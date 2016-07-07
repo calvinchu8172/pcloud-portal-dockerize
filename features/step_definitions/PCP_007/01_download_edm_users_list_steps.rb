@@ -58,7 +58,7 @@ end
 
 Then(/^the csv content should have user information with sign_on_by "(.*?)"$/) do |sign_on_by|
   content = CSV.parse(page.body)[1]
-  expect(content).to include(@user.id.to_s, @user.email, @user.edm_accept.to_s, @user.language, @user.country, sign_on_by)
+  expect(content).to include(@user.email, @user.edm_accept.to_s, @user.language, @user.country, sign_on_by)
 end
 
 Given(/^user also binded the account with Facebook and Google$/) do
