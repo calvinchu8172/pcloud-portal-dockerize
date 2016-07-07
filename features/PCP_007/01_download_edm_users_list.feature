@@ -44,7 +44,7 @@ Feature: [PCP_007_01] Visit Download EDM Users List Page
       And the user sees the download csv file as "EDM-Users-List-20160531072030.csv"
       And the user sees the csv header include:
       """
-      ["id", "email", "edm_accept", "language", "country", "sign_on_by"]
+      ["email", "edm_accept", "language", "country", "sign_on_by"]
       """
       And the csv content should have user information with sign_on_by "email"
 
@@ -62,7 +62,7 @@ Feature: [PCP_007_01] Visit Download EDM Users List Page
       And the user sees the download csv file as "EDM-Users-List-20160531072030.csv"
       And the user sees the csv header include:
       """
-      ["id", "email", "edm_accept", "language", "country", "sign_on_by"]
+      ["email", "edm_accept", "language", "country", "sign_on_by"]
       """
       And the csv content should have user information with sign_on_by "email/facebook/google_oauth2"
 
@@ -80,7 +80,7 @@ Feature: [PCP_007_01] Visit Download EDM Users List Page
       And the user sees the download csv file as "EDM-Users-List-20160531072030.csv"
       And the user sees the csv header include:
       """
-      ["id", "email", "edm_accept", "language", "country", "sign_on_by"]
+      ["email", "edm_accept", "language", "country", "sign_on_by"]
       """
       And the csv content should have user information with sign_on_by "email/facebook"
 
@@ -98,6 +98,6 @@ Feature: [PCP_007_01] Visit Download EDM Users List Page
       And the user sees the download csv file as "EDM-Users-List-20160531072030.csv"
       And the user sees the csv header include:
       """
-      ["id", "email", "edm_accept", "language", "country", "sign_on_by"]
+      ["email", "edm_accept", "language", "country", "sign_on_by"]
       """
       And the csv content should have user information with sign_on_by "email/google_oauth2"

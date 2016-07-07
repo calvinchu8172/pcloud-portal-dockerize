@@ -8,13 +8,12 @@ class Users::EdmUsersController < ApplicationController
 
   def download_csv
     users = User.order(:id)
-    attributes = ["id", "email", "edm_accept", "language", "country", "sign_on_by"]
+    attributes = ["email", "edm_accept", "language", "country", "sign_on_by"]
 
     csv_string = CSV.generate do |csv|
       csv << attributes
       users.each do |user|
         csv << [
-          user.id,
           user.email,
           user.edm_accept,
           user.language,
