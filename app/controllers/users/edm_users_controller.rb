@@ -15,7 +15,7 @@ class Users::EdmUsersController < ApplicationController
       users.each do |user|
         csv << [
           user.email,
-          user.edm_accept,
+          user.edm_accept.blank? ? false : user.edm_accept,
           user.language,
           user.country,
           check_sign_on_by(user)
@@ -33,10 +33,11 @@ class Users::EdmUsersController < ApplicationController
     end
 
     def check_sign_on_by(user)
-      if user.confirmation_token && user.confirmed_at
+      if user.confirmation_token
         method = 'email'
-      else
-        method = ''
+        if user.confirmed_at.blank?
+          method += '(unverified)'
+        end
       end
 
       if !user.identity.find_by_provider('facebook').blank?
