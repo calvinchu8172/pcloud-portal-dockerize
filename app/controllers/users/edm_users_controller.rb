@@ -33,6 +33,8 @@ class Users::EdmUsersController < ApplicationController
     end
 
     def check_sign_on_by(user)
+      method = ''
+      
       if user.confirmation_token
         method = 'email'
         if user.confirmed_at.blank?
