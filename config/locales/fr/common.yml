@@ -133,7 +133,7 @@ fr:
         in_pairing: L'appareil est en cours d'association
         failure: Délai d'association. Réessayez.
         canceled: L'association a été annulée
-        success: Association réussie. Veuillez cliquer sur le bouton "Confirmer" pour installer DDNS et UPnP.
+        success: Association réussie.
       ddns:
         instruction: 'Veuillez utiliser :'
         instruction_2: 3 à 63 caractères
