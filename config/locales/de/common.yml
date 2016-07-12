@@ -135,8 +135,7 @@ de:
         in_pairing: Gerät wird verbunden
         failure: Verbindungs Timeout. Bitte erneut versuchen.
         canceled: Verbinden wurde abgebrochen
-        success: Erfolgreich verbunden. Bitte klicken Sie den "Bestätigen" Button
-          um die DDNS und UPnP Einrichtung abzuschließen.
+        success: Erfolgreich verbunden.
       ddns:
         instruction: 'Bitte nutzen Sie:'
         instruction_2: 3-63 Zeichen

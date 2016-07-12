@@ -133,7 +133,7 @@ tr:
         in_pairing: Cihaz eşleştiriliyor
         failure: Eşleştirme zaman aşımı. Lütfen tekrar deneyin.
         canceled: Eşleştirme iptal edildi
-        success: Başarıyla eşleştirildi. Lütfen DDNS ve UPnP ayarlamak için "Onayla" düğmesine tıklayın.
+        success: Başarıyla eşleştirildi.
       ddns:
         instruction: 'Lütfen kullanın:'
         instruction_2: 3 ila 63 karakter
