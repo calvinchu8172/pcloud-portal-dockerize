@@ -25,6 +25,7 @@ Capybara.server_port = 3000
 Capybara.always_include_port = true
 Capybara.default_host = Settings.environments.portal_domain
 Capybara.app_host = 'http://' + Settings.environments.portal_domain
+Capybara.ignore_hidden_elements = false
 
 Capybara::Webkit.configure do |config|
   config.block_unknown_urls
