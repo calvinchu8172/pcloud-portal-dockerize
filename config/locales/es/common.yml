@@ -133,7 +133,7 @@ es:
         in_pairing: El dispositivo se está asociando
         failure: Tiempo de asociación agotado. Por favor, vuelva a intentarlo.
         canceled: La asociación ha sido cancelada
-        success: Asociado con éxito. Haga clic en el botón "Confirm" para configurar DDNS y UPnP.
+        success: Asociado con éxito.
       ddns:
         instruction: 'Por favor, utilice:'
         instruction_2: 3 a 63 caracteres

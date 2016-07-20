@@ -133,7 +133,7 @@ nl:
         in_pairing: Apparaat is verbinding aan het maken
         failure: Koppel timeout. Probeer het opnieuw.
         canceled: Koppelen is geannuleerd
-        success: Het koppelen is gelukt. Klik op de "Bevestig" knop om de setup DDNS en UPnP te starten.
+        success: Het koppelen is gelukt.
       ddns:
         instruction: 'Gelieve te gebruiken:'
         instruction_2: 3 tot 63 tekens

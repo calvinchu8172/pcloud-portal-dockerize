@@ -133,7 +133,7 @@ cs:
         in_pairing: Zařízení se páruje
         failure: "Časový limit párování. Opakujte akci znovu."
         canceled: Párování bylo zrušeno
-        success: "Úspěšně spárováno. Klikněte na tlačítko „Potvrdit“ a nastavte DDNS a UPnP."
+        success: "Úspěšně spárováno."
       ddns:
         instruction: 'Použijte:'
         instruction_2: 3 až 63 znaků
