@@ -1,4 +1,4 @@
-@javascript
+# @javascript
 Feature: [PCP_001_05] OAuth-Google
 
 	Background:
