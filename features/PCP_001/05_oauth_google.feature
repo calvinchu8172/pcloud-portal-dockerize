@@ -1,4 +1,3 @@
-# @javascript
 Feature: [PCP_001_05] OAuth-Google
 
 	Background:
@@ -51,5 +50,3 @@ Feature: [PCP_001_05] OAuth-Google
     Then user will stay in Terms of Use page
     Then the user should see text/message "Please accept the user agreement terms" on the page
 
-
-    

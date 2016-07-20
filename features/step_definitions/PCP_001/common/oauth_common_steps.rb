@@ -20,7 +20,9 @@ When(/^the user visits profile page$/) do
 end
 
 When(/^the user click Terms of Use page$/) do
-  page.find("label[class=checkbox_label]").click
+  # user[agreement] 為 checkbox 的 name 屬性，
+  # 此外 capybara 需指定 visible: false 才可選取到隱藏的 element
+  check("user[agreement]", visible: false)
   click_button "Confirm"
 end
 
@@ -62,13 +64,12 @@ Given(/^the user was a personal cloud member with "(.*?)" account$/) do |provide
 end
 
 When(/^the user click sign in with "(.*?)" link and grant permission$/) do |link_name|
-    click_link(link_name)
+  click_link(link_name)
 end
 
 
 When(/^the user click sign in with "(.*?)" link and not grant permission$/) do |link_name|
   set_invalid_omniauth(get_omniauth_provider(link_name))
-  
   click_link(link_name)
 end
 
