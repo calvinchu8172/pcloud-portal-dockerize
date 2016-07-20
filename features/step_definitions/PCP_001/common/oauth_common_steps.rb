@@ -4,6 +4,7 @@ Given(/^a user visits home page$/) do
 end
 
 Then(/^the user should see text\/message "(.*?)" on the page$/) do |message|
+  puts page.body
   expect(page.body).to have_content(message)
 end
 
@@ -16,6 +17,7 @@ Then(/^the user should login$/) do
 end
 
 When(/^the user visits profile page$/) do
+  puts page.body
   find("a.member").click
 end
 
