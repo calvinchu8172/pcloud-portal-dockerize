@@ -3,12 +3,7 @@ Given(/^a user visits home page$/) do
   visit unauthenticated_root_path
 end
 
-Then(/^the user should see text "(.*?)" on the page$/) do |message|
-  expect(page.body).to have_content(message)
-end
-
-Then(/^the user will see the message "(.*?)"$/) do |message|
-	
+Then(/^the user should see text\/message "(.*?)" on the page$/) do |message|
   expect(page.body).to have_content(message)
 end
 
@@ -43,6 +38,50 @@ end
 
 Then(/^the omniauth user should not see change password link$/) do
   expect(page).to have_no_link I18n.t("labels.change_password")
+end
+
+Then(/^redirect to My Devices\/Search Devices page$/) do
+  expect(page.current_path).to eq("/discoverer/index")
+end
+
+When(/^the user click sign in with "(.*?)" link$/) do |link_name|
+  click_link(link_name)
+end
+
+Given(/^the user was not a personal cloud member but with "(.*?)" account$/) do |provider|
+  set_omniauth(get_omniauth_provider(provider))
+end
+
+Given(/^the user was a personal cloud member with "(.*?)" account$/) do |provider|
+  @user = TestingHelper.create_and_confirm
+
+  oauth_provider_name = get_omniauth_provider(provider)
+
+  @identity = FactoryGirl.create(:identity, user_id: @user.id, provider: oauth_provider_name.to_s, uid: "1234")
+  set_omniauth(get_omniauth_provider(provider), @user.email)
+end
+
+When(/^the user click sign in with "(.*?)" link and grant permission$/) do |link_name|
+    click_link(link_name)
+end
+
+
+When(/^the user click sign in with "(.*?)" link and not grant permission$/) do |link_name|
+  set_invalid_omniauth(get_omniauth_provider(link_name))
+  
+  click_link(link_name)
+end
+
+
+def get_omniauth_provider(provider_name)
+  case provider_name
+    when "Facebook"
+      :facebook
+    when "Google"
+      :google_oauth2
+    else
+      raise Exception.new("invalid provider name")
+  end
 end
 
 
@@ -88,5 +127,5 @@ def set_invalid_omniauth(provider, opts = {})
                  }.merge(opts)
 
   OmniAuth.config.test_mode = true
-  OmniAuth.config.mock_auth[credentials[:provider]] = credentials[:invalid]
+  OmniAuth.config.mock_auth[provider] = credentials[:invalid]
 end
