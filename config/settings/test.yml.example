@@ -63,10 +63,10 @@ environments:
     - services
   public_key:
 oauth:
-  facebook_app_id: xxx
-  facebook_secret: xxx
-  google_app_id: xxx
-  google_secret: xxx
+  facebook_app_id: 897809603581013
+  facebook_secret: fe942ea4847d9a3e6c5ada6d37ecbef9
+  google_app_id: 473860103111-i1gqjjk57evl10r2i1iqvkpohkqssktp.apps.googleusercontent.com
+  google_secret: s-rA4uAtd5OPg6BLKxT0yU7b
 recaptcha:
   config:
     public_key: '6LelPvUSAAAAAHQP8AccRDnMO0ETmgmtY-okFr95'
