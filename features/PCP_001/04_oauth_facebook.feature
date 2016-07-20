@@ -53,7 +53,7 @@
 #      Then user will stay in Terms of Use page
 #      Then the user should see text/message "Please accept the user agreement terms" on the page
 
-
+@javascript
 Feature: [PCP_001_04] oauth
 
 	Background:
