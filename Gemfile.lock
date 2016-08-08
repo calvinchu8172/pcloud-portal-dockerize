@@ -174,6 +174,7 @@ GEM
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
     fssm (0.2.10)
+    geoip (1.6.2)
     gherkin (2.12.2)
       multi_json (~> 1.3)
     git-version-bump (0.15.1)
@@ -498,6 +499,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   fluent-logger
+  geoip
   github-markup
   hirb
   hirb-unicode

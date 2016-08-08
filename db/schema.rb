@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426074150) do
+ActiveRecord::Schema.define(version: 20160805104900) do
 
   create_table "accepted_users", force: :cascade do |t|
     t.integer  "invitation_id", limit: 4, null: false
@@ -56,8 +56,10 @@ ActiveRecord::Schema.define(version: 20160426074150) do
     t.integer  "online_status",                  limit: 1,   default: 0, null: false
     t.integer  "wol_status",                     limit: 1,   default: 0, null: false
     t.string   "mac_address_of_router_lan_port", limit: 25
+    t.string   "country",                        limit: 3
   end
 
+  add_index "devices", ["country"], name: "index_devices_on_country", using: :btree
   add_index "devices", ["mac_address", "serial_number"], name: "index_devices_on_mac_address_and_serial_number", unique: true, using: :btree
   add_index "devices", ["mac_address"], name: "index_devices_on_mac_address", using: :btree
   add_index "devices", ["product_id"], name: "devices_product_id_fk", using: :btree

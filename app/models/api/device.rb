@@ -8,32 +8,29 @@ class Api::Device < Device
   def checkin
 
     instance = Device.includes(pairing: :invitations).find_by( mac_address: mac_address, serial_number: serial_number)
+
+    # find country by ip from geoip database
+    country = get_country
+
     if instance.blank?
       # instance 不存在的情形下：
       # self 的其他 attributes 是在 controller 的 device_checking 當中給值，Example: "@device = Api::Device::Vx.new(....)"，
       # 因此 self 會有 model_class_name，且須通過 validate_model_name 的驗證。
-      self.attributes = { product_id: @product.id, ip_address: ip_encode_hex, online_status: true }
-
-      logger.info("creating api device: #{self.to_json}")
-
-      existing_device = Device.find_by(mac_address: mac_address, serial_number: serial_number)
-      logger.info("existing api device: #{existing_device.to_json}")
-
+      self.attributes = { product_id: @product.id, ip_address: ip_encode_hex, online_status: true, country: country }
       self.save
-      logger.info('create new device id:' + self.id.to_s)
       return true
     else
       # instance 是由 DB 所查詢出來的 device 資料，即使用 "Api::Device" 接也不會有 model_class_name 的值，
       # 因此當 instance 在 update 時，執行到 validate_model_name，就會出現錯誤，因為 model_class_name 是 nil，
       # 所以 instance 的物件型態不可設為 "Api::Device"，因 Api::Device 會執行 validate_model_name，
       # 且當 instance 已經存在 DB 當中時，因重複註冊並不會修改 model_class_name，因此 validate_model_name 可不被執行。
-      instance.update( ip_address: ip_encode_hex, online_status: true )
+      instance.update( ip_address: ip_encode_hex, online_status: true, country: country )
       instance.update_attribute(:mac_address_of_router_lan_port, self.mac_address_of_router_lan_port) if self.mac_address_of_router_lan_port.present?
     end
     
     # 如果 instance.firmware_version (from DB) 和 firmware_version (from parameters) 的值不同，則修改 firmware_version
     unless firmware_version == instance.firmware_version
-      logger.info('update device from fireware version' + firmware_version + ' from ' + firmware_version)
+      Rails.logger.info('update device from fireware version' + firmware_version + ' from ' + firmware_version)
       instance.update_attribute(:firmware_version, firmware_version)
     end
 
@@ -69,7 +66,7 @@ class Api::Device < Device
       :xmpp_account => self.session['xmpp_account']
     }
 
-    logger.info("device ip is changed, now creating ddns session: #{ddns_session_data}, and sending ddns queue: #{job}")
+    Rails.logger.info("device ip is changed, now creating ddns session: #{ddns_session_data}, and sending ddns queue: #{job}")
     ddns_session.session.bulk_set(ddns_session_data)
     AwsService.send_message_to_queue(job)
   end
@@ -99,8 +96,8 @@ class Api::Device < Device
     update_ip_list(current_ip_address) if ip_changed?
 
     if ip_changed? || xmpp_account != session['xmpp_account']
-      device_session_data = { 'ip' => current_ip_address, 'xmpp_account' => xmpp_account}
-      logger.info("create or update device session: #{device_session_data}, update device ip from #{self.session['ip']} to #{current_ip_address} !")
+      device_session_data = { 'ip' => current_ip_address, 'xmpp_account' => xmpp_account }
+      Rails.logger.info("create or update device session: #{device_session_data}, update device ip from #{self.session['ip']} to #{current_ip_address} !")
       self.session.bulk_set(device_session_data)
     end
   end
@@ -127,7 +124,7 @@ class Api::Device < Device
     self.xmpp_account[:password] = generate_new_passoword
     self.xmpp_account[:name] = session.fetch :xmpp_account || generate_new_username
 
-    logger.info('apply xmpp account:' + self.xmpp_account[:name])
+    Rails.logger.info('apply xmpp account:' + self.xmpp_account[:name])
     apply_for_xmpp_account(self.xmpp_account)
   end
 
@@ -192,7 +189,7 @@ class Api::Device < Device
       mac_address_regex = /^[0-9a-fA-F]{12}$/
 
       if mac_address.blank? || mac_address_regex.match(mac_address) == nil || serial_number.blank?
-        logger.info('result: invalid Mac Address or Serial Number')
+        Rails.logger.info('result: invalid Mac Address or Serial Number')
         errors.add(:parameter, {result: 'invalid parameter'})
       end
     end
@@ -204,5 +201,18 @@ class Api::Device < Device
       errors.add(:parameter, {result: 'invalid parameter'}) if @product.blank?
     end
 
+    def get_country
+      geoip = GeoIP.new(Settings.geoip.db_path)
+      country = ""
+      begin  
+        remote_ip = current_ip_address 
+        # remote_ip = "173.194.112.35"
+        location = geoip.country(remote_ip)
+        country = location.country_code2 if location.country_code2 != '--'
+      rescue Exception => e
+        Rails.logger.error(e.message)
+      end
+      country
+    end
 
 end
