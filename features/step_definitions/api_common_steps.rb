@@ -4,94 +4,6 @@
 # -------- device registration -------- #
 # ------------------------------------- #
 
-Given(/^the device with information$/) do |table|
-  TestingHelper::create_product_table if Product.count == 0
-  @device_given_attrs = table.rows_hash
-
-  set_device_default_ip_address
-
-  reset_signature(@device_given_attrs)
-end
-
-Given(/^the device is registered$/) do
-  @is_device_registered = true
-  model_class_name = @device_given_attrs['model_name'].blank? ? 'NAS325' : @device_given_attrs['model_name']
-  product = Product.find_by(model_class_name: model_class_name)
-
-  # Todo: 
-  # 1. 把 ip_encode_hex、ip_decode_hex 另外拉出單獨的 utility class 處理 
-  # 2. Device before_save 應該執行 ip_encode_hex
-  current_ip = Api::Device.new(current_ip_address: @device_given_attrs['ip_address']).ip_encode_hex
-
-  @registered_device = Device.create(
-    mac_address: @device_given_attrs['mac_address'],
-    serial_number: @device_given_attrs['serial_number'],
-    firmware_version: @device_given_attrs['firmware_version'],
-    ip_address: current_ip,
-    product_id: product.id
-    )
-end
-
-Given(/^the device is not registered$/) do 
-  @is_device_registered = false
-
-  device = Device.find_by(
-    mac_address: @device_given_attrs['mac_address'], 
-    serial_number: @device_given_attrs['serial_number']
-    )
-  expect(device).to be_nil
-
-  username = get_device_xmpp_username(@device_given_attrs)
-  xmpp_account = get_device_xmpp_username_with_host(@device_given_attrs)
-  xmpp_user = XmppUser.find_by(username: username)
-  expect(XmppUser.find_by(username: username)).to be_nil
-end
-
-Given(/^the device module information$/) do
-  @device_given_attrs["module"] = '[{"name": "DDNS", "ver": "1" }, {"name": "pairing", "ver": "button"}]'
-end
-
-When(/^the device's IP is "(.*?)"$/) do |ip|
-  ENV['RAILS_TEST_IP_ADDRESS'] = ip
-end
-
-When(/^the device "(.*?)" was be changed to "(.*?)"$/) do |key, value|
-  @device_given_attrs["#{key}"] = value
-
-  if key == 'ip_address'
-    puts "original IP: #{ENV['RAILS_TEST_IP_ADDRESS']}"
-    steps %{ When the device's IP is "#{value}" }
-  end
-
-  # if the invalid signature is not specified  
-  reset_signature(@device_given_attrs) if key != 'signature'
-
-  # if the invalid signature is specified  
-  @invalid_signature = true if key == 'signature'
-end
-
-Then(/^the API should return success respond$/) do
-  expect(last_response.status).to eq(200)
-end
-
-Then(/^the database does not have record$/) do
-  steps %{ And the device is not registered }
-end
-
-Then(/^the database should not have any pairing records$/) do
-  device = Device.find_by(mac_address: @device_given_attrs["mac_address"])
-  pairing = Pairing.find_by(device_id: device.id)
-  expect(pairing).to be_nil
-end
-
-Then(/^the database should not have any associate invitations and accepted users records$/) do
-  device = Device.find_by(mac_address: @device_given_attrs["mac_address"])
-  invitations = Invitation.find_by(device_id: device.id)
-  expect(invitations).to be_nil
-
-  accepted_users = AcceptedUser.find_by(invitation_id: @invitation_id)
-  expect(accepted_users).to be_nil
-end
 
 # ------------------------ #
 # -------- others -------- #
@@ -170,14 +82,11 @@ Then(/^Email deliveries should be (\d+)$/) do |count|
 end
 
 Then(/^the API should return "(.*?)" and "(.*?)" with "(.*?)" responds$/) do |http, json, type|
-  @result = JSON.parse(last_response.body)
+  api_result = JSON.parse(last_response.body)
   expect(last_response.status).to eq(http.to_i)
-  puts "@result: #{@result}"
-
   key = "error" if type == "error"
   key = "result" if type == "failure"
-  puts "key: #{key}"
-  expect(@result[key]).to eq(json)
+  expect(api_result[key]).to eq(json)
 end
 
 Then(/^the device record in database should have the same IP$/) do
@@ -237,15 +146,6 @@ def check_authentication_token(authentication_token)
   end
 end
 
-def get_device_xmpp_username(device)
-  username = 'd' + device["mac_address"].gsub(':', '-') + '-' + device["serial_number"].gsub(/([^\w])/, '-')
-  username
-end
-
-def get_device_xmpp_username_with_host(device)
-  "#{get_device_xmpp_username(device)}@#{Settings.xmpp.server}/#{Settings.xmpp.device_resource_id}"
-end
-
 def reset_signature(device)
   magic_number = Settings.magic_number
   data = device["mac_address"] + device["serial_number"].to_s + device["model_name"] + device["firmware_version"] + magic_number.to_s
@@ -254,24 +154,13 @@ def reset_signature(device)
   @device_given_attrs
 end
 
-
-def create_rest_pairing(device)
-  # redis = Redis.new
-  redis = Redis.new(:host => Settings.redis.web_host, :port => Settings.redis.port, :db => 0 )
+# 建立 device 的 pairing 資料
+def create_device_pairing(device)
   pairing = Pairing.new
   pairing.device = device
   pairing.user = TestingHelper.create_and_signin
   pairing.ownership = 0
-  puts 'pairing:' + pairing.attributes.to_s
   pairing.save
-end
-
-def set_device_default_ip_address
-  if ENV['RAILS_TEST_IP_ADDRESS'].blank?
-    unless @device_given_attrs['ip_address'].blank?
-      ENV['RAILS_TEST_IP_ADDRESS'] = @device_given_attrs['ip_address']
-    end
-  end
 end
 
 

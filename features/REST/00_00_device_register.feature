@@ -8,36 +8,30 @@ Feature: [REST_00_00] REST API testing
       | firmware_version | 1.0             |
       | algo             | 1               |
       | ip_address       | 173.194.112.35  |
+      | registered       | undefined       |
 
 # ---------------------------------------------- #
 # ----- Given the device is not registered ----- #
 # ---------------------------------------------- #
 
   Scenario Outline: [REST_00_00_01]
-    Check incorrect update process when invalid format
+    Check incorrect update process when invalid format or invalid signature
     Given the device is not registered 
       And the device "<information>" was be changed to "<value>"
       And the device send "register" request to REST API /d/1/register 
-     Then the API should return "<http_status>" and "<json_message>" with "failure" responds
+     Then the API should return "<http_status>" and "<json_message>" with "<json_message_column>" responds
      And the database does not have record
-    Examples: Invalid mac_address format
-      | information | value             | http_status | json_message      |
-      | mac_address | @@@@@@@@@@        | 400         | invalid parameter |
-      | mac_address | 6D-81-45-4B-1A-B8 | 400         | invalid parameter |
-      | mac_address | A6:3A:B9:05:3E:B3 | 400         | invalid parameter |
+    Examples: Invalid parameters format
+      | information | value             | http_status | json_message      | json_message_column  |
+      | mac_address | @@@@@@@@@@        | 400         | invalid parameter | failure              |
+      | mac_address | 6D-81-45-4B-1A-B8 | 400         | invalid parameter | failure              |
+      | mac_address | A6:3A:B9:05:3E:B3 | 400         | invalid parameter | failure              |
+      | signature   | abcd              | 400         | Failure           | error                |
 
   Scenario: [REST_00_00_02]
-    Check incorrect update process when signature invalid
-    Given the device is not registered
-      And the device "signature" was be changed to "abcde"
-      And the device send "register" request to REST API /d/1/register
-     Then the API should return "400" and "Failure" with "error" responds
-      And the database does not have record
-
-  Scenario: [REST_00_00_03]
     Check standard device registration process
     Given the device is not registered 
-      And the device's IP is "173.194.112.35"
+      # And the device's IP is "173.194.112.35"
      When the device send "register" request to REST API /d/1/register
      Then the API should return success respond
       And the record in databases as expected
@@ -46,7 +40,7 @@ Feature: [REST_00_00] REST API testing
 # ----- Given the device is registered ----- #
 # ------------------------------------------ #
 
-  Scenario Outline: [REST_00_00_04]
+  Scenario Outline: [REST_00_00_03]
     Check correct update process when valid format and IP changed
     Given the device is registered
       And the device "<information>" was be changed to "<value>"
@@ -58,10 +52,10 @@ Feature: [REST_00_00] REST API testing
       | firmware_version | 2.0              |
       | ip_address       | 173.194.112.100  |
 
-  Scenario: [REST_00_00_05]
+  Scenario: [REST_00_00_04]
     Check reset process
     Given the device is registered
       And the device send "reset" request to REST API /d/1/register
      Then the API should return success respond
       And the database should not have any pairing records
-
+      And the database should not have any associate invitations and accepted users records

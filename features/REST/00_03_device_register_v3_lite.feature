@@ -21,7 +21,8 @@ Feature: [REST_00_03] Device Register V3 Lite
       | model_name       | NSA325           |
       | firmware_version | 1.0              |
       | algo             | 1                |
-      | ip_address       | 192.168.100.100  |
+      | ip_address       | 173.194.112.35   |
+      | registered       | undefined       |
       And an existing certificate and RSA key
 
 # ---------------------------------------------- #
@@ -29,25 +30,19 @@ Feature: [REST_00_03] Device Register V3 Lite
 # ---------------------------------------------- #
 
   Scenario Outline: [REST_00_03_01]
-    Check incorrect update process when invalid format
+    Check incorrect update process when invalid format or invalid signature
     Given the device is not registered
       And the device "<information>" was be changed to "<value>"
      When the device send "register" request to REST API /d/3/register/lite
-     Then the API should return "<http_status>" and "<json_message>" with "failure" responds
-    Examples: Invalid mac_address format
-      | information | value             | http_status | json_message      |
-      | mac_address | @@@@@@@@@         | 400         | invalid parameter |
-      | mac_address | 6D-81-45-4B-1A-B8 | 400         | invalid parameter |
-      | mac_address | A6:3A:B9:05:3E:B3 | 400         | invalid parameter |
+     Then the API should return "<http_status>" and "<json_message>" with "<json_message_column>" responds
+    Examples: Invalid parameters format
+      | information | value             | http_status | json_message      | json_message_column  |
+      | mac_address | @@@@@@@@@         | 400         | invalid parameter | failure              |
+      | mac_address | 6D-81-45-4B-1A-B8 | 400         | invalid parameter | failure              |
+      | mac_address | A6:3A:B9:05:3E:B3 | 400         | invalid parameter | failure              |
+      | signature   | abcd              | 400         | Invalid signature | error                |
 
   Scenario: [REST_00_03_02]
-    Check incorrect update process when signature invalid
-    Given the device is not registered
-      And the device "signature" was be changed to "abcde"
-     When the device send "register" request to REST API /d/3/register/lite
-     Then the API should return "400" and "Invalid signature" with "error" responds
-
-  Scenario: [REST_00_03_03]
     Check standard device registration process
     Given the device is not registered
      When the device send "register" request to REST API /d/3/register/lite
@@ -57,7 +52,7 @@ Feature: [REST_00_03] Device Register V3 Lite
 # ----- Given the device is registered ----- #
 # ------------------------------------------ #
 
-  Scenario Outline: [REST_00_03_01]
+  Scenario Outline: [REST_00_03_03]
     Check correct update process when valid format and IP changed
      When the device is registered
       And the device "<information>" was be changed to "<value>"
@@ -66,5 +61,5 @@ Feature: [REST_00_03] Device Register V3 Lite
     Examples: Valid format
       | information      | value             |
       | firmware_version | 2.0               |
-      | ip_address       | 192.168.100.200   |
+      | ip_address       | 173.194.112.100   |
 

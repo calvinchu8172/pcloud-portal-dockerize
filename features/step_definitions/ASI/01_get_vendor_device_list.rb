@@ -4,8 +4,6 @@ Given(/^an user exists$/) do
    # @user.id = 1
    @user.save
    @cloud_id = @user.encoded_id
-   # puts @user.id
-   # puts @cloud_id
 end
 
 Given(/^there is a NAS paired with user$/) do
@@ -40,7 +38,6 @@ end
 Given(/^the ASI server return valid result$/) do
   data = "{\"resultCode\":\"000.000\",\"data\":[{\"ircutSupport\":\"1\",\"deviceLicenseKey\":\"IVSIPCSP01-V101V52TEY7KC0IZ\",\"productClass\":\"IPCAM\",\"network\":\"ETHERNET\",\"ip\":\"192.168.12.79\",\"recTagSupport\":\"0\",\"isOnline\":\"1\",\"devicePurchaseDate\":\"\",\"microphoneSupport\":\"1\",\"modelName\":\"C11W\",\"nickName\":\"B01F81700417\",\"externalIp\":\"192.168.12.1\",\"firmwareVersion\":\"C11W-2.0.8\",\"speakerSupport\":\"1\",\"ptzSupport\":\"-1\",\"deviceId\":\"B01F81700417\",\"deviceLicenseActivatedDate\":\"2016-04-27 14:29:39.0\"}],\"resultMessage\":\"Success.\"}"
   # allow_any_instance_of(Api::Resource::VendorDevicesController).to receive(:get_devise_list_from_vendor).with("zyxoperator").and_return(data)
-  puts @cloud_id
   allow_any_instance_of(Api::Resource::VendorDevicesController).to receive(:get_devise_list_from_vendor).with(@cloud_id).and_return(data)
 
 end
@@ -86,7 +83,6 @@ When(/^NAS send a GET request to \/resource\/(\d+)\/vendor_devices with:$/) do |
     signature = "invalid signature"
   else
     signature = create_signature(certificate_serial, cloud_id, mac_address, serial_number)
-    # puts signature
   end
 
   get path, {
