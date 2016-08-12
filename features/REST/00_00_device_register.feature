@@ -7,7 +7,7 @@ Feature: [REST_00_00] REST API testing
       | model_name       | NSA325          |
       | firmware_version | 1.0             |
       | algo             | 1               |
-      | ip_address       | 192.168.100.100 |
+      | ip_address       | 173.194.112.35  |
 
 # ---------------------------------------------- #
 # ----- Given the device is not registered ----- #
@@ -36,6 +36,8 @@ Feature: [REST_00_00] REST API testing
 
   Scenario: [REST_00_00_03]
     Check standard device registration process
+    Given the device is not registered 
+      And the device's IP is "173.194.112.35"
      When the device send "register" request to REST API /d/1/register
      Then the API should return success respond
       And the record in databases as expected
@@ -46,7 +48,7 @@ Feature: [REST_00_00] REST API testing
 
   Scenario Outline: [REST_00_00_04]
     Check correct update process when valid format and IP changed
-     Given the device is registered
+    Given the device is registered
       And the device "<information>" was be changed to "<value>"
       And the device send "register" request to REST API /d/1/register
      Then the API should return success respond
@@ -54,7 +56,7 @@ Feature: [REST_00_00] REST API testing
     Examples: Valid format
       | information      | value            |
       | firmware_version | 2.0              |
-      | ip_address       | 192.168.100.200  |
+      | ip_address       | 173.194.112.100  |
 
   Scenario: [REST_00_00_05]
     Check reset process

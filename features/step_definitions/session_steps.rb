@@ -33,6 +33,7 @@ module TestingHelper
     product_id ||= Product.first.id
     device = FactoryGirl.create(:device, product_id: product_id)
     device.save
+    # set ip = "127.0.0.1" to make device can be found
     ip = "127.0.0.1"
     device.update_ip_list ip
     device.session['ip'] = ip

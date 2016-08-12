@@ -34,9 +34,12 @@ class Api::Device < Device
       instance.update_attribute(:firmware_version, firmware_version)
     end
 
+    # Device update 之後，因 self 的 attributes value 還沒有 refresh，
+    # 所以將 self 的 attributes value refresh
     self.attributes.keys.each do |key|
       self.send("#{key}=", instance.send(key))
     end
+
     self.ddns = instance.ddns if instance.ddns.present?
     return true
   end
@@ -206,7 +209,12 @@ class Api::Device < Device
       country = ""
       begin  
         remote_ip = current_ip_address 
-        # remote_ip = "173.194.112.35"
+        remote_ip = "173.194.112.35" if Rails.env.development?
+
+        # set local_ip_alias:
+        # geoip.city("127.0.0.1") 
+        # <struct GeoIP::City request="127.0.0.1", ip="173.194.112.35", country_code2="US", country_code3="USA", country_name="United States", continent_code="NA", region_name="CA", city_name="Mountain View", postal_code="94043", latitude=37.41919999999999, longitude=-122.0574, dma_code=807, area_code=650, timezone="America/Los_Angeles", real_region_name="California">
+        # geoip.local_ip_alias = "173.194.112.35" if Rails.env.test?
         location = geoip.country(remote_ip)
         country = location.country_code2 if location.country_code2 != '--'
       rescue Exception => e

@@ -56,6 +56,7 @@ begin
   Before do
     DatabaseCleaner.start
     DatabaseCleaner[:active_record,{:model => XmppUser}].start
+    @redis = Redis.new(:host => Settings.redis.web_host, :port => Settings.redis.port)
   end
 
   After do

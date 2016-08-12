@@ -7,7 +7,7 @@ Feature: [REST_00_02] Device Register V3
       | model_name       | NAS540                     |
       | firmware_version | 1.0                        |
       | algo             | 1                          |
-      | ip_address       | 192.168.100.100            |
+      | ip_address       | 173.194.112.35             |
       | module           | [{"name": "DDNS", "ver": "1" }, {"name": "pairing", "ver": "button"}] |
     And an existing certificate and RSA key
 
@@ -39,6 +39,7 @@ Feature: [REST_00_02] Device Register V3
   Scenario: [REST_00_02_03]
     Check standard device registration process
     Given the device is not registered
+      And the device's IP is "173.194.112.35"
      When the device send "register" request to REST API /d/3/register
      Then the API should return success respond
       And the record in databases as expected
@@ -58,7 +59,7 @@ Feature: [REST_00_02] Device Register V3
     Examples: Valid format
       | information      | value             |
       | firmware_version | 2.0               |
-      | ip_address       | 192.168.100.200   |
+      | ip_address       | 173.194.112.100   |
 
   Scenario: [REST_00_02_05]
     Check reset process

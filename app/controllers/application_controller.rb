@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
   before_action :check_user_confirmation_expire, unless: :devise_controller?
   after_action :clear_log_context
   before_filter :setup_log_context
+  
+  # For cucumber test
+  before_filter :mock_ip_address 
+
 
   #called by last route matching unmatched routes.  Raises RoutingError which will be rescued from in the same way as other exceptions.
   def raise_not_found!
@@ -99,6 +103,24 @@ class ApplicationController < ActionController::Base
         # 如果 devise stored_location_for 有值
         if stored_location = stored_location_for(current_user)
           redirect_to stored_location
+        end
+      end
+    end
+
+    # for cucumber test
+    # override remote_ip to set the fake ip 
+    def mock_ip_address
+      if Rails.env == 'test'
+        unless ENV['RAILS_TEST_IP_ADDRESS'].blank?
+          puts "mock_ip_address(): ENV['RAILS_TEST_IP_ADDRESS'] = #{ENV['RAILS_TEST_IP_ADDRESS']}" 
+        end
+        test_ip = ENV['RAILS_TEST_IP_ADDRESS']
+        unless test_ip.nil? or test_ip.empty?
+          request.instance_eval <<-EOS
+            def remote_ip
+              "#{test_ip}"
+            end
+          EOS
         end
       end
     end
