@@ -85,3 +85,5 @@ vendors:
     host: 'http://asicloud-beta.aethersi.com:10980'
     account: 'zyxoperator'
     password: 'zyxoperator'
+geoip:
+  db_path: "db/geoip/GeoIP.dat"
