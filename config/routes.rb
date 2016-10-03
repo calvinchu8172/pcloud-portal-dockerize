@@ -167,6 +167,13 @@ Rails.application.routes.draw do
       post "vendor_devices/crawl", to: "vendor_devices#crawl", format: 'json' 
     end
 
+    scope :path => '/schedule/1/', :module => "api/schedule" do
+      namespace :ddns do
+        get "expirations", to: "expirations#index", format: 'json' 
+        delete "expirations", to: "expirations#destroy", format: 'json' 
+      end
+    end
+
     scope :path => '/healthy/1/', :module => "api/healthy" do
       get 'status', to: 'status#show', format: 'json'
     end
