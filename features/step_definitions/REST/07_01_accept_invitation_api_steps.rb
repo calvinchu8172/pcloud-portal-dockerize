@@ -61,7 +61,6 @@ end
 Then(/^the JSON response should be:$/) do |table|
   data = table.rows_hash
   body_hash = JSON.parse(last_response.body)
-  # binding.pry
 
   data.each do |key, value|
     expect(body_hash.key?(key)).to be true
