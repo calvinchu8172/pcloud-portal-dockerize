@@ -139,6 +139,7 @@ Rails.application.routes.draw do
       resource :xmpp_account, format: 'json', only: [ :update ]
       get 'checkin/:oauth_provider', to: 'oauth#mobile_checkin', format: 'json'
       post 'register/:oauth_provider', to: 'oauth#mobile_register', format: 'json'
+      get 'cloud_id', to: 'emails#get_cloud_id', format: 'json'
     end
 
     scope :path => '/resource/1/', :module => "api/resource" do
@@ -163,14 +164,14 @@ Rails.application.routes.draw do
       # -------------------------- #
       # ----- vendor_devices ----- #
       # -------------------------- #
-      get "vendor_devices", to: "vendor_devices#index", format: 'json' 
-      post "vendor_devices/crawl", to: "vendor_devices#crawl", format: 'json' 
+      get "vendor_devices", to: "vendor_devices#index", format: 'json'
+      post "vendor_devices/crawl", to: "vendor_devices#crawl", format: 'json'
     end
 
     scope :path => '/schedule/1/', :module => "api/schedule" do
       namespace :ddns do
-        get "expirations", to: "expirations#index", format: 'json' 
-        delete "expirations", to: "expirations#destroy", format: 'json' 
+        get "expirations", to: "expirations#index", format: 'json'
+        delete "expirations", to: "expirations#destroy", format: 'json'
       end
     end
 
