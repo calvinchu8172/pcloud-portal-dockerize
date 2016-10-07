@@ -72,6 +72,10 @@ class User < ActiveRecord::Base
     Time.now.to_i < confirmation_expire_time.to_i
   end
 
+  def expired_days
+    (Time.now - self.created_at).to_i.fdiv(86400).round(2)
+  end
+
   private
     def add_default_display_name
       if self.display_name.blank?

@@ -62,8 +62,7 @@ class Api::User::EmailsController < Api::Base
         if @user.confirmation_valid?
           return render :json => { error_code: "002", description: "Client has to confirm email but it is still within 3 days trial period." }, status: 400
         else
-          expired_days = (Time.now - @user.created_at).to_i.fdiv(86400).round(2)
-          return render :json => { error_code: "002", description: "Client has to confirm email account to continue. It has been expired over #{expired_days} days." }, status: 400
+          return render :json => { error_code: "002", description: "Client has to confirm email account to continue. It has been expired over #{@user.expired_days} days." }, status: 400
         end
       end
     end
@@ -71,7 +70,7 @@ class Api::User::EmailsController < Api::Base
     def check_certificate_serial
       certificate_serial = Api::Certificate.find_by_serial(get_cloud_id_params[:certificate_serial])
       if certificate_serial.blank?
-        return render :json => { error_code: "001", description: "Invalid certificate serial." }, status: 400
+        return render :json => { error_code: "013", description: "Invalid certificate serial." }, status: 400
       end
     end
 
@@ -80,7 +79,7 @@ class Api::User::EmailsController < Api::Base
       signature = get_cloud_id_params[:signature]
       certificate_serial = get_cloud_id_params[:certificate_serial]
 
-      return render :json => { error_code: "101", description: "invalid signature." }, status: 400 unless validate_signature(signature, key, certificate_serial)
+      return render :json => { error_code: "101", description: "Invalid signature." }, status: 400 unless validate_signature(signature, key, certificate_serial)
     end
 
     def validate_signature(signature, key, serial)
