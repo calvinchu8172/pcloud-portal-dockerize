@@ -58,11 +58,13 @@ class Api::User::EmailsController < Api::Base
       if @user.blank?
         return render :json => { error_code: "001", description: "Invalid email." }, status: 400
       end
-      if !@user.confirmed?
-        if @user.confirmation_valid?
-          return render :json => { error_code: "002", description: "Client has to confirm email but it is still within 3 days trial period." }, status: 400
-        else
-          return render :json => { error_code: "002", description: "Client has to confirm email account to continue. It has been expired over #{@user.expired_days} days." }, status: 400
+      unless @user.confirmed?
+        unless @user.confirmation_valid?
+          # cloud_id = @user.encoded_id
+          # render json: { cloud_id: cloud_id }
+          # return render :json => { error_code: "002", description: "Client has to confirm email but it is still within 3 days trial period." }, status: 400
+        # else
+          return render :json => { error_code: "022", description: "Client has to confirm email account to continue. It has been expired over #{@user.expired_days} days." }, status: 400
         end
       end
     end
