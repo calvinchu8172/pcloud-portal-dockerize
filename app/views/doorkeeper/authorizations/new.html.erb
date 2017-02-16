@@ -32,7 +32,7 @@
           <%= hidden_field_tag :state, @pre_auth.state %>
           <%= hidden_field_tag :response_type, @pre_auth.response_type %>
           <%= hidden_field_tag :scope, @pre_auth.scope %>
-          <%= submit_tag t('doorkeeper.authorizations.buttons.authorize'), class: "btn btn-default zyxel_btn_submit"%>
+          <%= submit_tag t('doorkeeper.authorizations.buttons.authorize'), data: { disable_with: I18n.t('labels.wait') }, class: "btn btn-default zyxel_btn_submit"%>
         <% end %>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -42,7 +42,7 @@
             <%= hidden_field_tag :state, @pre_auth.state %>
             <%= hidden_field_tag :response_type, @pre_auth.response_type %>
             <%= hidden_field_tag :scope, @pre_auth.scope %>
-            <%= submit_tag t('doorkeeper.authorizations.buttons.deny'), class: "btn btn-default zyxel_btn_back"%>
+            <%= submit_tag t('doorkeeper.authorizations.buttons.deny'), data: { disable_with: I18n.t('labels.wait') }, class: "btn btn-default zyxel_btn_back"%>
           <% end %>
         </div>
       </div>
