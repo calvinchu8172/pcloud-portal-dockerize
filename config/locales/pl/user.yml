@@ -27,6 +27,6 @@ pl:
       captcha: Kod obrazkowy
       terms:
         instruction: Rozumiem i zgadzam się z
-        instruction_2: warunkami użytkowania ZyXEL Cloud
-      edm: Tak, proszę o przesyłanie mi wiadomości na temat produktów i usług ZyXEL
+        instruction_2: warunkami użytkowania Zyxel Cloud
+      edm: Tak, proszę o przesyłanie mi wiadomości na temat produktów i usług Zyxel
         Cloud

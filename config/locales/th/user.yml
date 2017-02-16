@@ -27,5 +27,5 @@ th:
       captcha: Captcha
       terms:
         instruction: "ข้าพเจ้าเข้าใจและยอมรับ"
-        instruction_2: ZyXEL Cloud เงื่อนไขการใช้งาน
-      edm: "ใช่ กรุณาส่งอีเมลหาฉันเกี่ยวกับ ZyXEL Cloud ผลิตภัณฑ์และการบริการ"
+        instruction_2: Zyxel Cloud เงื่อนไขการใช้งาน
+      edm: "ใช่ กรุณาส่งอีเมลหาฉันเกี่ยวกับ Zyxel Cloud ผลิตภัณฑ์และการบริการ"

@@ -28,5 +28,5 @@ it:
       captcha: Captcha
       terms:
         instruction: Capisco e accetto le
-        instruction_2: condizioni d'uso di ZyXel Cloud
-      edm: Sì, inviatemi e-mail con informazioni sui prodotti e servizi ZyXEL Cloud
+        instruction_2: condizioni d'uso di Zyxel Cloud
+      edm: Sì, inviatemi e-mail con informazioni sui prodotti e servizi Zyxel Cloud

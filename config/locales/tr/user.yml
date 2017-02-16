@@ -26,6 +26,6 @@ tr:
       language: Dil
       captcha: Güvenlik Kodu
       terms:
-        instruction: ZyXEL Cloud Kullanım Hükümlerini
-        instruction_2: ZyXEL Cloud kabul ediyorum
-      edm: Evet, bana ZyXEL Cloud Ürünleri ve Hizmetleri konusunda e-postalar gönder
+        instruction: Zyxel Cloud Kullanım Hükümlerini
+        instruction_2: Zyxel Cloud kabul ediyorum
+      edm: Evet, bana Zyxel Cloud Ürünleri ve Hizmetleri konusunda e-postalar gönder
