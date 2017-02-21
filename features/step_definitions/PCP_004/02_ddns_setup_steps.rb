@@ -62,7 +62,7 @@ Then(/^the user should see "(.*?)" message on DDNS setup page$/) do |msg|
 end
 
 Then(/^the user should see success message on DDNS setup page$/) do
-	expect(page).to have_content('DDNS settings have been successfully.')
+	expect(page).to have_content('DDNS settings have been updated successfully.')
 	puts find('div.zyxel_content h2').text
 end
 
@@ -93,7 +93,8 @@ def submit_hostname(hostname)
 end
 
 def get_ddns_session(device_id)
-	redis = Redis.new
+	# redis = Redis.new
+	redis = Redis.new(:host => Settings.redis.web_host, :port => Settings.redis.port, :db => 0 )
 	@index = redis.GET "ddns:session:index"
 	DdnsSession.find(@index).session.all
 end

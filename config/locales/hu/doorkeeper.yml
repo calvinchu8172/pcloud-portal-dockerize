@@ -1,0 +1,125 @@
+---
+hu:
+  activerecord:
+    attributes:
+      doorkeeper:
+        application:
+          name: Név
+          redirect_uri: "Átirányítás URI"
+    errors:
+      models:
+        doorkeeper:
+          application:
+            attributes:
+              redirect_uri:
+                fragment_present: nem tartalmazhat egy töredék.
+                invalid_uri: kell lennie egy érvényes URI.
+                relative_uri: kell, hogy legyen egy abszolút URI.
+                secured_uri: kell lennie HTTPS.SSL URI.
+  doorkeeper:
+    applications:
+      confirmations:
+        destroy: biztos vagy ebben?
+      buttons:
+        edit: szerkesztése
+        destroy: Elpusztítani
+        submit: beküldése
+        cancel: Megszünteti
+        authorize: engedélyez
+      form:
+        error: Hoppá! Ellenőrizze az űrlap esetleges hibákért
+      help:
+        redirect_uri: Használja soronként egy URI
+        native_redirect_uri: A %{native_redirect_uri} helyi vizsgálatok
+        scopes: Külön körök szóközzel. Hagyja üresen az alapértelmezett hatókörét.
+      edit:
+        title: alkalmazás szerkesztése
+      index:
+        title: Az alkalmazások
+        new: "új alkalmazás"
+        name: Név
+        callback_url: visszahívási URL
+      new:
+        title: "új alkalmazás"
+      show:
+        title: 'Alkalmazás: %{name}'
+        application_id: alkalmazás Id
+        secret: Titok
+        scopes: Scope
+        callback_urls: Visszahívás urls
+        actions: Hozzászólások
+    authorizations:
+      buttons:
+        authorize: engedélyez
+        deny: Tagadni
+        back_to_your_application: Vissza az alkalmazás
+      error:
+        title: Hiba történt
+      new:
+        title: engedély szükséges
+        prompt: Engedélyezheti %{client_name} kezelhető fiókja?
+        able_to: Ez az alkalmazás képes lesz
+      show:
+        title: Megerősítő kód
+    authorized_applications:
+      confirmations:
+        revoke: biztos vagy ebben?
+      buttons:
+        revoke: visszavonja
+      index:
+        title: Az engedélyezett alkalmazások
+        application: Alkalmazás
+        created_at: létrehozott
+        date_format: "%Y-%m-%d %H:%M:%S"
+        no_application: You have no authorized application.
+    errors:
+      messages:
+        invalid_request: A kérelem hiányzik egy szükséges paraméter tartalmaz egy
+          nem támogatott paraméter értéke, vagy egyéb módon a formátuma.
+        invalid_redirect_uri: Az átirányítás uri benne nem érvényes.
+        unauthorized_client: Az ügyfél nem jogosult a kérés teljesítéséhez ezzel a
+          módszerrel.
+        access_denied: Az erőforrás-tulajdonos vagy engedély szerver elutasította
+          a kérelmet.
+        invalid_scope: A kért szolgáltatás érvénytelen, ismeretlen, vagy hibás.
+        server_error: Az engedély szerver váratlan hibát észlelt, ami megakadályozta,
+          hogy teljesíteni a kérést.
+        temporarily_unavailable: Az engedély szerver jelenleg nem tudja kezelni a
+          kérést miatt átmeneti túlterheltség vagy karbantartás a szerveren.
+        credential_flow_not_configured: Erőforrás Tulajdonosi jelszó bizonyítványok
+          áramlás miatt nem sikerült Doorkeeper.configure.resource_owner_from_credentials
+          hogy konfigurálva.
+        resource_owner_authenticator_not_configured: Erőforrás Képviselő találj miatt
+          meghiúsult Doorkeeper.configure.resource_owner_authenticator hogy unconfiged.
+        unsupported_response_type: Az engedély kiszolgáló nem támogatja ezt a választ
+          típus.
+        invalid_client: Az ügyfél hitelesítése sikertelen miatt ismeretlen ügyfél
+          nem ügyfélhitelesítés benne, vagy nem támogatott hitelesítési módszert.
+        invalid_grant: Az előírt engedély megadása érvénytelen, lejárt, visszavonták,
+          nem egyezik az átirányítás URI alkalmazott engedélyezési kérelem vagy adtak
+          ki, hogy egy másik ügyfél.
+        unsupported_grant_type: Az engedély megadása nem támogatott az engedély szerver.
+        invalid_resource_owner: A megadott erőforrás tulajdonosa hitelesítő nem érvényes,
+          vagy erőforrás tulajdonosa nem található
+        invalid_token:
+          revoked: A hozzáférési token visszavonták
+          expired: A hozzáférési token lejárt
+          unknown: A hozzáférési token érvénytelen
+    flash:
+      applications:
+        create:
+          notice: Alkalmazás létre.
+        destroy:
+          notice: Alkalmazás hagyni.
+        update:
+          notice: Az alkalmazás frissítése.
+      authorized_applications:
+        destroy:
+          notice: Alkalmazás visszavonták.
+    layouts:
+      admin:
+        nav:
+          oauth2_provider: OAuth2 Szolgáltató
+          applications: alkalmazások
+      application:
+        title: OAuth szükséges engedélyt

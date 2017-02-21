@@ -1,0 +1,126 @@
+---
+pl:
+  activerecord:
+    attributes:
+      doorkeeper:
+        application:
+          name: Nazwa
+          redirect_uri: Przekierowanie URI
+    errors:
+      models:
+        doorkeeper:
+          application:
+            attributes:
+              redirect_uri:
+                fragment_present: Nie może zawierać fragment.
+                invalid_uri: musi być poprawnym URI.
+                relative_uri: musi być absolutnym URI.
+                secured_uri: musi być HTTPS.SSL URI.
+  doorkeeper:
+    applications:
+      confirmations:
+        destroy: Jesteś pewny?
+      buttons:
+        edit: Edytować
+        destroy: Zniszczyć
+        submit: Zatwierdź
+        cancel: Anuluj
+        authorize: Autoryzować
+      form:
+        error: Ups! Sprawdź swoją formę za możliwe błędy
+      help:
+        redirect_uri: Użyj jednej linijki na URI
+        native_redirect_uri: Użyj %{native_redirect_uri} dla lokalnych testów
+        scopes: Oddzielne zakresy ze spacjami. Pozostaw puste, aby korzystać z domyślnych
+          zakresów.
+      edit:
+        title: Edycja aplikacji
+      index:
+        title: Twoje aplikacje
+        new: Nowa aplikacja
+        name: Nazwa
+        callback_url: Callback URL
+      new:
+        title: Nowa aplikacja
+      show:
+        title: 'Nazwa aplikacji: %{name}'
+        application_id: Identyfikator Aplikacji
+        secret: Sekret
+        scopes: zakresy
+        callback_urls: zwrotne URL
+        actions: Akcje
+    authorizations:
+      buttons:
+        authorize: Autoryzować
+        deny: Zaprzeczać
+        back_to_your_application: Powrót do aplikacji
+      error:
+        title: Wystąpił błąd
+      new:
+        title: Wymagana Autoryzacja
+        prompt: Autoryzacja %{client_name} korzystać z konta?
+        able_to: Ta aplikacja będzie mógł
+      show:
+        title: Kod autoryzacji
+    authorized_applications:
+      confirmations:
+        revoke: Jesteś pewny?
+      buttons:
+        revoke: Unieważnić
+      index:
+        title: Twoje autoryzowane aplikacje
+        application: Podanie
+        created_at: Utworzono
+        date_format: "%Y-%m-%d %H:%M:%S"
+        no_application: You have no authorized application.
+    errors:
+      messages:
+        invalid_request: We wniosku brakuje wymaganego parametru, zawiera nieobsługiwany
+          wartość parametru, lub w inny sposób zniekształcone.
+        invalid_redirect_uri: Przekierowanie uri wliczone jest nieprawidłowy.
+        unauthorized_client: Klient nie jest uprawniony do wykonywania tego żądania
+          przy użyciu tej metody.
+        access_denied: Właściciel zasobu lub zezwolenie na serwer odrzucił prośbę.
+        invalid_scope: "Żądany zakres jest nieprawidłowy, nieznane lub zniekształcone."
+        server_error: Serwer autoryzacji napotkał nieoczekiwany warunek, który uniemożliwia
+          jej wypełnianie wniosku.
+        temporarily_unavailable: Serwer autoryzacji jest obecnie w stanie obsłużyć
+          żądania z powodu czasowego przeciążenia lub konserwacji serwera.
+        credential_flow_not_configured: Zasób Hasło właściciela Poświadczenia przepływu
+          powiodło się z powodu Doorkeeper.configure.resource_owner_from_credentials
+          jest skonfigurowany.
+        resource_owner_authenticator_not_configured: Zasób Właściciel znaleźć powiodło
+          się z powodu Doorkeeper.configure.resource_owner_authenticator będąc unconfiged.
+        unsupported_response_type: Serwer autoryzacji nie obsługuje tego typu reakcji.
+        invalid_client: Uwierzytelnienie klienta nie powiodła się z powodu nieznanego
+          klienta, bez uwierzytelniania klienta zawarte lub nieobsługiwanych metod
+          uwierzytelniania.
+        invalid_grant: Dostarczony udzielić zezwolenia jest nieważny, wygasły, został
+          odwołany, nie zgadza się na przekierowanie URI używany w żądaniu autoryzacji,
+          lub został wydany innemu klientowi.
+        unsupported_grant_type: Rodzaj udzielić zezwolenia nie jest obsługiwana przez
+          serwer autoryzacji.
+        invalid_resource_owner: Dostarczone poświadczenia właściciel zasobu nie są
+          ważne, lub właściciel zasobu nie można znaleźć
+        invalid_token:
+          revoked: Token dostępu został odwołany
+          expired: Token dostępu upłynął
+          unknown: "Żeton dostępu jest nieprawidłowa"
+    flash:
+      applications:
+        create:
+          notice: tworzonej aplikacji.
+        destroy:
+          notice: Zastosowanie usunięte.
+        update:
+          notice: Zaktualizowana aplikacja.
+      authorized_applications:
+        destroy:
+          notice: Zastosowanie odwołane.
+    layouts:
+      admin:
+        nav:
+          oauth2_provider: OAuth2 Provider
+          applications: Aplikacje
+      application:
+        title: wymagane zezwolenie OAuth

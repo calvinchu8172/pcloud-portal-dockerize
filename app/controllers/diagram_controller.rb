@@ -8,9 +8,10 @@ class DiagramController < ApplicationController
     # Input
     # --------------------
     @period_scale      = params[:period_scale] ? (params[:period_scale].to_i) : 3
-    @graph_data_number = params[:graph_data_number] ? params[:graph_data_number] : "1_1"
-    start_date         = Date.parse("2014-11-01") # Date.parse(params[:start])
-    end_date           = Date.today
+    @graph_data_number = params[:graph_data_number] ? params[:graph_data_number] : "0"
+    start_date         = Date.parse("2014-10-01") # Date.parse(params[:start])
+    # end_date           = Date.today
+    end_date           = DateTime.now
     @url_prefix        = "/diagram?graph_data_number=#{@graph_data_number}"
 
     # --------------------
@@ -22,13 +23,13 @@ class DiagramController < ApplicationController
       period = "date(created_at)"
       @scale  = "日"
     when 2
-      period = "week(created_at)"
+      period = "week(created_at), year(created_at)"
       @scale  = "週"
     when 3
-      period = "month(created_at)"
+      period = "month(created_at), year(created_at)"
       @scale  = "月"
     else
-      period = "month(created_at)" # In case data amount is oversized.
+      period = "month(created_at), year(created_at)" # In case data amount is oversized.
       @scale  = "月"
     end
 
@@ -47,7 +48,7 @@ class DiagramController < ApplicationController
       @axis_type = 'date'
     when "1_4"
       graph_data = graph_1_4(period, start_date, end_date)
-      @axis_type = 'date'
+      @axis_type = 'individual_date'
     when "2_1"
       graph_data = graph_2_1(period, start_date, end_date)
       @axis_type = 'date'
@@ -59,16 +60,17 @@ class DiagramController < ApplicationController
       @axis_type = 'date'
     when "3_1"
       graph_data = graph_3_1(period, start_date, end_date)
+      @axis_type = 'individual_date'
     when "3_3"
       graph_data = graph_3_3(period, start_date, end_date)
       @axis_type = 'model'
-      @y2_axis_show       = true
-      @y2_axis_label_name = graph_data[1][1][0]
+      # @y2_axis_show       = true
+      # @y2_axis_label_name = graph_data[1][1][0]
     when "5_1"
       graph_data = graph_5_1(period, start_date, end_date)
       @axis_type = 'model'
-      @y2_axis_show       = true
-      @y2_axis_label_name = graph_data[1][2][0]
+      # @y2_axis_show       = true
+      # @y2_axis_label_name = graph_data[1][2][0]
     when "5_2"
       graph_data = graph_5_2(period, start_date, end_date)
       @axis_type = 'model'
@@ -95,8 +97,9 @@ class DiagramController < ApplicationController
     # --------------------
     # Logic for ploting
     # --------------------
-    if @axis_type == 'date'
-      @graph_type = 'area'
+    if @axis_type == 'date' || @axis_type == 'individual_date'
+
+      @graph_type = (@axis_type == 'date') ? 'area' : 'line'
 
       # Calculate date difference
       case @period_scale
@@ -130,7 +133,7 @@ class DiagramController < ApplicationController
         when 2
           # Fill week
           start_date = start_date.next_week if i > 0
-          date_string = start_date.strftime("%Y-W%V")
+          date_string = "#{start_date.strftime("%Y-W%V(%m/%d")}~#{(start_date + 6).strftime("%m/%d)")}"
         when 3
           # Fill month
           start_date = start_date.next_month if i > 0
@@ -171,13 +174,18 @@ class DiagramController < ApplicationController
             end
           end
 
-          # Accumulation
-          unless value_array[j-1].blank?
-            accumulation[j-1] += value_array[j-1]
-            @columns[j] << accumulation[j-1]
-          else
-            @columns[j] << accumulation[j-1]
+          if @axis_type == 'date'
+            # Accumulation
+            unless value_array[j-1].blank?
+              accumulation[j-1] += value_array[j-1]
+              @columns[j] << accumulation[j-1]
+            else
+              @columns[j] << accumulation[j-1]
+            end  
+          elsif @axis_type == 'individual_date'
+              @columns[j] << value_array[j-1]
           end
+
         end
       end
 

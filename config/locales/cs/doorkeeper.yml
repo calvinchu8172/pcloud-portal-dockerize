@@ -1,0 +1,121 @@
+---
+cs:
+  activerecord:
+    attributes:
+      doorkeeper:
+        application:
+          name: Jméno
+          redirect_uri: přesměrování URI
+    errors:
+      models:
+        doorkeeper:
+          application:
+            attributes:
+              redirect_uri:
+                fragment_present: nemůže obsahovat fragment.
+                invalid_uri: musí být platný URI.
+                relative_uri: musí být absolutní URI.
+                secured_uri: Musí se jednat o HTTPS.SSL URI.
+  doorkeeper:
+    applications:
+      confirmations:
+        destroy: Jsi si jistá?
+      buttons:
+        edit: editovat
+        destroy: Zničit
+        submit: Předložit
+        cancel: Zrušit
+        authorize: Povolit
+      form:
+        error: Jejda! Zkontrolujte, zda vaše formuláře za případné chyby
+      help:
+        redirect_uri: Použijte jeden řádek URI
+        native_redirect_uri: Použijte %{native_redirect_uri} pro místní testy
+        scopes: Samostatné obory s mezerami. Ponechte prázdné použít výchozí obory.
+      edit:
+        title: "Úprava aplikací"
+      index:
+        title: Vaše aplikace
+        new: Nová aplikace
+        name: Jméno
+        callback_url: callback URL
+      new:
+        title: Nová aplikace
+      show:
+        title: 'Použití: %{name}'
+        application_id: ID aplikace
+        secret: Tajný
+        scopes: scopes
+        callback_urls: callback urls
+        actions: Akce
+    authorizations:
+      buttons:
+        authorize: Povolit
+        deny: Odmítnout
+        back_to_your_application: Zpět do vaší aplikace
+      error:
+        title: Došlo k chybě
+      new:
+        title: Je potřebná autorizace
+        prompt: Autorizovat %{client_name} používat svůj účet?
+        able_to: Tato aplikace bude moci
+      show:
+        title: Autorizační kód
+    authorized_applications:
+      confirmations:
+        revoke: Jsi si jistá?
+      buttons:
+        revoke: Zrušit
+      index:
+        title: Váš autorizovaný aplikací
+        application: Aplikace
+        created_at: Na vytvořil
+        date_format: "%Y-%m-%d %H:%M:%S"
+        no_application: You have no authorized application.
+    errors:
+      messages:
+        invalid_request: Požadavek chybí požadovaný parametr, obsahuje nepodporovaný
+          hodnotu parametru, nebo je jinak poškozen.
+        invalid_redirect_uri: Přesměrování URI součástí není platný.
+        unauthorized_client: Klient není oprávněn provést tento požadavek pomocí této
+          metody.
+        access_denied: Tento server majitel zdrojů nebo autorizace odepřena žádost.
+        invalid_scope: Požadovaný rozsah je neplatná, neznámé nebo chybně.
+        server_error: Autorizačním serverem došlo k neočekávané podmínku, která je
+          zabráněno splnění požadavku.
+        temporarily_unavailable: Server povolení je v současné době schopen zpracovat
+          požadavek kvůli dočasnému přetížení nebo údržbě serveru.
+        credential_flow_not_configured: Zdroj hesla vlastníka Pověření tok se nezdařilo
+          kvůli Doorkeeper.configure.resource_owner_from_credentials dekonfigurovaném.
+        resource_owner_authenticator_not_configured: Zdroj Majitel naleznou selhalo
+          kvůli Doorkeeper.configure.resource_owner_authenticator bytí unconfiged.
+        unsupported_response_type: Server povolení nepodporuje tento typ reakce.
+        invalid_client: autentizace klienta se nezdařila kvůli neznámému klientovi,
+          bez ověření klienta zařazeny, nebo nepodporované metodu ověřování.
+        invalid_grant: Poskytnutý grant povolení je neplatné, vypršel, zrušit, neodpovídá
+          přesměrování URI použitý v žádosti o povolení, nebo byla vydána jinému klientovi.
+        unsupported_grant_type: Typ udělit povolení není podporován serverem povolení.
+        invalid_resource_owner: Poskytnuté pověření majitele zdroje nejsou platné,
+          nebo vlastník zdroje nelze nalézt
+        invalid_token:
+          revoked: Token přístupu bylo zrušeno
+          expired: Token přístupu vypršela
+          unknown: Token přístupu je neplatná
+    flash:
+      applications:
+        create:
+          notice: Aplikace vytvořená.
+        destroy:
+          notice: Aplikace smazán.
+        update:
+          notice: Aplikace aktualizována.
+      authorized_applications:
+        destroy:
+          notice: Aplikace odvolán.
+    layouts:
+      admin:
+        nav:
+          oauth2_provider: OAuth2 Provider
+          applications: Aplikace
+      application:
+        title: vyžadováno povolení OAuth

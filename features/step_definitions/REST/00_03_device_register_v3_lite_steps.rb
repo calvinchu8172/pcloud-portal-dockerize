@@ -1,20 +1,23 @@
-When(/^the device send information to REST API \/d\/3\/register\/lite$/) do
+
+# ----------------------- #
+# -------- steps -------- #
+# ----------------------- #
+
+When(/^the device send "(.*?)" request to REST API \/d\/3\/register\/lite$/) do | action |
+  @device_given_attrs["reset"] = 1 if action == "reset"
+  if @device_given_attrs["registered"] == true
+    create_device_pairing(@registered_device)
+  end
+
   path = '//' + Settings.environments.api_domain + '/d/3/register/lite'
   signature = create_signature(
     @certificate.serial,
-    @device["mac_address"],
-    @device["serial_number"],
-    @device["model_name"],
-    @device["firmware_version"])
+    @device_given_attrs["mac_address"],
+    @device_given_attrs["serial_number"],
+    @device_given_attrs["model_name"],
+    @device_given_attrs["firmware_version"])
 
-  @device["signature"] = signature unless @invalid_signature
-  @device["certificate_serial"] = @certificate.serial
-  post path, @device
-
-end
-
-When(/^the device send reset request to REST API \/d\/3\/register\/lite$/) do
-  create_rest_pairing(@registered_device)
-  @device["reset"] = 1
-  steps %{ When the device send information to REST API /d/3/register/lite}
+  @device_given_attrs["signature"] = signature unless @invalid_signature
+  @device_given_attrs["certificate_serial"] = @certificate.serial
+  post path, @device_given_attrs
 end

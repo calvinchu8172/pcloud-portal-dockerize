@@ -114,12 +114,12 @@
   &.i18n_fix {
     display: table;
     margin: 30px auto;
-    width:315px;
+    width: 315px;
     border-spacing: 6px; // For self button's margin value
-    .zyxel_btn_ok, .zyxel_resend_btn, .zyxel_btn_back, .zyxel_btn_submit{
+    .zyxel_btn_ok, .zyxel_resend_btn, .zyxel_btn_back, .zyxel_btn_submit, .zyxel_btn_change_email,{
       display: table-cell;
       padding: 11px 0 13px 0;
-      width:45%;
+      // width: 45%;
       min-width: 140px;
       vertical-align: middle;
     }
@@ -137,6 +137,20 @@
     text-decoration:none;
     color: #565656;
     background-color:#CCCBCB;
+  }
+}
+
+.zyxel_btn_change_email {
+  background-color: #FFF;
+  color: #337ab7;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  @include border-radius(5px);
+  @include transition(background-color, .3s);
+  &:hover {
+    text-decoration:underline;
+    color: #337ab7;
   }
 }
 
@@ -218,7 +232,8 @@
   padding:30px 0 10px 0;
 }
 .zyxel_btn_sns {
-  width: 48%;
+  // width: 48%;
+  width: 100%; // 20160328因為登入頁採用RWD，因此facebook與google登入按鈕，寬度從48%改成100%，48%會走樣
   color: $zyxel_white;
   border: none;
   outline: none;
