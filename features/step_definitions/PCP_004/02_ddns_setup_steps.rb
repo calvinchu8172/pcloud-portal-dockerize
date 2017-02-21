@@ -62,7 +62,7 @@ Then(/^the user should see "(.*?)" message on DDNS setup page$/) do |msg|
 end
 
 Then(/^the user should see success message on DDNS setup page$/) do
-	expect(page).to have_content('DDNS settings have been successfully.')
+	expect(page).to have_content('DDNS settings have been updated successfully.')
 	puts find('div.zyxel_content h2').text
 end
 

@@ -23,8 +23,9 @@ Given(/^device has been not used more than (\d+) days$/) do |day_num|
 end
 
 When(/^ddns expire scan$/) do
-  Services::DdnsExpire.notice
-  Services::DdnsExpire.delete
+  path = '//' + Settings.environments.api_domain + '/schedule/1/ddns/expirations'
+  get path
+  delete path
 end
 
 Then(/^user should receive a warning email$/) do

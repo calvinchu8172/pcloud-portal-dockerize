@@ -25,6 +25,7 @@ Capybara.server_port = 3000
 Capybara.always_include_port = true
 Capybara.default_host = Settings.environments.portal_domain
 Capybara.app_host = 'http://' + Settings.environments.portal_domain
+# Capybara.ignore_hidden_elements = false
 
 Capybara::Webkit.configure do |config|
   config.block_unknown_urls
@@ -50,9 +51,28 @@ ActionController::Base.allow_rescue = false
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
 begin
   DatabaseCleaner.strategy = :transaction
+  DatabaseCleaner[:active_record,{:model => XmppUser}].strategy = :transaction
+
+  Before do
+    DatabaseCleaner.start
+    DatabaseCleaner[:active_record,{:model => XmppUser}].start
+    @redis = Redis.new(:host => Settings.redis.web_host, :port => Settings.redis.port)
+  end
+
+  After do
+    DatabaseCleaner.clean
+    DatabaseCleaner[:active_record,{:model => XmppUser}].clean
+  end
+
 rescue NameError
   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
 end
+
+# begin
+#   DatabaseCleaner.strategy = :transaction
+# rescue NameError
+#   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
+# end
 
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:

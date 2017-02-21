@@ -1,0 +1,123 @@
+---
+tr:
+  activerecord:
+    attributes:
+      doorkeeper:
+        application:
+          name: isim
+          redirect_uri: URI yönlendir
+    errors:
+      models:
+        doorkeeper:
+          application:
+            attributes:
+              redirect_uri:
+                fragment_present: Bir parçasını içeremez.
+                invalid_uri: Geçerli bir URI olmalıdır.
+                relative_uri: mutlak bir URI olmalıdır.
+                secured_uri: Bir HTTPS.SSL URI olmalıdır.
+  doorkeeper:
+    applications:
+      confirmations:
+        destroy: Emin misiniz?
+      buttons:
+        edit: Düzenleme
+        destroy: yıkmak
+        submit: Gönder
+        cancel: "İptal etmek"
+        authorize: Yetki vermek
+      form:
+        error: Tüh! Olası hatalar için formunuzu kontrol edin
+      help:
+        redirect_uri: URI başına bir satırını kullanın
+        native_redirect_uri: Yerel testler için %{native_redirect_uri} kullanın
+        scopes: boşluk ayrı kapsamları. Varsayılan kapsamları kullanmak için boş bırakın.
+      edit:
+        title: Düzenleme uygulaması
+      index:
+        title: sizin uygulamaları
+        new: Yeni uygulama
+        name: isim
+        callback_url: Geri arama URL
+      new:
+        title: Yeni uygulama
+      show:
+        title: Uygulama Adı %{name}
+        application_id: Uygulama Kimliği
+        secret: Gizli
+        scopes: kapsamları
+        callback_urls: Geri arama URL'ler
+        actions: Eylemler
+    authorizations:
+      buttons:
+        authorize: Yetki vermek
+        deny: Reddetmek
+        back_to_your_application: Geri uygulamanıza
+      error:
+        title: bir hata oluştu
+      new:
+        title: "İzin gerekmekte"
+        prompt: "%{client_name} hesabınızı kullanmasına izin?"
+        able_to: Bu uygulama, mümkün olacaktır
+      show:
+        title: Yetki Kodu
+    authorized_applications:
+      confirmations:
+        revoke: Emin misiniz?
+      buttons:
+        revoke: iptal etmek
+      index:
+        title: Yetkili uygulamalar
+        application: Uygulama
+        created_at: At düzenlendi
+        date_format: "%Y-%m-%d %H:%M:%S"
+        no_application: You have no authorized application.
+    errors:
+      messages:
+        invalid_request: gerekli bir parametre eksik istek, desteklenmeyen bir parametre
+          değeri içerir, ya da başka bozuk.
+        invalid_redirect_uri: uri dahil yönlendirme geçerli değil.
+        unauthorized_client: "İstemci, bu yöntemi kullanarak bu isteği gerçekleştirmek
+          için yetkisi yok."
+        access_denied: kaynak sahibi veya yetki sunucusu isteğini reddetti.
+        invalid_scope: "İstenen kapsam, geçersiz bilinmeyen, ya da bozuk."
+        server_error: yetkilendirme sunucusu isteği yerine getirmesini engelledi beklenmeyen
+          bir durumla karşılaştı.
+        temporarily_unavailable: yetkilendirme sunucusu nedeniyle sunucunun geçici
+          aşırı yüklenme veya bakım için şu anda isteği işleyemiyor.
+        credential_flow_not_configured: Kaynak Sahibi Şifre Kimlik Doorkeeper.configure.resource_owner_from_credentials
+          yapılandırılmamış olması nedeniyle başarısız akış.
+        resource_owner_authenticator_not_configured: Kaynak Sahibi Doorkeeper.configure.resource_owner_authenticator
+          unconfiged olması nedeniyle başarısız oldu bulmak.
+        unsupported_response_type: yetkilendirme sunucusu bu yanıtı türünü desteklemiyor.
+        invalid_client: Müşteri kimlik nedeniyle bilinmeyen istemci dahil hiçbir istemci
+          kimlik, ya da desteklenmeyen bir kimlik doğrulama yöntemi başarısız oldu.
+        invalid_grant: "öngörülen yetkinin hibe URI yetkilendirme isteği kullanılan,
+          ya da başka bir müşteriye verildiği yönlendirmeyi eşleşmiyor, iptal edilmiş,
+          süresi dolmuş, geçersiz."
+        unsupported_grant_type: yetki hibe tipi yetkilendirme sunucusu tarafından
+          desteklenmiyor.
+        invalid_resource_owner: sağlanan kaynak sahibi kimlik bilgileri geçerli değil,
+          ya da kaynak sahibi bulunamıyor
+        invalid_token:
+          revoked: erişim belirteci iptal edildi
+          expired: erişim belirteci süresi
+          unknown: erişim belirteci geçersiz
+    flash:
+      applications:
+        create:
+          notice: Uygulama yarattı.
+        destroy:
+          notice: Uygulama silindi.
+        update:
+          notice: Uygulama güncellendi.
+      authorized_applications:
+        destroy:
+          notice: Uygulama iptal.
+    layouts:
+      admin:
+        nav:
+          oauth2_provider: OAuth2 Sağlayıcı
+          applications: Uygulamalar
+      application:
+        title: OAuth izin gereklidir

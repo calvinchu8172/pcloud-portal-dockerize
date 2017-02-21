@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include Guards::AttrEncryptor
+  include UserOmniauth
   enum gender: {male: true, female: false}
   before_create :add_default_display_name
   has_many :identity
@@ -7,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :devices, :through => :pairings
   has_many :invitations, :through => :devices
   has_many :accepted_users
+  has_many :vendor_devices
 
 
   VALIDATE_MOBILE_REGEX = /\A[0-9#\+\(\)-]*\z/
@@ -68,6 +70,10 @@ class User < ActiveRecord::Base
 
   def confirmation_valid?
     Time.now.to_i < confirmation_expire_time.to_i
+  end
+
+  def expired_days
+    (Time.now - self.created_at).to_i.fdiv(86400).round(2)
   end
 
   private

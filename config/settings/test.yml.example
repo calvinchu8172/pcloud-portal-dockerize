@@ -41,6 +41,9 @@ environments:
       secret_access_key:
       region: 'us-east-1'
   ddns: pcloud.ecoworkinc.com
+  upnp:
+    random_port_max: '10000'
+    random_port_min: '6000'
   cdn: 'https://d3k0gq7ryrjfe4.cloudfront.net'
   zones_info:
     id: 'Z23KWXIJBQNA7O'
@@ -60,10 +63,10 @@ environments:
     - services
   public_key:
 oauth:
-  facebook_app_id: 678292992243317
-  facebook_secret: 386ec08a3d700466bac2c66641c71e4b
-  google_app_id: 14580324123-25ourkvv3ppvh4c1uph5gacjj6lq7q51.apps.googleusercontent.com
-  google_secret: XXG2i7MwFpRvOn6hd4gg9nWv
+  facebook_app_id: 897809603581013
+  facebook_secret: fe942ea4847d9a3e6c5ada6d37ecbef9
+  google_app_id: 473860103111-i1gqjjk57evl10r2i1iqvkpohkqssktp.apps.googleusercontent.com
+  google_secret: s-rA4uAtd5OPg6BLKxT0yU7b
 recaptcha:
   config:
     public_key: '6LelPvUSAAAAAHQP8AccRDnMO0ETmgmtY-okFr95'
@@ -72,3 +75,15 @@ redis:
   web_host: 'redis'
   xmpp_host: 'redis'
   port: 6379
+oauth_applications:
+  account: 'admin'
+  password: 'ecowork'
+vendors:
+  data_safe_period: 10 # minutes
+  asi:
+    vpcName: 'ZYX'
+    host: 'http://asicloud-beta.aethersi.com:10980'
+    account: 'zyxoperator'
+    password: 'zyxoperator'
+geoip:
+  db_path: "db/geoip/GeoIP.dat"

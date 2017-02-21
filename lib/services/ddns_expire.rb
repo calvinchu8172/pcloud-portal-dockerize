@@ -9,7 +9,7 @@ module Services
     def self.notice
       current_time = Time.now.to_i
 
-      warning_ddns = Ddns.where(status: [nil, 0])
+      warning_ddns = Ddns.where(status: [nil, 0]) # status = nil or 0, user of the ddns has not yet been noticed
       warning_device_account = Array.new
       warning_ddns.each do |ddns|
         warning_device_account << 'd' + ddns.device.mac_address.gsub(':', '-') + '-' + ddns.device.serial_number.gsub(/([^\w])/, '-')
@@ -23,6 +23,7 @@ module Services
         end
       end
 
+      # 取交集 ( 1. xmpp 已經超過 60 天未上線 2. 從未被提醒過 )
       intersection_account = warning_device_account & candidate_device_account
 
       intersection_account_mac_address_and_serial_number = Array.new
