@@ -134,14 +134,15 @@ Given(/^the user have a paired device$/) do
   @pairing = TestingHelper.create_pairing(@user.id)
 end
 
-When(/^the user's session is expired$/) do 
+When(/^the user's session is expired$/) do
   # the "logout" method is a method of Warden::Test::Helpers,
   # about "logout" method please check https://github.com/hassox/warden/wiki/Testing,
   logout
 end
 
 When(/^the user want to click link without cancel$/) do
-  find("h1.header_h1_rwd > a").click
+  # find("h1.header_h1_rwd > a").click
+  find("div.header_h1_rwd_left > a").click
   find("a.member").click
   find("a.sign_out").click
   find("a.btn_tab_color1").click

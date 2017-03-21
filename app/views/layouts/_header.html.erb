@@ -1,9 +1,27 @@
-<div class="header">
+<div class="pre_header">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="header_h1_rwd_left">
+        <%#= link_to_unless( in_oauth_flow?, image_tag("logo.png", width: "118", height: "60"), "/" ) %>
+        <%= link_to_unless( in_oauth_flow?, image_tag("zyxel-logo-2.png", width: "118", height: "26"), "/" ) %>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="header_h1_rwd_right">
+        <%= link_to_unless( in_oauth_flow?, image_tag("myzyxelcloud-logo.png"), "/" ) %>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="header_devider">
+
+<div class="rwd_header">
   <%# LOGO %>
 
-  <h1 class="header_h1_rwd">
-    <%= link_to_unless( in_oauth_flow?, image_tag("logo.png", width: "118", height: "60"), "/" ) %> 
-  </h1>
+  <!-- <h1 class="header_h1_rwd"> -->
+    <%#= link_to_unless( in_oauth_flow?, image_tag("logo.png", width: "118", height: "60"), "/" ) %>
+    <%#= link_to_unless( in_oauth_flow?, image_tag("zyxel-logo.png", width: "118", height: "26"), "/" ) %>
+  <!-- </h1> -->
 
   <ul class="nav nav-pills nav_zyxel nav_zyxel_rwd">
     <%# Display member link when user signed in %>
