@@ -34,4 +34,3 @@ cucumber:
       - doc
   only:
     - develop
-    - feature/20170320-1-change-navbar-brand
