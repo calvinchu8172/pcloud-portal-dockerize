@@ -4,7 +4,7 @@ Feature: [REST_01_02] Register with E-mail account
     Given an existing certificate and RSA key
 
   Scenario: [REST_01_02_01]
-    register
+    register with valid informations
      When client send a POST request to /user/1/register with:
       | id              | acceptance@ecoworkinc.com    |
       | password        | secret123                    |
@@ -64,3 +64,32 @@ Feature: [REST_01_02] Register with E-mail account
       And the JSON response should include error code: "101"
       And the JSON response should include description: "Invalid signature"
       And Email deliveries should be 0
+
+  Scenario: [REST_01_02_06]
+    register with valid informations and without Accept-Language Header
+     When client send a POST request to /user/1/register with:
+      | id              | acceptance@ecoworkinc.com    |
+      | password        | secret123                    |
+      | signature       | VALID SIGNATURE              |
+     Then the response status should be "200"
+      And the JSON response should include:
+      """
+      ["user_id", "account_token", "authentication_token", "timeout", "confirmed", "registered_at", "bot_list", "stun_ip_addresses", "xmpp_account", "xmpp_ip_addresses"]
+      """
+      And Email deliveries should be 1
+      And Portal's language should be changed to default locale
+
+  Scenario: [REST_01_02_07]
+    register with valid informations and unavailable language
+     When client send a POST request to /user/1/register with:
+      | id              | acceptance@ecoworkinc.com    |
+      | password        | secret123                    |
+      | signature       | VALID SIGNATURE              |
+      | Accept-Language | unavailable_lang             |
+     Then the response status should be "200"
+      And the JSON response should include:
+      """
+      ["user_id", "account_token", "authentication_token", "timeout", "confirmed", "registered_at", "bot_list", "stun_ip_addresses", "xmpp_account", "xmpp_ip_addresses"]
+      """
+      And Email deliveries should be 1
+      And Portal's language should be changed to default locale
