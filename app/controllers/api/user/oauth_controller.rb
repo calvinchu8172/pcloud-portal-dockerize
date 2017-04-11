@@ -7,7 +7,7 @@
 # is_portal_user? : 為portal第一階段未綁定密碼
 class Api::User::OauthController < Api::Base
   before_action :adjust_provider, only: [:mobile_checkin, :mobile_register]
-  before_filter :set_available_locale, only: :mobile_register
+  before_action :set_available_locale, only: :mobile_register
 
   # GET /user/1/checkin/:oauth_provider
   def mobile_checkin

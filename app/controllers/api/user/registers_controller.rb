@@ -1,5 +1,5 @@
 class Api::User::RegistersController < Api::Base
-  before_filter :set_available_locale, only: :create
+  before_action :set_available_locale, only: :create
 
   def create
     # 當使用者在 Portal 用 OAuth 註冊過了，再到 APP 上用 Email 註冊時，由於 Portal 的 OAuth 註冊不會設定密碼，
