@@ -39,7 +39,8 @@ Feature: [PCP_001_04] OAuth-Facebook
 	   Then the user will redirect to Terms of Use page
 	    And the user should see text/message "Terms of Use" on the page
      When the user click Terms of Use page
-     Then the user will redirect to editing password page
+     # Then the user will redirect to editing password page
+     Then user will login and redirect to dashboard
 
 
   Scenario:  [PCP_001_04_06]

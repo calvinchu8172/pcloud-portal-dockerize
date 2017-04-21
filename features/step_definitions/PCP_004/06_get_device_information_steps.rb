@@ -41,7 +41,8 @@ When(/^user click on down arrow button and then click on another down arrow butt
   another_device_id = Device.last.encoded_id
 
   within(:xpath, "//tr[contains(@ng-init, '#{another_device_id}')]") do
-    find("a").click
+    # find("a").click
+    find("a").trigger("click")
   end
 
   wait_server_response(1)
