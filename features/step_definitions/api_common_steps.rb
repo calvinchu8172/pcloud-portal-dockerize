@@ -61,7 +61,16 @@ end
 
 Then(/^the JSON response should include error code: "(.*?)"$/) do |error_code|
   body = JSON.parse(last_response.body)
-  expect(body["error_code"]).to eq(error_code)
+  if body["error_code"]
+    expect(body["error_code"]).to eq(error_code)
+  else
+    expect(body["code"]).to eq(error_code)
+  end
+end
+
+Then(/^the JSON response should include error message: "(.*?)"$/) do |message|
+  body = JSON.parse(last_response.body)
+  expect(body["message"]).to eq(message)
 end
 
 Then(/^the JSON response should include description: "(.*?)"$/) do |description|
