@@ -142,7 +142,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'recaptcha', '~> 0.3.6', require: 'recaptcha/rails'
 gem 'paperclip', github: 'thoughtbot/paperclip'
-gem 'rmagick'
+# gem 'rmagick'
 gem 'aws-sdk', '~> 1'
 gem 'rails_admin', group: [:test, :development, :staging]
 gem 'rest-client'
