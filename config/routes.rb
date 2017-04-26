@@ -119,6 +119,7 @@ Rails.application.routes.draw do
 
     scope :path => '/d/1/', :module => "api/devices/v1" do
       post 'register', to: 'register#create', format: 'json'
+      post 'pairing', to: 'pairing#create', format: 'json'
     end
 
     scope :path => '/d/2/', :module => "api/devices/v2" do

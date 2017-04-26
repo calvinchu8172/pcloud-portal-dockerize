@@ -14,7 +14,9 @@ When(/^client send a POST request to \/user\/1\/register with:$/) do |table|
 
   signature = "" if data["signature"].include?("INVALID")
 
-  header 'Accept-Language', data["Accept-Language"]
+  unless data["Accept-Language"].blank?
+    header 'Accept-Language', data["Accept-Language"]
+  end
 
   post path, {
     id: id,
@@ -28,4 +30,10 @@ Then(/^Portal's language should be changed to "(.*?)"$/) do |language|
   user = User.find_by_email(@email)
   expect(I18n.locale).to eq(language.to_sym)
   expect(user.language).to eq(language)
+end
+
+Then(/^Portal's language should be changed to default locale$/) do
+  user = User.find_by_email(@email)
+  expect(I18n.locale).to eq(I18n.default_locale)
+  expect(user.language).to eq(I18n.default_locale.to_s)
 end

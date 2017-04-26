@@ -1,4 +1,5 @@
 class Api::User::RegistersController < Api::Base
+  before_action :set_available_locale, only: :create
 
   def create
     # 當使用者在 Portal 用 OAuth 註冊過了，再到 APP 上用 Email 註冊時，由於 Portal 的 OAuth 註冊不會設定密碼，
@@ -9,14 +10,7 @@ class Api::User::RegistersController < Api::Base
     register = Api::User::Register.new valid_params.except(:id)
     register.email = valid_params[:id]
     register.agreement = "1"
-
-    #假如App打api的header有帶Accept-Language的話，就寫入Portal的語系與user的language欄位，與修改瀏覽器的cookies
-    #若app註冊時沒有帶accept-language，沒有帶則default的字串會大於5（例如最長的zh-TW字元大小為5），則user寫入內定值'en'
-    if !request.headers["Accept-Language"].blank? && request.headers["Accept-Language"].size < 6
-      I18n.locale = request.headers["Accept-Language"].to_sym
-      register.language = request.headers["Accept-Language"]
-      cookies["locale"] = request.headers["Accept-Language"]
-    end
+    register.language = I18n.locale.to_s
 
     unless register.save
       {"001" => "email",
