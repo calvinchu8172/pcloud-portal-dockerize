@@ -11,6 +11,10 @@ When(/^device sends a POST request to "(.*?)" with:$/) do |path, table|
     access_token = nil
   elsif data["access_token"].include?("INVALID")
     access_token = "invalid access_token"
+  elsif data["access_token"].include?("REVOKED")
+    @oauth_access_token.revoked_at = Time.now
+    @oauth_access_token.save
+    access_token = @oauth_access_token.token
   else
     access_token = @oauth_access_token.token
   end
@@ -78,5 +82,9 @@ end
 
 When(/^the device has been paired$/) do
   FactoryGirl.create(:pairing, user_id: @user.id, device_id: @device.id)
+end
+
+Then(/^the access_token is revoked$/) do
+  expect(@oauth_access_token.revoked?).to eq(true)
 end
 
