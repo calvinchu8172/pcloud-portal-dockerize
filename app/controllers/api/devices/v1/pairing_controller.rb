@@ -75,8 +75,12 @@ class Api::Devices::V1::PairingController < Api::Base
     def doorkeeper_unauthorized_render_options(error: nil)
       if doorkeeper_token.nil?
         { :json => { code: "401.0", message: error("401.0") } }
+      elsif doorkeeper_token.revoked?
+        { :json => { code: "401.0", message: error("401.0") } }
       elsif doorkeeper_token.expired?
         { :json => { code: "401.1", message: error("401.1") } }
+      else
+        { :json => { code: "401.0", message: error("401.0") } }
       end
     end
 

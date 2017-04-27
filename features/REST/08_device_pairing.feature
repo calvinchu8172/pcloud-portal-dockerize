@@ -155,8 +155,24 @@ Feature: [REST_01] Device Authentication API
      And the JSON response should include error code: "401.0"
      And the JSON response should include error message: "Invalid access_token"
 
-  @timecop
   Scenario: [REST_01_11]
+    Device fails to pair if access_token is revoked.
+
+    When device sends a POST request to "/d/1/pairing" with:
+      | access_token          | REVOKED ACCESS TOKEN           |
+      | certificate_serial    | VALID CERTIFICATE SERIAL       |
+      | cloud_id              | VALID CLOUD ID                 |
+      | mac_address           | VALID MAC ADDRESS              |
+      | serial_number         | VALID SERIAL NUMBER            |
+      | signature             | VALID SIGNATURE                |
+
+    Then the access_token is revoked
+     And the response status should be "401"
+     And the JSON response should include error code: "401.0"
+     And the JSON response should include error message: "Invalid access_token"
+
+  @timecop
+  Scenario: [REST_01_12]
     Device fails to pair if access_token is expired.
 
     Given "1" days later
@@ -172,7 +188,7 @@ Feature: [REST_01] Device Authentication API
      And the JSON response should include error code: "401.1"
      And the JSON response should include error message: "Access Token Expired"
 
-  Scenario: [REST_01_12]
+  Scenario: [REST_01_13]
     Device fails to pair if cloud_id is invalid.
 
     When device sends a POST request to "/d/1/pairing" with:
@@ -187,7 +203,7 @@ Feature: [REST_01] Device Authentication API
      And the JSON response should include error code: "400.26"
      And the JSON response should include error message: "Invalid cloud_id"
 
-  Scenario: [REST_01_13]
+  Scenario: [REST_01_14]
     Device fails to pair if mac_address is invalid.
 
     When device sends a POST request to "/d/1/pairing" with:
@@ -202,7 +218,7 @@ Feature: [REST_01] Device Authentication API
      And the JSON response should include error code: "400.24"
      And the JSON response should include error message: "Device Not Found"
 
-  Scenario: [REST_01_14]
+  Scenario: [REST_01_15]
     Device fails to pair if serial_number is invalid.
 
     When device sends a POST request to "/d/1/pairing" with:
@@ -217,7 +233,7 @@ Feature: [REST_01] Device Authentication API
      And the JSON response should include error code: "400.24"
      And the JSON response should include error message: "Device Not Found"
 
-  Scenario: [REST_01_15]
+  Scenario: [REST_01_16]
     Device fails to pair if both mac_address and serial_number is invalid.
 
     When device sends a POST request to "/d/1/pairing" with:
@@ -232,7 +248,7 @@ Feature: [REST_01] Device Authentication API
      And the JSON response should include error code: "400.24"
      And the JSON response should include error message: "Device Not Found"
 
-  Scenario: [REST_01_16]
+  Scenario: [REST_01_17]
     Device fails to pair if device has been paired.
 
     When the device has been paired
