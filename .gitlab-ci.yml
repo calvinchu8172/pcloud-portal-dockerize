@@ -34,3 +34,4 @@ cucumber:
       - doc
   only:
     - develop
+    - feature/20170614-1-modify-device-list-page
