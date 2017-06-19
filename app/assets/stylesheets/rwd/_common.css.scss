@@ -66,6 +66,15 @@
 
 }
 
+.product-checkbox-custom {
+  .checkbox {
+    input {
+      display: block;
+      margin-left: 0;
+      position: static;
+    }
+  }
+}
 
 // .text-left-not-xs, .text-left-not-sm, .text-left-not-md, .text-left-not-lg {
 //     text-align: left;

@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   respond_to :html, :js
 
   def index
-    @products = Product.all
+    @products = Product.includes(:category).all
   end
 
   def show
@@ -27,11 +27,13 @@ class ProductsController < ApplicationController
 
   def update
     @product.update_attributes(product_params)
+    puts product_params
+    # binding.pry
     error_message(@product)
   end
 
   # def destroy
-    
+
   # end
 
   private
@@ -41,7 +43,7 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:name, :model_class_name, :asset, :pairing)
+      params.require(:product).permit(:name, :model_class_name, :asset, :pairing, :category_id, :show)
     end
 
     def admin_auth!
