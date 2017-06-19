@@ -34,3 +34,13 @@ end
 Then(/^the user should see "(.*?)" message on My Devices page$/) do |msg|
 	expect(page).to have_content(msg)
 end
+
+When(/^a paired device is belonged to a hidden product$/) do
+  TestingHelper::create_product_table if Product.count == 0
+  @device = TestingHelper.create_device(39)
+  @pairing = FactoryGirl.create(:pairing, user_id: @user.id, device_id: @device.id)
+end
+
+Then(/^use visits discover page$/) do
+  visit authenticated_root_path
+end

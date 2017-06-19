@@ -12,6 +12,7 @@ class DiscovererController < ApplicationController
     raw_result = Array.new
     search_available_device.each do |device|
       next if(device.product.blank?)
+      next if(device.product.show == false) # 20170619 新增所屬 product 若隱藏(show == false)，則 device list 不顯示該 device
       raw_result.push({:device_id => device.encoded_id,
         :paired => device.paired?,
         :product_name => device.product.name,
@@ -48,8 +49,11 @@ class DiscovererController < ApplicationController
     device = Device.search(params[:device][:mac_address], params[:device][:serial_number])
 
     logger.info("searched device:" + params[:device][:mac_address].inspect)
-    
+
     if device.blank?
+      flash[:alert] = I18n.t("errors.messages.not_found")
+      redirect_to action: 'add'
+    elsif device.product.show == false # 20170619 新增所屬 product 若隱藏(show == false)，則該 device
       flash[:alert] = I18n.t("errors.messages.not_found")
       redirect_to action: 'add'
     elsif device.paired?

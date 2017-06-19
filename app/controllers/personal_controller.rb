@@ -15,6 +15,15 @@ class PersonalController < ApplicationController
     end
 
     @devices = pairing.map(&:device)
+
+    # 20170619 新增所屬 product 若隱藏(show == false)，則 device list 不顯示該 device
+    @devices.delete_if do |device|
+      device.product.show == false
+    end
+    if @devices.empty?
+      flash[:alert] = flash[:notice] ? flash[:notice] : I18n.t("warnings.no_pairing_device")
+      redirect_to "/discoverer/index"
+    end
   end
 
   def profile
