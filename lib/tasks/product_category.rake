@@ -66,6 +66,19 @@ namespace :product do
     end
   end
 
+  task :update_all_category_id => :environment do
+    puts "Update all products category_id to 1"
+    products = Product.all
+    products.each do |product|
+      done = product.update_attributes!(category_id: 1)
+      if done
+        puts "#{product.id} #{product.name}: category_id is updated to 1. #{product.category.name}"
+      else
+        puts done.errors.messages
+      end
+    end
+  end
+
   task :update_single_show_column => :environment do
     puts "Update a product show column to true. Please enter product name:"
     name = STDIN.gets.chomp
