@@ -11,6 +11,11 @@
     <%= f.input :asset, as: :file, label: '產品圖' %>
     <br>
     <%= f.input :pairing, as: :file, label: '配對示意圖' %>
+    <br>
+    <%= f.input :category_id, label: '分類', collection: Category.collections, include_blank: false, required: true %>
+    <br>
+    <%#= f.input :show, label: '顯示與否', as: :boolean, :input_html => { :display => 'block' }, wrapper_html: { class: 'product-checkbox-custom' } %>
+    <%= f.input :show, as: :radio_buttons, label: '顯示與否', collection: [['是', true], ['否', false]], checked: ['是', true], required: true %>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" data-dismiss="modal">取消編輯</button>

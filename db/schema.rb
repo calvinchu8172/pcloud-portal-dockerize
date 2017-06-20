@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805104900) do
+ActiveRecord::Schema.define(version: 20170616042307) do
 
   create_table "accepted_users", force: :cascade do |t|
     t.integer  "invitation_id", limit: 4, null: false
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20160805104900) do
   add_index "accepted_users", ["invitation_id", "user_id"], name: "index_accepted_users_on_invitation_id_and_user_unique", unique: true, using: :btree
   add_index "accepted_users", ["invitation_id"], name: "index_accepted_users_on_invitation_id", using: :btree
   add_index "accepted_users", ["user_id"], name: "index_accepted_users_on_user_id", using: :btree
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
 
   create_table "certificates", force: :cascade do |t|
     t.string  "serial",    limit: 255,   null: false
@@ -198,8 +206,11 @@ ActiveRecord::Schema.define(version: 20160805104900) do
     t.string   "pairing_content_type", limit: 255
     t.integer  "pairing_file_size",    limit: 4
     t.datetime "pairing_updated_at"
+    t.boolean  "show"
+    t.integer  "category_id",          limit: 4,   null: false
   end
 
+  add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["model_class_name"], name: "index_products_on_model_class_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|

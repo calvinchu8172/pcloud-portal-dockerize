@@ -18,3 +18,10 @@ Feature: [PCP_003_01] Search Devices
 	  The user should not see device is paired by another user
 	   When another user paired the devics
 	   Then the user should not see this device is paired by another user
+
+	Scenario: [PCP_003_01_04]
+		User cannot see the device if the belonged product is hidden
+		 When a paired device is belonged to a hidden product
+		 When the hidden device connect
+		 Then the user should not see devices list
+

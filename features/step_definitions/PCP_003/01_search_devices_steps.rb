@@ -38,3 +38,8 @@ end
 Then(/^the user should see devices list$/) do
   expect(page).to have_selector('table.devices_list .device, a[href*="/discoverer/check"]')
 end
+
+When(/^the hidden device connect$/) do
+  @redis.HSET "s3:#{@device.session['xmpp_account']}:#{Settings.xmpp.server}:#{Settings.xmpp.device_resource_id}".downcase, "1", "1"
+  visit '/discoverer/index'
+end

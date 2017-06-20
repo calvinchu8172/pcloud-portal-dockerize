@@ -3,6 +3,7 @@ Given(/^a user visits manually add page$/) do
   @user = TestingHelper.create_and_signin
   @device = TestingHelper.create_device
   @device_nas325 = TestingHelper.create_device(28)
+  @hidden_device = TestingHelper.create_device(39)
   visit '/discoverer/add'
 end
 
@@ -59,4 +60,9 @@ end
 
 Then(/^redirect to Search Devices page$/) do
   expect(page.current_path).to eq('/discoverer/index')
+end
+
+Given(/^the user filled the hidden device information$/) do
+  fill_in I18n.t("labels.mac_address"), with: @hidden_device.mac_address
+  fill_in I18n.t("labels.serial_number"), with: @hidden_device.serial_number
 end

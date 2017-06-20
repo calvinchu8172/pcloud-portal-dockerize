@@ -5,7 +5,7 @@
   </div>
 
   <div class="zyxel_content" style="max-width:660px">
-    
+
     <% if flash.any? %>
       <h2 class="text-center">產品建立失敗</h2>
       <div class="alert alert-danger" role="alert">
@@ -19,6 +19,8 @@
             <th class="device_info">產品</th>
             <th class="device_info">產品圖</th>
             <th class="device_info">配對示意圖</th>
+            <th class="device_info">分類</th>
+            <th class="device_info">顯示與否</th>
           </tr>
         </thead>
         <tbody>
@@ -26,13 +28,12 @@
             <th class=""><span class="model_name"><%= @product.model_class_name %></span></th>
             <td class=""><img src="<%= @product.asset.url(:thumb) %>"></td>
             <td class=""><img src="<%= @product.pairing.url %>"></td>
+            <th class=""><span class="model_name"><%= @product.category.name %></span></th>
+            <th class=""><span class="model_name"><%= @product.display? %></span></th>
           </tr>
         </tbody>
       </table>
     <% end %>
-    
-
-    
 
     <div class="zyxel_btn_area">
       <%= link_to "返回產品列表", products_path, class: "zyxel_btn_ok" %>

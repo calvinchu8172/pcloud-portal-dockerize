@@ -43,3 +43,10 @@ Feature: [PCP_003_02] Manually Add
       And the user filled the not exists device information with valid mac_address and invalid serial_number
      When the user click "Submit" button
      Then the user should see error message on manually add page
+
+  Scenario: [PCP_003_02_07]
+    User cannot find the device if the belonged product is hidden.
+      And the user filled the hidden device information
+     When the user click "Submit" button
+     Then the user should see error message on manually add page
+

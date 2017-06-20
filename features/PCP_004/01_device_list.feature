@@ -1,3 +1,4 @@
+@javascript
 Feature: [PCP_004_01] Device Lists
 
 	Background:
@@ -17,3 +18,12 @@ Feature: [PCP_004_01] Device Lists
 	  Show "DDNS is not Configured" when device didn't setting DDNS.
 	   When the user have already paired device
 	   Then the user should see "DDNS is not Configured" message on My Devices page
+
+	Scenario: [PCP_004_01_04]
+		User cannot see the device if the belonged product is hidden
+
+		 When a paired device is belonged to a hidden product
+		 Then use visits discover page
+		 Then the user will redirect to Search Results page
+
+
