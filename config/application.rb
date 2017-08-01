@@ -35,6 +35,7 @@ module Pcloud
     # config.i18n.default_locale = :de
     config.i18n.default_locale = :en
     config.i18n.available_locales = [:en, :de, :nl, :"zh-TW", :th, :tr, :cs, :ru, :pl, :it, :hu, :fr, :es]
+    config.i18n.fallbacks = true
     # config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths << Rails.root.join('lib')
 
@@ -48,9 +49,9 @@ module Pcloud
     # config.autoload_paths += Dir["#{config.root}/app/models/**/"]
 
     # override ActionView::Base.field_error_proc
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
-      html_tag
-    }
+    # config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+    #   html_tag
+    # }
 
     config.active_record.raise_in_transactional_callbacks = true
 
