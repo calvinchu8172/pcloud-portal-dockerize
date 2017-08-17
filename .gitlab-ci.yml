@@ -34,3 +34,4 @@ cucumber:
       - doc
   only:
     - develop
+    - feature/20170815-1-revoke-user-api
