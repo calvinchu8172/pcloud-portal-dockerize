@@ -146,8 +146,8 @@ Rails.application.routes.draw do
     scope module: 'api' do
       namespace :console do
         put 'user/revoke', to: 'users#revoke', format: 'json'
-        resources :users do
-        end
+        # resources :users do
+        # end
       end
     end
 

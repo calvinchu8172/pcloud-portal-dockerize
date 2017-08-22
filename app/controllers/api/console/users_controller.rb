@@ -11,7 +11,7 @@ class Api::Console::UsersController < Api::Base
   end
 
   before_action only: [:revoke] do
-    check_signature valid_params, signature
+    check_signature_urlsafe valid_params, signature
   end
 
   before_action only: [:revoke] do
@@ -30,10 +30,10 @@ class Api::Console::UsersController < Api::Base
     Doorkeeper::AccessToken.where(resource_owner_id: user.id).update_all(revoked_at: Time.now.strftime("%Y-%m-%d %H:%M:%S"))
     user.skip_reconfirmation!
     user.update_attributes(revoked_at: Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-    # user.update_column(:email, Digest::SHA2.hexdigest(user.email))
     user.update_column(:email, SecureRandom.hex(10))
 
     render nothing: true, status: 200
+    # render :json => { code: "000.0", message: 'OK' }, status: 200
   end
 
   private

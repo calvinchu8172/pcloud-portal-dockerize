@@ -19,7 +19,7 @@ module ApiErrors
       "401.1" => "Access Token Expired",
       "403.0" => "User Is Not Device Owner",
       "403.1" => "Device Already Paired",
-      "404.2" => "User not found"
+      "404.2" => "User Not Found"
     }
 
     error[code]
