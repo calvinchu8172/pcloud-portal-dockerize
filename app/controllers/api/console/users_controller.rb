@@ -33,7 +33,6 @@ class Api::Console::UsersController < Api::Base
     user.update_column(:email, SecureRandom.hex(10))
 
     render nothing: true, status: 200
-    # render :json => { code: "000.0", message: 'OK' }, status: 200
   end
 
   private
