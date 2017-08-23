@@ -143,6 +143,14 @@ Rails.application.routes.draw do
       get 'cloud_id', to: 'emails#get_cloud_id', format: 'json'
     end
 
+    scope module: 'api' do
+      namespace :console do
+        put 'user/revoke', to: 'users#revoke', format: 'json'
+        # resources :users do
+        # end
+      end
+    end
+
     scope :path => '/resource/1/', :module => "api/resource" do
       # ---------------------- #
       # ----- invitation ----- #

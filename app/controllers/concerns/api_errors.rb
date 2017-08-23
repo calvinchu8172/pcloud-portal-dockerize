@@ -14,10 +14,12 @@ module ApiErrors
       "400.24" => "Device Not Found",
       "400.25" => "Missing Required Parameter: cloud_id",
       "400.26" => "Invalid cloud_id",
+      "400.36" => "Missing Required Parameter: email",
       "401.0" => "Invalid access_token",
       "401.1" => "Access Token Expired",
       "403.0" => "User Is Not Device Owner",
-      "403.1" => "Device Already Paired"
+      "403.1" => "Device Already Paired",
+      "404.2" => "User Not Found"
     }
 
     error[code]
