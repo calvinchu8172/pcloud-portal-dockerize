@@ -50,7 +50,7 @@ Feature: [Console_01] Revoke User API
 
     Then the response status should be "404"
      And the JSON response should include error code: "404.2"
-     And the JSON response should include error message: "User not found"
+     And the JSON response should include error message: "User Not Found"
 
   Scenario: [Console_01_04]
     Failed to revoke user with invalid certificate serial

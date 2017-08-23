@@ -31,7 +31,7 @@ When(/^client send a PUT request to \/console\/user\/revoke with:$/) do |table|
   elsif data["signature"].include?("INVALID")
     signature = "invalid signature"
   else
-    signature = create_signature(certificate_serial, email)
+    signature = create_signature_urlsafe(certificate_serial, email)
   end
 
   header 'X-Signature', signature

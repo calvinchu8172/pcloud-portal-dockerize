@@ -136,6 +136,15 @@ def create_signature(*arg)
   signature = Base64::encode64(private_key.sign(digest, data))
 end
 
+def create_signature_urlsafe(*arg)
+  data = arg.map { |param| param.to_s}.join('')
+
+  digest = OpenSSL::Digest::SHA224.new
+  private_key = @rsa_key
+  #signature = CGI::escape(Base64::encode64(private_key.sign(digest, data)))
+  signature = Base64::urlsafe_encode64(private_key.sign(digest, data))
+end
+
 def check_authentication_token(authentication_token)
   if authentication_token == "VALID AUTHENTICATION TOKEN"
     authentication_token = @user.create_authentication_token
