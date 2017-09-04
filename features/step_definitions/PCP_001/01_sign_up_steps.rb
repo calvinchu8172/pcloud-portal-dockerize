@@ -119,8 +119,9 @@ end
 
 # Check and display error message for captcha
 Then(/^the visitor should see an error message for Captcha code$/) do
-  expect(page).to have_selector('div#dynamic_recaptcha~div.error div.zyxel_arlert_area')
-  puts find('div#dynamic_recaptcha~div.error div.zyxel_arlert_area>label.error_message').text
+  # expect(page).to have_selector('div#dynamic_recaptcha~div.error div.zyxel_arlert_area')
+  expect(page).to have_selector('div.error div.zyxel_arlert_area label.error_message')
+  # puts find('div#dynamic_recaptcha~div.error div.zyxel_arlert_area>label.error_message').text
 end
 
 # Check and display error message for checkout
