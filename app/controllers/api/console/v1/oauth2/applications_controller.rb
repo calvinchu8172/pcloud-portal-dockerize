@@ -21,7 +21,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   def create
     @app = Doorkeeper::Application.new
     @app.name = params[:name]
-    @app.scopes = params[:scopes]
+    @app.scopes = params[:scopes] if params[:scopes]
     @app.redirect_uri = params[:redirect_uri]
     @app.logout_redirect_uri = params[:logout_redirect_uri]
     @app.save
