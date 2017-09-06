@@ -1,12 +1,22 @@
 module CheckSignature
   include ApiErrors
 
+  def signature
+    request.headers["X-Signature"]
+  end
+
+  def check_header_signature(signature)
+    if signature.nil?
+      return response_error("400.0")
+    end
+  end
+
   def check_signature(params, signature)
     params = sort_params(params)
     key = params.values.join("")
     certificate_serial = params["certificate_serial"]
     unless validate_signature(signature, key, certificate_serial)
-      return render :json => { code: "400.1", message: error("400.1") }, status: 400
+      return response_error("400.1")
     end
   end
 
@@ -15,7 +25,7 @@ module CheckSignature
     key = params.values.join("")
     certificate_serial = params["certificate_serial"]
     unless validate_signature_urlsafe(signature, key, certificate_serial)
-      return render :json => { code: "400.1", message: error("400.1") }, status: 400
+      return response_error("400.1")
     end
   end
 

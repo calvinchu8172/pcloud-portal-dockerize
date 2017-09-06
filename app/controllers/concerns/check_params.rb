@@ -1,6 +1,17 @@
 module CheckParams
   include ApiErrors
 
+  def check_certificate_serial(params)
+    unless params.has_key?("certificate_serial")
+      return response_error("400.2")
+    end
+
+    certificate_serial = Api::Certificate.find_by_serial(params[:certificate_serial])
+    if certificate_serial.nil?
+      return response_error("400.3")
+    end
+  end
+
   def check_params(params, filter)
 
     params.delete("certificate_serial")
@@ -10,17 +21,17 @@ module CheckParams
     compare = filter - params.keys
 
     if compare.include?('app_id')
-      return render :json => { code: "400.4", message: error("400.4") }, status: 400
+      return response_error("400.4")
     elsif compare.include?('access_token')
-      return render :json => { code: "400.6", message: error("400.6") }, status: 400
+      return response_error("400.6")
     elsif compare.include?('cloud_id')
-      return render :json => { code: "400.25", message: error("400.25") }, status: 400
+      return response_error("400.25")
     elsif compare.include?('mac_address')
-      return render :json => { code: "400.22", message: error("400.22") }, status: 400
+      return response_error("400.22")
     elsif compare.include?('serial_number')
-      return render :json => { code: "400.23", message: error("400.23") }, status: 400
+      return response_error("400.23")
     elsif compare.include?('email')
-      return render :json => { code: "400.36", message: error("400.36") }, status: 400
+      return response_error("400.36")
     end
 
   end
