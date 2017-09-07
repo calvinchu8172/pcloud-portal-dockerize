@@ -1,6 +1,22 @@
 module CheckSignature
   include ApiErrors
 
+  def timestamp
+    request.headers["X-Timestamp"]
+  end
+
+  def check_header_timestamp(timestamp)
+     if timestamp.nil?
+      return response_error("400.37")
+    end
+  end
+
+  def check_timestamp_valid(timestamp)
+     if timestamp.to_i - Time.now.to_i < 300
+      return response_error("400.38")
+    end
+  end
+
   def signature
     request.headers["X-Signature"]
   end
@@ -21,6 +37,7 @@ module CheckSignature
   end
 
   def check_signature_urlsafe(params, signature)
+    params.merge!( {'X-Timestamp': timestamp} )
     params = sort_params(params)
     key = params.values.join("")
     certificate_serial = params["certificate_serial"]

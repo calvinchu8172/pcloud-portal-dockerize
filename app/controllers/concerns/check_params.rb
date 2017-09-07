@@ -13,25 +13,22 @@ module CheckParams
   end
 
   def check_params(params, filter)
-
     params.delete("certificate_serial")
     params = params.sort{ |a,z| a<=>z }.to_h
     filter = filter.sort
-
     compare = filter - params.keys
 
-    if compare.include?('app_id')
-      return response_error("400.4")
-    elsif compare.include?('access_token')
-      return response_error("400.6")
-    elsif compare.include?('cloud_id')
-      return response_error("400.25")
-    elsif compare.include?('mac_address')
-      return response_error("400.22")
-    elsif compare.include?('serial_number')
-      return response_error("400.23")
-    elsif compare.include?('email')
-      return response_error("400.36")
+    if !compare.empty?
+      return_params_error(compare)
+    end
+  end
+
+  def return_params_error(compare)
+
+    missing_param_code.each do |key, value|
+      if compare.include?(value)
+        return response_error(key)
+      end
     end
 
   end
