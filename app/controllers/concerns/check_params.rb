@@ -21,6 +21,8 @@ module CheckParams
       return render :json => { code: "400.23", message: error("400.23") }, status: 400
     elsif compare.include?('email')
       return render :json => { code: "400.36", message: error("400.36") }, status: 400
+    elsif compare.include?('descriptions')
+      return render :json => { code: "400.37", message: error("400.37") }, status: 400
     end
 
   end
