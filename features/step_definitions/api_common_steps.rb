@@ -25,6 +25,15 @@ Then(/^the JSON response should include:$/) do |attributes|
   end
 end
 
+Then(/^the JSON response data should include:$/) do |attributes|
+  body_hash = JSON.parse(last_response.body)
+  expect(body_hash.key?("data")).to be true
+  attributes = JSON.parse(attributes)
+  attributes.each do |attribute|
+    expect(body_hash["data"].key?(attribute)).to be true
+  end
+end
+
 Given(/^an existing user with:$/) do |table|
   data = table.rows_hash
   email = data["id"]
@@ -49,6 +58,20 @@ Then(/^the JSON response should include (\d+):$/) do |record_count, attributes|
     end
   end
 end
+
+Then(/^the JSON response data should include (\d+):$/) do |record_count, attributes| 
+  body_hash = JSON.parse(last_response.body)
+  expect(body_hash.key?("data")).to be true
+  body_array = body_hash["data"]
+  expect(body_array.count).to eq(record_count.to_i)
+  attributes = JSON.parse(attributes)
+  body_array.each do |body|
+    attributes.each do |attribute|
+      expect(body.key?(attribute)).to be true
+    end
+  end
+end
+  
 
 Then(/^the response status should be "(.*?)"$/) do |status_code|
   expect(last_response.status).to eq(status_code.to_i)
