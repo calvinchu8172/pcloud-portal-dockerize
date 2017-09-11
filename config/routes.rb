@@ -152,6 +152,17 @@ Rails.application.routes.draw do
       end
     end
 
+    scope path: 'v1', module: 'api/console/v1', format: 'json' do
+      namespace :oauth2 do
+        resources :applications, param: :client_id do
+          member do
+            post :create_db
+          end
+        end
+      end
+    end
+
+
     scope :path => '/resource/1/', :module => "api/resource" do
       # ---------------------- #
       # ----- invitation ----- #
