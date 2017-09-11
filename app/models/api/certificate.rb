@@ -8,4 +8,14 @@ class Api::Certificate < ActiveRecord::Base
   def data
     self.attributes.except("content", "vendor_id")
   end
+  
+  def valid_content?
+    begin
+      OpenSSL::X509::Certificate.new(self.content)
+    rescue => e
+      puts "Error: Invalid Certificate Format => #{e}"
+      return false
+    end
+    true
+  end
 end
