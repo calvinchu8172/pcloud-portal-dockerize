@@ -26,13 +26,14 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
     check_params application_params, create_filter
   end
 
+  before_action :find_client, only: [:show, :update, :destroy, :create_db]
+
   def index
     @apps = Doorkeeper::Application.all
     render json: { code: "0000", message: "OK", data: @apps }, status: 200
   end
 
   def show
-    @app = Doorkeeper::Application.find_by_uid(params[:client_id])
     render json: { code: "0000", message: "OK", data: @app }, status: 200
   end
 
@@ -56,19 +57,11 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   end
 
   def update
-    @app = Doorkeeper::Application.find_by_uid(params[:client_id])
-    if @app.nil?
-      return response_error('404.2')
-    end
     @app.update_attributes(update_params)
     render json: { code: "0000", message: "OK", data: @app }, status: 200
   end
 
   def destroy
-    @app = Doorkeeper::Application.find_by_uid(params[:client_id])
-    if @app.nil?
-      return response_error('404.2')
-    end
     @app.destroy
     @app.access_grants.delete_all
     @app.access_tokens.delete_all
@@ -78,10 +71,6 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   end
 
   def create_db
-    @app = Doorkeeper::Application.find_by_uid(params[:client_id])
-    if @app.nil?
-      return response_error('404.2')
-    end
     create_dynamo_db(params[:client_id])
     render json: { code: '0000', message: 'OK' }, status: 200
   rescue => e
@@ -91,7 +80,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   private
 
   def create_filter
-    ['name', 'redirect_uri']
+    ['name', 'redirect_uri', 'create_db']
   end
 
   def application_params
@@ -100,6 +89,13 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
 
   def update_params
     params.permit(:name, :redirect_uri, :scopes, :logout_redirect_uri)
+  end
+
+  def find_client
+    @app = Doorkeeper::Application.find_by_uid(params[:client_id])
+    if @app.nil?
+      return response_error('404.2')
+    end
   end
 
   def create_dynamo_db(client_id)

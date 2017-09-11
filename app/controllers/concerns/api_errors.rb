@@ -31,7 +31,7 @@ module ApiErrors
       "401.1"  => "Access Token Expired",
       "403.0"  => "User Is Not Device Owner",
       "403.1"  => "Device Already Paired",
-      "404.2"  => "User Not Found"
+      "404.2"  => "APP Not Found"
     }
 
     error.merge! missing_param_code_modify
@@ -55,8 +55,7 @@ module ApiErrors
       '400.36' => 'email' ,
       '400.39' => 'name',
       '400.40' => 'redirect_uri' ,
-      '400.41' => 'logout_redirect_uri',
-      '400.42' => 'create_db',
+      '400.41' => 'create_db',
     }
   end
 
