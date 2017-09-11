@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170816084649) do
+ActiveRecord::Schema.define(version: 20170907055122) do
 
   create_table "accepted_users", force: :cascade do |t|
     t.integer  "invitation_id", limit: 4, null: false
@@ -34,9 +34,12 @@ ActiveRecord::Schema.define(version: 20170816084649) do
   add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
 
   create_table "certificates", force: :cascade do |t|
-    t.string  "serial",    limit: 255,   null: false
-    t.text    "content",   limit: 65535, null: false
-    t.integer "vendor_id", limit: 4
+    t.string   "serial",      limit: 255,   null: false
+    t.text     "content",     limit: 65535, null: false
+    t.integer  "vendor_id",   limit: 4
+    t.string   "description", limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "ddns", force: :cascade do |t|
@@ -160,7 +163,7 @@ ActiveRecord::Schema.define(version: 20170816084649) do
     t.string   "name",                limit: 255,                null: false
     t.string   "uid",                 limit: 255,                null: false
     t.string   "secret",              limit: 255,                null: false
-    t.text     "redirect_uri",        limit: 65535
+    t.text     "redirect_uri",        limit: 65535,              null: false
     t.string   "scopes",              limit: 255,   default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -297,10 +300,6 @@ ActiveRecord::Schema.define(version: 20170816084649) do
     t.datetime "updated_at",            null: false
   end
 
-  add_foreign_key "accepted_users", "invitations", name: "accepted_users_invitation_id_fk"
-  add_foreign_key "accepted_users", "users", name: "accepted_users_user_id_fk"
-  add_foreign_key "ddns", "devices", name: "ddns_device_id_fk"
-  add_foreign_key "ddns", "domains", name: "ddns_domain_id_fk"
   add_foreign_key "devices", "products", name: "devices_product_id_fk"
   add_foreign_key "identities", "users", name: "identities_user_id_fk"
   add_foreign_key "invitations", "devices", name: "invitations_device_id_fk"

@@ -146,6 +146,11 @@ Rails.application.routes.draw do
     scope module: 'api' do
       namespace :console do
         put 'user/revoke', to: 'users#revoke', format: 'json'
+        # Device Certificate APIs
+        get 'device_certs', to: "device_certs#index", format: 'json'
+        get 'device_certs/:id', to: "device_certs#show", format: 'json'
+        post 'device_certs', to: "device_certs#create", format: 'json'
+        put 'device_certs/:id', to: "device_certs#update", format: 'json'
       end
     end
 
