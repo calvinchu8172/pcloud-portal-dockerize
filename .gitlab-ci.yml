@@ -34,3 +34,4 @@ cucumber:
       - doc
   only:
     - develop
+    - feature/20170905-1-oauth-applications-api
