@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(version: 20170907055122) do
     t.string   "name",                limit: 255,                null: false
     t.string   "uid",                 limit: 255,                null: false
     t.string   "secret",              limit: 255,                null: false
-    t.text     "redirect_uri",        limit: 65535,              null: false
+    t.text     "redirect_uri",        limit: 65535
     t.string   "scopes",              limit: 255,   default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -300,6 +300,10 @@ ActiveRecord::Schema.define(version: 20170907055122) do
     t.datetime "updated_at",            null: false
   end
 
+  add_foreign_key "accepted_users", "invitations", name: "accepted_users_invitation_id_fk"
+  add_foreign_key "accepted_users", "users", name: "accepted_users_user_id_fk"
+  add_foreign_key "ddns", "devices", name: "ddns_device_id_fk"
+  add_foreign_key "ddns", "domains", name: "ddns_domain_id_fk"
   add_foreign_key "devices", "products", name: "devices_product_id_fk"
   add_foreign_key "identities", "users", name: "identities_user_id_fk"
   add_foreign_key "invitations", "devices", name: "invitations_device_id_fk"
