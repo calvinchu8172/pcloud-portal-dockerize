@@ -138,5 +138,5 @@ Feature: [Console_02_04] Update APP API
       | create_db            | 1                                  |
     Then the response status should be "404"
     And the JSON response should be:
-      | code    | 404.2           |
+      | code    | 404.3           |
       | message | APP Not Found   |

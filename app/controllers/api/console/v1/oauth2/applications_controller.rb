@@ -94,7 +94,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   def find_client
     @app = Doorkeeper::Application.find_by_uid(params[:client_id])
     if @app.nil?
-      return response_error('404.2')
+      return response_error('404.3')
     end
   end
 

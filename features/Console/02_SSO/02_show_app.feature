@@ -101,5 +101,5 @@ Feature: [Console_02_02] Show APP API
       | timestamp            | VALID TIMESTAMP                    |
     Then the response status should be "404"
      And the JSON response should be:
-      | code    | 404.2           |
+      | code    | 404.3           |
       | message | APP Not Found   |
