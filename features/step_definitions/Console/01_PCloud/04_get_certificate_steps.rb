@@ -4,13 +4,20 @@ When(/^client send a GET request to \/console\/device_certs\/{serial} with:$/) d
 
   params = {}
   cert_serial, description, content = nil
-  unless data["certificate_serial"].blank?   
+  if data["certificate_serial"].present?   
     cert_serial = data["certificate_serial"].include?("INVALID") ? data["certificate_serial"] : @certificate.serial
     params["certificate_serial"] = cert_serial 
   end
 
-  # binding.pry
-  signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(cert_serial, @certificate.serial)
-  header 'X-Signature', signature
+  if data["timestamp"].present?
+    timestamp = data["timestamp"].include?("INVALID") ? Time.now.to_i : ( Time.now.to_i + 350 )
+    header 'X-Timestamp', timestamp
+  end
+
+  if data["signature"].present?
+    signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(timestamp, cert_serial, @certificate.serial)
+    header 'X-Signature', signature
+  end
+
   get path, params
 end
