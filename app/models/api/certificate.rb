@@ -6,7 +6,7 @@ class Api::Certificate < ActiveRecord::Base
   end
 
   def data
-    self.attributes.except("content", "vendor_id")
+    self.attributes.except("id", "content", "vendor_id")
   end
   
   def valid_content?

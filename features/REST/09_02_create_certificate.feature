@@ -77,5 +77,5 @@ Feature: [REST_09_02] Create Certificate
     Then the response status should be "200"
     And the JSON response data should include:
       """
-      ["id", "serial", "description", "created_at", "updated_at"]
+      ["serial", "description", "created_at", "updated_at"]
       """
