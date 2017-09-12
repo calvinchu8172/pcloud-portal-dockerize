@@ -26,15 +26,24 @@ When(/^client send a PUT request to \/console\/user\/revoke with:$/) do |table|
     certificate_serial = @certificate.serial
   end
 
+  if data["timestamp"].nil?
+    timestamp = nil
+  elsif data["timestamp"].include?("INVALID")
+    timestamp = Date.new(2017,9,6).to_time.to_i
+  else
+    timestamp = 10.minutes.from_now.to_i
+  end
+
   if data["signature"].nil?
     signature = nil
   elsif data["signature"].include?("INVALID")
     signature = "invalid signature"
   else
-    signature = create_signature_urlsafe(certificate_serial, email)
+    signature = create_signature_urlsafe(timestamp, certificate_serial, email)
   end
 
   header 'X-Signature', signature
+  header 'X-Timestamp', timestamp
 
   body = {
     email: email,

@@ -3,7 +3,15 @@ class Api::Console::UsersController < Api::Base
   include CheckParams
 
   before_action only: [:revoke] do
+    check_header_timestamp timestamp
+  end
+
+  before_action only: [:revoke] do
     check_header_signature signature
+  end
+
+  before_action only: [:revoke] do
+    check_timestamp_valid timestamp
   end
 
   before_action only: [:revoke] do
