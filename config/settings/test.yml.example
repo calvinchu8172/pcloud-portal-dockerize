@@ -87,3 +87,6 @@ vendors:
     password: 'zyxoperator'
 geoip:
   db_path: "db/geoip/GeoIP.dat"
+oss:
+  env: test
+  service_name: object-storage-service
