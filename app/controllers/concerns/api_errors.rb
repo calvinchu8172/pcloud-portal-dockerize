@@ -18,7 +18,7 @@ module ApiErrors
       # "400.36" => "Missing Required Parameter: email",
       "400.37" => "Missing Required Header: X-Timestamp",
       "400.38" => "Invalid timestamp",
-      "400.39" => "Invalid content",
+      "400.44" => "Invalid content",
       "401.0"  => "Invalid access_token",
       "401.1"  => "Access Token Expired",
       "403.0"  => "User Is Not Device Owner",
@@ -49,7 +49,7 @@ module ApiErrors
       '400.39' => 'name',
       '400.40' => 'redirect_uri' ,
       '400.41' => 'create_db',
-      '400.42' => 'descriptions',
+      '400.42' => 'description',
       '400.43' => 'content'
     }
   end

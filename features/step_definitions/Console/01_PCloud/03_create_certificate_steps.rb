@@ -4,23 +4,29 @@ When(/^client send a POST request to \/console\/device_certs with:$/) do |table|
 
   params = {}
   cert_serial, description, content = nil
-  unless data["certificate_serial"].blank?   
+  if data["certificate_serial"].present?   
     cert_serial = data["certificate_serial"].include?("INVALID") ? data["certificate_serial"] : @certificate.serial
     params["certificate_serial"] = cert_serial 
   end
   
-  unless data["description"].blank?   
+  if data["description"].present?   
     description = data["description"] 
     params["description"] = description
   end
 
-  unless data["content"].blank?   
+  if data["content"].present?   
     content = data["content"].include?("INVALID") ? data["content"] : @certificate.content
     params["content"] = content
   end
 
-  # binding.pry
-  signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(cert_serial, content, description)
-  header 'X-Signature', signature
+  if data["timestamp"].present?
+    timestamp = data["timestamp"].include?("INVALID") ? Time.now.to_i : ( Time.now.to_i + 350 )
+    header 'X-Timestamp', timestamp
+  end
+
+  if data["signature"].present?
+    signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(timestamp, cert_serial, content, description)
+    header 'X-Signature', signature
+  end
   post path, params
 end

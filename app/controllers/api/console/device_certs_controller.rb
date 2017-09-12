@@ -3,7 +3,15 @@ class Api::Console::DeviceCertsController < Api::Base
   include CheckParams
 
   before_action do
+    check_header_timestamp timestamp
+  end
+
+  before_action do
     check_header_signature signature
+  end
+
+  before_action do
+    check_timestamp_valid timestamp
   end
 
   before_action do
@@ -39,7 +47,7 @@ class Api::Console::DeviceCertsController < Api::Base
     device_cert.description = valid_params[:description]
     device_cert.content = valid_params[:content]
     unless device_cert.valid_content?
-      return render :json => { code: "400.39", message: error("400.39") }, status: 400 
+      return render :json => { code: "400.44", message: error("400.44") }, status: 400 
     end
     device_cert.save
     render :json => { 
@@ -53,7 +61,7 @@ class Api::Console::DeviceCertsController < Api::Base
     unless valid_params[:content].blank? 
       device_cert.content = valid_params[:content]  
       unless device_cert.valid_content?
-        return render :json => { code: "400.39", message: error("400.39") }, status: 400 
+        return render :json => { code: "400.44", message: error("400.44") }, status: 400 
       end
     end
     # device_cert.update(update_data)
@@ -69,32 +77,11 @@ class Api::Console::DeviceCertsController < Api::Base
       params.permit(:serial, :certificate_serial, :content, :description)
     end
 
-    def signature
-      request.headers["X-Signature"]
-    end
-
     def filter
       required_params = []
       required_params = ["content", "description"] if action_name.eql? "create"
       required_params = ["description"] if action_name.eql? "update"
       required_params
-    end
-
-    def check_header_signature(signature)
-      if signature.nil?
-        return render :json => { code: "400.0", message: error("400.0") }, status: 400
-      end
-    end
-
-    def check_certificate_serial(params)
-      unless params.has_key?("certificate_serial")
-        return render :json => { code: "400.2", message: error("400.2") }, status: 400
-      end
-
-      certificate_serial = Api::Certificate.find_by_serial(params[:certificate_serial])
-      if certificate_serial.nil?
-        return render :json => { code: "400.3", message: error("400.3") }, status: 400
-      end
     end
 
 end
