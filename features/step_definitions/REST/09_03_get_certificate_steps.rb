@@ -1,6 +1,6 @@
-When(/^client send a GET request to \/console\/device_certs\/{id} with:$/) do |table|
+When(/^client send a GET request to \/console\/device_certs\/{serial} with:$/) do |table|
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/console/device_certs/#{@certificate.id}"
+  path = '//' + Settings.environments.api_domain + "/console/device_certs/#{@certificate.serial}"
 
   params = {}
   cert_serial, description, content = nil
@@ -10,7 +10,7 @@ When(/^client send a GET request to \/console\/device_certs\/{id} with:$/) do |t
   end
 
   # binding.pry
-  signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(cert_serial, @certificate.id)
+  signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(cert_serial, @certificate.serial)
   header 'X-Signature', signature
   get path, params
 end

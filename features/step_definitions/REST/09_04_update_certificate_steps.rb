@@ -1,6 +1,6 @@
-When(/^client send a PUT request to \/console\/device_certs\/{id} with:$/) do |table|
+When(/^client send a PUT request to \/console\/device_certs\/{serial} with:$/) do |table|
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/console/device_certs/#{@certificate.id}"
+  path = '//' + Settings.environments.api_domain + "/console/device_certs/#{@certificate.serial}"
 
   params = {}
   cert_serial, description, content = nil
@@ -19,7 +19,7 @@ When(/^client send a PUT request to \/console\/device_certs\/{id} with:$/) do |t
     params["content"] = content
   end
 
-  signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(cert_serial, content, description, @certificate.id)
+  signature = data["signature"].include?("INVALID") ? data["signature"] : create_signature_urlsafe(cert_serial, content, description, @certificate.serial)
   header 'X-Signature', signature
   put path, params
 end

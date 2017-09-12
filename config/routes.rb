@@ -148,7 +148,7 @@ Rails.application.routes.draw do
         put 'user/revoke', to: 'users#revoke', format: 'json'
 
         # Device Certificate APIs
-        resources :device_certs, except: [:destroy], format: 'json'
+        resources :device_certs, except: [:destroy, :edit], param: :serial
       end
     end
 

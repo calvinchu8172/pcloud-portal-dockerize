@@ -27,7 +27,7 @@ class Api::Console::DeviceCertsController < Api::Base
   end
 
   def show
-    device_cert = Api::Certificate.find(valid_params[:id])
+    device_cert = Api::Certificate.find_by_serial(valid_params[:serial])
     render :json => { 
       "data" => device_cert.data
     }, status: 200
@@ -48,11 +48,9 @@ class Api::Console::DeviceCertsController < Api::Base
   end
 
   def update 
-    device_cert = Api::Certificate.find(valid_params[:id])
+    device_cert = Api::Certificate.find_by_serial(valid_params[:serial])
     device_cert.description = valid_params[:description]
-    # update_data["description"] = valid_params[:description]
     unless valid_params[:content].blank? 
-      # update_data["content"] = valid_params[:content]  
       device_cert.content = valid_params[:content]  
       unless device_cert.valid_content?
         return render :json => { code: "400.39", message: error("400.39") }, status: 400 
@@ -68,7 +66,7 @@ class Api::Console::DeviceCertsController < Api::Base
   private 
 
     def valid_params
-      params.permit(:id, :certificate_serial, :content, :description)
+      params.permit(:serial, :certificate_serial, :content, :description)
     end
 
     def signature

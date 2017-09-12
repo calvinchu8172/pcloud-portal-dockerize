@@ -5,7 +5,7 @@ Feature: [REST_09_04] Update Certificate
 
   Scenario: [09_04_01]
     Invalid signature
-    When client send a PUT request to /console/device_certs/{id} with:
+    When client send a PUT request to /console/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | INVALID_SIGNATURE         |
       | description         | VALID_DESCRIPTION         |
@@ -17,7 +17,7 @@ Feature: [REST_09_04] Update Certificate
 
   Scenario: [09_04_02]
     Missing Required Parameter: certificate_serial
-    When client send a PUT request to /console/device_certs/{id} with:
+    When client send a PUT request to /console/device_certs/{serial} with:
       | signature           | VALID_SIGNATURE           |
       | description         | VALID_DESCRIPTION         |
       | content             | VALID_CONTENT             |
@@ -27,7 +27,7 @@ Feature: [REST_09_04] Update Certificate
 
   Scenario: [09_04_03]
     Invalid certificate_serial
-    When client send a PUT request to /console/device_certs/{id} with:
+    When client send a PUT request to /console/device_certs/{serial} with:
       | certificate_serial  | INVALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE             |
       | description         | VALID_DESCRIPTION           |
@@ -38,7 +38,7 @@ Feature: [REST_09_04] Update Certificate
 
   Scenario: [09_04_04]
     Missing Required Parameter: description
-    When client send a PUT request to /console/device_certs/{id} with:
+    When client send a PUT request to /console/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | content             | VALID_CONTENT             |
@@ -48,7 +48,7 @@ Feature: [REST_09_04] Update Certificate
 
   Scenario: [09_04_05]
     Invalid content
-    When client send a PUT request to /console/device_certs/{id} with:
+    When client send a PUT request to /console/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | description         | VALID_DESCRIPTION         |
@@ -59,19 +59,19 @@ Feature: [REST_09_04] Update Certificate
 
   Scenario: [09_04_06]
     Success without updating content
-    When client send a PUT request to /console/device_certs/{id} with:
+    When client send a PUT request to /console/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | description         | VALID_DESCRIPTION         |
     Then the response status should be "200"
     And the JSON response data should include:
       """
-      ["id", "serial", "description", "created_at", "updated_at"]
+      ["serial", "description", "created_at", "updated_at"]
       """
 
   Scenario: [09_04_07]
     Success
-    When client send a PUT request to /console/device_certs/{id} with:
+    When client send a PUT request to /console/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | description         | VALID_DESCRIPTION         |
@@ -79,5 +79,5 @@ Feature: [REST_09_04] Update Certificate
     Then the response status should be "200"
     And the JSON response data should include:
       """
-      ["id", "serial", "description", "created_at", "updated_at"]
+      ["serial", "description", "created_at", "updated_at"]
       """

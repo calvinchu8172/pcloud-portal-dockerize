@@ -57,5 +57,5 @@ Feature: [REST_09_01] Get Certificate List
     Then the response status should be "200"
     And the JSON response data should include 3:
       """
-      ["id", "serial", "description"]
+      ["serial", "description", "created_at", "updated_at"]
       """
