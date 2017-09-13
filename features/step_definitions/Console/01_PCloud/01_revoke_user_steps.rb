@@ -6,9 +6,9 @@ Given(/^user accepted invitation before$/) do
   @accepted_user = FactoryGirl.create(:accepted_user, invitation_id: @invitation.id, user_id: @user.id, status: 1)
 end
 
-When(/^client send a PUT request to \/console\/user\/revoke with:$/) do |table|
+When(/^client send a PUT request to \/v1\/user\/revoke with:$/) do |table|
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/console/user/revoke"
+  path = '//' + Settings.environments.api_domain + "/v1/user/revoke"
 
   if data["email"].nil?
     email = nil

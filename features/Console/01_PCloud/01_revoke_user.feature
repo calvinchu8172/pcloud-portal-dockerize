@@ -14,7 +14,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_01]
     Revoke user successfully
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | VALID EMAIL                        |
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
@@ -31,7 +31,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_02]
     Failed to revoke user without timestamp
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | VALID EMAIL                        |
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
@@ -45,7 +45,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_02]
     Failed to revoke user with invalid timestamp
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | VALID EMAIL                        |
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
@@ -60,7 +60,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_02]
     Failed to revoke user with invalid email
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       # | email                | INVALID EMAIL                      |
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
@@ -74,7 +74,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_03]
     Failed to revoke user with invalid email
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | INVALID EMAIL                      |
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
@@ -89,7 +89,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_04]
     Failed to revoke user with invalid certificate serial
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | VALID EMAIL                        |
       # | certificate_serial   | INVALID CERTIFICATE SERIAL         |
       | signature            | VALID SIGNATURE                    |
@@ -104,7 +104,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_05]
     Failed to revoke user with invalid certificate serial
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | VALID EMAIL                        |
       | certificate_serial   | INVALID CERTIFICATE SERIAL         |
       | signature            | VALID SIGNATURE                    |
@@ -118,7 +118,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_06]
     Failed to revoke user with invalid certificate serial
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | VALID EMAIL                        |
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       # | signature            | INVALID SIGNATURE                    |
@@ -132,7 +132,7 @@ Feature: [Console_01] Revoke User API
   Scenario: [Console_01_07]
     Failed to revoke user with invalid certificate serial
 
-    When client send a PUT request to /console/user/revoke with:
+    When client send a PUT request to /v1/user/revoke with:
       | email                | VALID EMAIL                        |
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | INVALID SIGNATURE                  |

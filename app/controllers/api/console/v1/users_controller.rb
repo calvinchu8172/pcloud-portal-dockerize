@@ -1,4 +1,4 @@
-class Api::Console::UsersController < Api::Base
+class Api::Console::V1::UsersController < Api::Base
   include CheckSignature
   include CheckParams
 

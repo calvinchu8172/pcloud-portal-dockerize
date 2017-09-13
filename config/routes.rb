@@ -145,13 +145,14 @@ Rails.application.routes.draw do
 
     scope module: 'api' do
       namespace :console do
-        put 'user/revoke', to: 'users#revoke', format: 'json'
+        # put 'user/revoke', to: 'users#revoke', format: 'json'
         # Device Certificate APIs
         resources :device_certs, except: [:destroy, :edit], param: :serial
       end
     end
 
     scope path: 'v1', module: 'api/console/v1', format: 'json' do
+      put 'user/revoke', to: 'users#revoke', format: 'json'
       namespace :oauth2 do
         resources :applications, param: :client_id do
           member do
