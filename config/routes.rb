@@ -154,7 +154,7 @@ Rails.application.routes.draw do
     scope path: 'v1', module: 'api/console/v1', format: 'json' do
       put 'user/revoke', to: 'users#revoke', format: 'json'
       namespace :oauth2 do
-        resources :applications, param: :client_id do
+        resources :applications do
           member do
             post :create_db
           end

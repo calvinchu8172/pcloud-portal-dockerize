@@ -16,7 +16,7 @@ end
 When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:client_id\/create_db with:$/) do |arg1, arg2, table|
   @oauth_client_app = @oauth_client_apps[0]
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/#{@oauth_client_app.uid}/create_db"
+  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/#{@oauth_client_app.id}/create_db"
 
   if data["certificate_serial"].nil?
     certificate_serial = nil
@@ -39,7 +39,7 @@ When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:client
   elsif data["signature"].include?("INVALID")
     signature = "invalid signature"
   else
-    signature = create_signature_urlsafe(timestamp, certificate_serial, @oauth_client_app.uid)
+    signature = create_signature_urlsafe(timestamp, certificate_serial, @oauth_client_app.id)
   end
 
   header 'X-Signature', signature
@@ -57,11 +57,11 @@ end
 When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_client_id\/create_db with:$/) do |arg1, arg2, table|
 
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_client_id/create_db"
+  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_id/create_db"
 
   certificate_serial = @certificate.serial
   timestamp = 10.minutes.from_now.to_i
-  signature = create_signature_urlsafe(timestamp, certificate_serial, 'invalid_client_id')
+  signature = create_signature_urlsafe(timestamp, certificate_serial, 'invalid_id')
 
   header 'X-Signature', signature
   header 'X-Timestamp', timestamp

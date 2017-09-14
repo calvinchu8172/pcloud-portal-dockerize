@@ -43,35 +43,42 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
     @app.scopes = params[:scopes] if params[:scopes]
     @app.redirect_uri = params[:redirect_uri]
     @app.logout_redirect_uri = params[:logout_redirect_uri]
-    @app.save
-
-    if params[:create_db] == '1'
-      begin
-        create_dynamo_db(@app.uid)
-      rescue => e
-        return render :json => { code: e.code, message: e.message }, status: 400
+    if @app.save
+      if params[:create_db] == '1'
+        begin
+          create_dynamo_db(@app.uid)
+        rescue => e
+          return render :json => { code: e.code, message: e.message }, status: 400
+        end
       end
-    end
 
-    render json: { code: "0000", message: "OK", data: @app }, status: 200
+      render json: { code: "0000", message: "OK", data: @app }, status: 200
+    else
+      render json: { message: @app.errors.full_messages.first }, status: 400
+    end
   end
 
   def update
-    @app.update_attributes(update_params)
-    render json: { code: "0000", message: "OK", data: @app }, status: 200
+    if @app.update_attributes(update_params)
+      render json: { code: "0000", message: "OK", data: @app }, status: 200
+    else
+      render json: { message: @app.errors.full_messages.first }, status: 400
+    end
   end
 
   def destroy
     @app.destroy
     @app.access_grants.delete_all
     @app.access_tokens.delete_all
-    delete_dynamo_db(params[:client_id]) rescue nil
+    # delete_dynamo_db(params[:client_id]) rescue nil
+    delete_dynamo_db(@app.uid) rescue nil
 
     render json: { code: "0000", message: "OK" }, status: 200
   end
 
   def create_db
-    create_dynamo_db(params[:client_id])
+    # create_dynamo_db(params[:client_id])
+    create_dynamo_db(@app.uid)
     render json: { code: '0000', message: 'OK' }, status: 200
   rescue => e
     render :json => { code: e.code, message: e.message }, status: 400
@@ -84,7 +91,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   end
 
   def application_params
-    params.permit(:certificate_serial, :client_id, :name, :redirect_uri, :scopes, :logout_redirect_uri, :create_db)
+    params.permit(:certificate_serial, :id, :name, :redirect_uri, :scopes, :logout_redirect_uri, :create_db)
   end
 
   def update_params
@@ -92,7 +99,10 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   end
 
   def find_client
-    @app = Doorkeeper::Application.find_by_uid(params[:client_id])
+    # @app = Doorkeeper::Application.find_by_uid(params[:client_id])
+    # binding.pry
+    @app = Doorkeeper::Application.find_by(id: params[:id])
+
     if @app.nil?
       return response_error('404.3')
     end

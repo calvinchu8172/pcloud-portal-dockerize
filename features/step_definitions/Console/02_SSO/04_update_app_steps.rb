@@ -2,7 +2,7 @@ When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:client_
 
   @oauth_client_app = @oauth_client_apps[0]
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/#{@oauth_client_app.uid}"
+  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/#{@oauth_client_app.id}"
 
   if data["certificate_serial"].nil?
     certificate_serial = nil
@@ -61,7 +61,7 @@ When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:client_
   elsif data["signature"].include?("INVALID")
     signature = "invalid signature"
   else
-    signature = create_signature_urlsafe(timestamp, certificate_serial, @oauth_client_app.uid, @logout_redirect_uri, @name, @redirect_uri, @scopes)
+    signature = create_signature_urlsafe(timestamp, certificate_serial, @oauth_client_app.id, @logout_redirect_uri, @name, @redirect_uri, @scopes)
   end
 
   header 'X-Signature', signature
@@ -82,7 +82,7 @@ end
 
 When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_client_id with:$/) do |arg1, arg2, table|
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_client_id"
+  path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_id"
   certificate_serial = @certificate.serial
   timestamp = 10.minutes.from_now.to_i
   @name = 'oauth_client_app_modify'
@@ -93,7 +93,7 @@ When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid
   @logout_redirect_uri =
   "https://app1_modify.com
   https://app2_modify.com"
-  signature = create_signature_urlsafe(timestamp, certificate_serial, 'invalid_client_id', @logout_redirect_uri, @name, @redirect_uri, @scopes)
+  signature = create_signature_urlsafe(timestamp, certificate_serial, 'invalid_id', @logout_redirect_uri, @name, @redirect_uri, @scopes)
 
   header 'X-Signature', signature
   header 'X-Timestamp', timestamp
