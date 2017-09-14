@@ -44,7 +44,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
     @app.redirect_uri = params[:redirect_uri]
     @app.logout_redirect_uri = params[:logout_redirect_uri]
     if @app.save
-      if params[:create_db] == '1'
+      if params[:create_table] == '1'
         begin
           create_dynamo_db(@app.uid)
         rescue => e
