@@ -26,7 +26,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
     check_params application_params, create_filter
   end
 
-  before_action :find_client, only: [:show, :update, :destroy, :create_db]
+  before_action :find_client, only: [:show, :update, :destroy, :create_table]
 
   def index
     @apps = Doorkeeper::Application.all
@@ -76,7 +76,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
     render json: { code: "0000", message: "OK" }, status: 200
   end
 
-  def create_db
+  def create_table
     # create_dynamo_db(params[:client_id])
     create_dynamo_db(@app.uid)
     render json: { code: '0000', message: 'OK' }, status: 200
@@ -87,11 +87,11 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   private
 
   def create_filter
-    ['name', 'redirect_uri', 'create_db']
+    ['name', 'redirect_uri', 'create_table']
   end
 
   def application_params
-    params.permit(:certificate_serial, :id, :name, :redirect_uri, :scopes, :logout_redirect_uri, :create_db)
+    params.permit(:certificate_serial, :id, :name, :redirect_uri, :scopes, :logout_redirect_uri, :create_table)
   end
 
   def update_params

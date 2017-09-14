@@ -9,7 +9,7 @@ Feature: [Console_02_06] Create APP Dynamo DB Table API
     Create app dynamo DB successfully
 
    Given Dynamo_DB will successfully create table
-    When client send a POST request to /v1/oauth2/applications/:client_id/create_db with:
+    When client send a POST request to /v1/oauth2/applications/:client_id/create_table with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -23,7 +23,7 @@ Feature: [Console_02_06] Create APP Dynamo DB Table API
     Fail to create app dynamo DB table because it already exists
 
    Given The app table already exists
-    When client send a POST request to /v1/oauth2/applications/:client_id/create_db with:
+    When client send a POST request to /v1/oauth2/applications/:client_id/create_table with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -36,7 +36,7 @@ Feature: [Console_02_06] Create APP Dynamo DB Table API
     Fail to create app dynamo DB table because invalid client id
 
    Given The app table already exists
-    When client send a POST request to /v1/oauth2/applications/:invalid_client_id/create_db with:
+    When client send a POST request to /v1/oauth2/applications/:invalid_client_id/create_table with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |

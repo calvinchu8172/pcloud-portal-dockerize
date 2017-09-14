@@ -46,7 +46,7 @@ module ApiErrors
       '400.36' => 'email' ,
       '400.39' => 'name',
       '400.40' => 'redirect_uri' ,
-      '400.41' => 'create_db',
+      '400.41' => 'create_table',
       '400.42' => 'description',
       '400.43' => 'content'
     }

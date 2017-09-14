@@ -1,6 +1,6 @@
 Given(/^Dynamo_DB will successfully create table$/) do
   # @oauth_client_app = @oauth_client_apps[0]
-  allow_any_instance_of(Api::Console::V1::Oauth2::ApplicationsController).to receive(:create_dynamo_db).and_return('successfully create db')
+  allow_any_instance_of(Api::Console::V1::Oauth2::ApplicationsController).to receive(:create_dynamo_db).and_return('successfully create table')
 end
 
 When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications with:$/) do |arg1, arg2, table|
@@ -59,14 +59,14 @@ When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications with:$/)
     https://app2.com"
   end
 
-  if data["create_db"].nil?
-    create_db = nil
-  elsif data["create_db"].include?("INVALID")
-    create_db = "invalid create_db"
-  elsif data["create_db"] == '1'
-    create_db = "1"
-  elsif data["create_db"] == '0'
-    create_db = "0"
+  if data["create_table"].nil?
+    create_table = nil
+  elsif data["create_table"].include?("INVALID")
+    create_table = "invalid create_db"
+  elsif data["create_table"] == '1'
+    create_table = "1"
+  elsif data["create_table"] == '0'
+    create_table = "0"
   end
 
   if data["signature"].nil?
@@ -74,7 +74,7 @@ When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications with:$/)
   elsif data["signature"].include?("INVALID")
     signature = "invalid signature"
   else
-    signature = create_signature_urlsafe(timestamp, certificate_serial, create_db, @logout_redirect_uri, @name, @redirect_uri, @scopes)
+    signature = create_signature_urlsafe(timestamp, certificate_serial, create_table, @logout_redirect_uri, @name, @redirect_uri, @scopes)
   end
 
   header 'X-Signature', signature
@@ -86,7 +86,7 @@ When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications with:$/)
     scopes: @scopes,
     redirect_uri: @redirect_uri,
     logout_redirect_uri: @logout_redirect_uri,
-    create_db: create_db
+    create_table: create_table
   }
 
   body.delete_if {|key, value| value.nil? }

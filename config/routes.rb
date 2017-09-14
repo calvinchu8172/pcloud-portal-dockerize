@@ -156,7 +156,7 @@ Rails.application.routes.draw do
       namespace :oauth2 do
         resources :applications do
           member do
-            post :create_db
+            post :create_table
           end
         end
       end

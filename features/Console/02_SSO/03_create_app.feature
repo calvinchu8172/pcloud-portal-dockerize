@@ -16,7 +16,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "200"
      And the JSON response should be:
       | code    | 0000 |
@@ -35,7 +35,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 0                                  |
+      | create_table         | 0                                  |
     Then the response status should be "200"
      And the JSON response should be:
       | code    | 0000 |
@@ -54,7 +54,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.37"
      And the JSON response should include error message: "Missing Required Header: X-Timestamp"
@@ -71,7 +71,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.38"
      And the JSON response should include error message: "Invalid timestamp"
@@ -88,7 +88,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.0"
      And the JSON response should include error message: "Missing Required Header: X-Signature"
@@ -105,7 +105,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.1"
      And the JSON response should include error message: "Invalid signature"
@@ -122,7 +122,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.2"
      And the JSON response should include error message: "Missing Required Parameter: certificate_serial"
@@ -139,7 +139,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.3"
      And the JSON response should include error message: "Invalid certificate_serial"
@@ -156,7 +156,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.39"
      And the JSON response should include error message: "Missing Required Parameter: name"
@@ -173,7 +173,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       # | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      | create_db            | 1                                  |
+      | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.40"
      And the JSON response should include error message: "Missing Required Parameter: redirect_uri"
@@ -190,7 +190,7 @@ Feature: [Console_02_03] Create APP API
       | scopes               | VALID SCOPES                       |
       | redirect_uri         | VALID REDIRECT_URI                 |
       | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      # | create_db            | 1                                  |
+      # | create_table         | 1                                  |
     Then the response status should be "400"
      And the JSON response should include error code: "400.41"
-     And the JSON response should include error message: "Missing Required Parameter: create_db"
+     And the JSON response should include error message: "Missing Required Parameter: create_table"
