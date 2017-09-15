@@ -13,7 +13,7 @@ Given(/^The app table already exists$/) do
     .and_raise(ApiError.new('ResourceInUseException'), "Table already exists: #{table_name}")
 end
 
-When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:client_id\/create_table with:$/) do |arg1, arg2, table|
+When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:id\/create_table with:$/) do |arg1, arg2, table|
   @oauth_client_app = @oauth_client_apps[0]
   data = table.rows_hash
   path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/#{@oauth_client_app.id}/create_table"
@@ -54,7 +54,7 @@ When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:client
   post path, body
 end
 
-When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_client_id\/create_table with:$/) do |arg1, arg2, table|
+When(/^client send a POST request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_id\/create_table with:$/) do |arg1, arg2, table|
 
   data = table.rows_hash
   path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_id/create_table"

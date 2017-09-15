@@ -1,4 +1,4 @@
-When(/^client send a GET request to \/v(\d+)\/oauth(\d+)\/applications\/:client_id with:$/) do |arg1, arg2, table|
+When(/^client send a GET request to \/v(\d+)\/oauth(\d+)\/applications\/:id with:$/) do |arg1, arg2, table|
   @oauth_client_app = @oauth_client_apps[0]
   # client_id = @oauth_client_app.uid
   id = @oauth_client_app.id
@@ -41,7 +41,7 @@ When(/^client send a GET request to \/v(\d+)\/oauth(\d+)\/applications\/:client_
   get path, qs
 end
 
-When(/^client send a GET request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_client_id with:$/) do |arg1, arg2, table|
+When(/^client send a GET request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_id with:$/) do |arg1, arg2, table|
   data = table.rows_hash
   path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_id"
 

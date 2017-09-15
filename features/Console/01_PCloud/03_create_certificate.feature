@@ -5,7 +5,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_01]
     Missing Required Header: X-Timestamp
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | description         | VALID_DESCRIPTION         |
@@ -16,7 +16,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_02]
     Invalid timestamp
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | INVALID_TIMESTAMP         |
@@ -28,7 +28,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_03]
     Missing Required Header: X-Signature
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | timestamp           | VALID_TIMESTAMP           |
       | description         | VALID_DESCRIPTION         |
@@ -39,7 +39,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_04]
     Invalid signature
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | INVALID_SIGNATURE         |
       | timestamp           | VALID_TIMESTAMP           |
@@ -52,7 +52,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_05]
     Missing Required Parameter: certificate_serial
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
       | description         | VALID_DESCRIPTION         |
@@ -63,7 +63,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_06]
     Invalid certificate_serial
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | INVALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE             |
       | timestamp           | VALID_TIMESTAMP             |
@@ -75,7 +75,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_07]
     Missing Required Parameter: description
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
@@ -86,7 +86,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_08]
     Missing Required Parameter: content
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
@@ -97,7 +97,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_09]
     Invalid content
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
@@ -109,7 +109,7 @@ Feature: [Console_01_03] Create Certificate
 
   Scenario: [01_03_10]
     Success
-    When client send a POST request to /console/device_certs with:
+    When client send a POST request to /v1/device_certs with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |

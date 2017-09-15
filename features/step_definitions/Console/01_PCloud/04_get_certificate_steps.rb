@@ -1,12 +1,12 @@
-When(/^client send a GET request to \/console\/device_certs\/{serial} with:$/) do |table|
+When(/^client send a GET request to \/v1\/device_certs\/{serial} with:$/) do |table|
   data = table.rows_hash
-  path = '//' + Settings.environments.api_domain + "/console/device_certs/#{@certificate.serial}"
+  path = '//' + Settings.environments.api_domain + "/v1/device_certs/#{@certificate.serial}"
 
   params = {}
   cert_serial, description, content = nil
-  if data["certificate_serial"].present?   
+  if data["certificate_serial"].present?
     cert_serial = data["certificate_serial"].include?("INVALID") ? data["certificate_serial"] : @certificate.serial
-    params["certificate_serial"] = cert_serial 
+    params["certificate_serial"] = cert_serial
   end
 
   if data["timestamp"].present?

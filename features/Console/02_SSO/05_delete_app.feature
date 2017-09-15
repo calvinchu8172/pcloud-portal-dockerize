@@ -9,7 +9,7 @@ Feature: [Console_02_05] Delete APP API
     Delete app successfully
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -23,7 +23,7 @@ Feature: [Console_02_05] Delete APP API
     Fail to delete app without timestamp
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       # | timestamp            | VALID TIMESTAMP                    |
@@ -36,7 +36,7 @@ Feature: [Console_02_05] Delete APP API
     Fail to delete app with invalid timestamp
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | INVALID TIMESTAMP                  |
@@ -49,7 +49,7 @@ Feature: [Console_02_05] Delete APP API
     Fail to delete app without signature in Header
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       # | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -62,7 +62,7 @@ Feature: [Console_02_05] Delete APP API
     Fail to delete app with invalid signature in Header
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | INVALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                    |
@@ -75,7 +75,7 @@ Feature: [Console_02_05] Delete APP API
     Fail to delete app without certificate serial
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:id with:
       # | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                  |
@@ -88,7 +88,7 @@ Feature: [Console_02_05] Delete APP API
     Fail to delete app with invalid certificate serial
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:id with:
       | certificate_serial   | INVALID CERTIFICATE SERIAL       |
       | signature            | VALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                  |
@@ -101,7 +101,7 @@ Feature: [Console_02_05] Delete APP API
     Fail to delete app with invalid client id
 
    Given Dynamo_DB will successfully delete table
-    When client send a DELETE request to /v1/oauth2/applications/:invalid_client_id with:
+    When client send a DELETE request to /v1/oauth2/applications/:invalid_id with:
       | certificate_serial   | INVALID CERTIFICATE SERIAL       |
       | signature            | VALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                  |

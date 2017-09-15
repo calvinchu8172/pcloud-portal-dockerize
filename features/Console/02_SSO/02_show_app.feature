@@ -8,7 +8,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_01]
     Get app info successfully
 
-    When client send a GET request to /v1/oauth2/applications/:client_id with:
+    When client send a GET request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -21,7 +21,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_02]
     Fail to get app info without timestamp
 
-    When client send a GET request to /v1/oauth2/applications/:client_id with:
+    When client send a GET request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       # | timestamp            | VALID TIMESTAMP                    |
@@ -33,7 +33,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_03]
     Fail to get app info with invalid timestamp
 
-    When client send a GET request to /v1/oauth2/applications/:client_id with:
+    When client send a GET request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | INVALID TIMESTAMP                  |
@@ -45,7 +45,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_04]
     Fail to get app info without signature in Header
 
-    When client send a GET request to /v1/oauth2/applications/:client_id with:
+    When client send a GET request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       # | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -58,7 +58,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_05]
     Fail to get app info with invalid signature in Header
 
-    When client send a GET request to /v1/oauth2/applications/:client_id with:
+    When client send a GET request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | INVALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                    |
@@ -70,7 +70,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_06]
     Fail to get app info without certificate serial
 
-    When client send a GET request to /v1/oauth2/applications/:client_id with:
+    When client send a GET request to /v1/oauth2/applications/:id with:
       # | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                  |
@@ -83,7 +83,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_07]
     Fail to get app info with invalid certificate serial
 
-    When client send a GET request to /v1/oauth2/applications/:client_id with:
+    When client send a GET request to /v1/oauth2/applications/:id with:
       | certificate_serial   | INVALID CERTIFICATE SERIAL       |
       | signature            | VALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                  |
@@ -95,7 +95,7 @@ Feature: [Console_02_02] Show APP API
   Scenario: [Console_02_02_08]
     Fail to get app info with invalid client ID
 
-    When client send a GET request to /v1/oauth2/applications/:invalid_client_id with:
+    When client send a GET request to /v1/oauth2/applications/:invalid_id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |

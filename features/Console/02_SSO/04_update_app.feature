@@ -8,7 +8,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_04_01]
     Update app successfully
 
-    When client send a PUT request to /v1/oauth2/applications/:client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -25,7 +25,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_04_02]
     Fail to update app without timestamp
 
-    When client send a PUT request to /v1/oauth2/applications/:client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       # | timestamp            | VALID TIMESTAMP                    |
@@ -42,7 +42,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_03_04]
     Fail to update app with invalid timestamp
 
-    When client send a PUT request to /v1/oauth2/applications/:client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | INVALID TIMESTAMP                  |
@@ -59,7 +59,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_03_05]
     Fail to update app without signature in Header
 
-    When client send a PUT request to /v1/oauth2/applications/:client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       # | signature            | VALID SIGNATURE                    |
       | timestamp            | INVALID TIMESTAMP                  |
@@ -76,7 +76,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_03_06]
     Fail to update app with invalid signature in Header
 
-    When client send a PUT request to /v1/oauth2/applications/:client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | INVALID SIGNATURE                  |
       | timestamp            | VALID TIMESTAMP                    |
@@ -93,7 +93,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_03_07]
     Fail to update app without certificate serial
 
-    When client send a PUT request to /v1/oauth2/applications/:client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:id with:
       # | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -110,7 +110,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_03_08]
     Fail to update app list with invalid certificate serial
 
-    When client send a PUT request to /v1/oauth2/applications/:client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:id with:
       | certificate_serial   | INVALID CERTIFICATE SERIAL         |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |
@@ -127,7 +127,7 @@ Feature: [Console_02_04] Update APP API
   Scenario: [Console_02_03_09]
     Fail to update app list with invalid client id
 
-    When client send a PUT request to /v1/oauth2/applications/:invalid_client_id with:
+    When client send a PUT request to /v1/oauth2/applications/:invalid_id with:
       | certificate_serial   | VALID CERTIFICATE SERIAL           |
       | signature            | VALID SIGNATURE                    |
       | timestamp            | VALID TIMESTAMP                    |

@@ -1,4 +1,4 @@
-When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:client_id with:$/) do |arg1, arg2, table|
+When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:id with:$/) do |arg1, arg2, table|
 
   @oauth_client_app = @oauth_client_apps[0]
   data = table.rows_hash
@@ -80,7 +80,7 @@ When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:client_
   put path, body
 end
 
-When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_client_id with:$/) do |arg1, arg2, table|
+When(/^client send a PUT request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_id with:$/) do |arg1, arg2, table|
   data = table.rows_hash
   path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_id"
   certificate_serial = @certificate.serial

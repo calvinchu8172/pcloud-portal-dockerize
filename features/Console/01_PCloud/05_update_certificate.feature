@@ -5,7 +5,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_01]
     Missing Required Header: X-Timestamp
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | description         | VALID_DESCRIPTION         |
@@ -16,7 +16,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_02]
     Invalid timestamp
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | INVALID_TIMESTAMP         |
@@ -28,7 +28,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_03]
     Missing Required Header: X-Signature
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | timestamp           | VALID_TIMESTAMP           |
       | description         | VALID_DESCRIPTION         |
@@ -39,7 +39,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_04]
     Invalid signature
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | INVALID_SIGNATURE         |
       | timestamp           | VALID_TIMESTAMP           |
@@ -52,7 +52,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_05]
     Missing Required Parameter: certificate_serial
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
       | description         | VALID_DESCRIPTION         |
@@ -63,7 +63,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_06]
     Invalid certificate_serial
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | INVALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE             |
       | timestamp           | VALID_TIMESTAMP             |
@@ -75,7 +75,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_07]
     Missing Required Parameter: description
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
@@ -86,7 +86,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_08]
     Invalid content
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
@@ -98,7 +98,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_09]
     Success without updating content
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |
@@ -111,7 +111,7 @@ Feature: [Console_01_05] Update Certificate
 
   Scenario: [01_05_10]
     Success
-    When client send a PUT request to /console/device_certs/{serial} with:
+    When client send a PUT request to /v1/device_certs/{serial} with:
       | certificate_serial  | VALID_CERTIFICATE_SERIAL  |
       | signature           | VALID_SIGNATURE           |
       | timestamp           | VALID_TIMESTAMP           |

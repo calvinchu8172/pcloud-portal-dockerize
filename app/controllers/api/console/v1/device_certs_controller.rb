@@ -1,4 +1,4 @@
-class Api::Console::DeviceCertsController < Api::Base
+class Api::Console::V1::DeviceCertsController < Api::Base
   include CheckSignature
   include CheckParams
 
@@ -29,14 +29,14 @@ class Api::Console::DeviceCertsController < Api::Base
   # List Device Certificates API
   def index
     device_certs = Api::Certificate.all
-    render :json => { 
+    render :json => {
         "data" => device_certs.map{ |dc| dc.data }
       }, status: 200
   end
 
   def show
     device_cert = Api::Certificate.find_by_serial(valid_params[:serial])
-    render :json => { 
+    render :json => {
       "data" => device_cert.data
     }, status: 200
   end
@@ -47,31 +47,31 @@ class Api::Console::DeviceCertsController < Api::Base
     device_cert.description = valid_params[:description]
     device_cert.content = valid_params[:content]
     unless device_cert.valid_content?
-      return render :json => { code: "400.44", message: error("400.44") }, status: 400 
+      return render :json => { code: "400.44", message: error("400.44") }, status: 400
     end
     device_cert.save
-    render :json => { 
+    render :json => {
       "data" => device_cert.data
     }, status: 200
   end
 
-  def update 
+  def update
     device_cert = Api::Certificate.find_by_serial(valid_params[:serial])
     device_cert.description = valid_params[:description]
-    unless valid_params[:content].blank? 
-      device_cert.content = valid_params[:content]  
+    unless valid_params[:content].blank?
+      device_cert.content = valid_params[:content]
       unless device_cert.valid_content?
-        return render :json => { code: "400.44", message: error("400.44") }, status: 400 
+        return render :json => { code: "400.44", message: error("400.44") }, status: 400
       end
     end
     # device_cert.update(update_data)
     device_cert.save
-    render :json => { 
+    render :json => {
       "data" => device_cert.data
     }, status: 200
   end
 
-  private 
+  private
 
     def valid_params
       params.permit(:serial, :certificate_serial, :content, :description)

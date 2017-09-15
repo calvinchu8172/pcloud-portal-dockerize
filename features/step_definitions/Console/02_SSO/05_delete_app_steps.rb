@@ -2,7 +2,7 @@ Given(/^Dynamo_DB will successfully delete table$/) do
   allow_any_instance_of(Api::Console::V1::Oauth2::ApplicationsController).to receive(:delete_dynamo_db).with(@oauth_client_apps[0].uid).and_return('successfully delete db')
 end
 
-When(/^client send a DELETE request to \/v(\d+)\/oauth(\d+)\/applications\/:client_id with:$/) do |arg1, arg2, table|
+When(/^client send a DELETE request to \/v(\d+)\/oauth(\d+)\/applications\/:id with:$/) do |arg1, arg2, table|
   @oauth_client_app = @oauth_client_apps[0]
   data = table.rows_hash
   path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/#{@oauth_client_app.id}"
@@ -43,7 +43,7 @@ When(/^client send a DELETE request to \/v(\d+)\/oauth(\d+)\/applications\/:clie
   delete path, qs
 end
 
-When(/^client send a DELETE request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_client_id with:$/) do |arg1, arg2, table|
+When(/^client send a DELETE request to \/v(\d+)\/oauth(\d+)\/applications\/:invalid_id with:$/) do |arg1, arg2, table|
   data = table.rows_hash
   path = '//' + Settings.environments.api_domain + "/v1/oauth2/applications/invalid_id"
 
