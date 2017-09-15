@@ -143,14 +143,6 @@ Rails.application.routes.draw do
       get 'cloud_id', to: 'emails#get_cloud_id', format: 'json'
     end
 
-    # scope module: 'api' do
-    #   namespace :console do
-    #     # put 'user/revoke', to: 'users#revoke', format: 'json'
-    #     # Device Certificate APIs
-    #     # resources :device_certs, except: [:destroy, :edit], param: :serial
-    #   end
-    # end
-
     scope path: 'v1', module: 'api/console/v1', format: 'json' do
       put 'user/revoke', to: 'users#revoke', format: 'json'
       resources :device_certs, except: [:destroy, :edit], param: :serial
