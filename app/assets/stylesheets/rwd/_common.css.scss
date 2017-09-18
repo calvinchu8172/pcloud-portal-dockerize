@@ -8,6 +8,11 @@
 .layout-rwd .zyxel_content {
 
   .signupForm {
+    .env {
+      font-size: 20px;
+      margin-top: -30px;
+      float: right;
+    }
 
     .signup_cont {
 
@@ -137,6 +142,9 @@
 
     .signupForm {
       margin-top: 0;
+      .env {
+        margin-top: -50px;
+      }
 
       header {
         padding-top: 0;

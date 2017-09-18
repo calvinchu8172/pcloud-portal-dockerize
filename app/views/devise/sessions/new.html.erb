@@ -3,7 +3,11 @@
 <div class="zyxel_content">
   <div class="signupForm">
     <header><%= I18n.t("titles.sign_in") %></header>
-
+    <% unless Settings.environments.name == 'production' %>
+      <div class="env">
+        <%= "(#{Settings.environments.name})"%>
+      </div>
+    <% end %>
     <div class="signup_cont">
 
       <%# Warning information %>
