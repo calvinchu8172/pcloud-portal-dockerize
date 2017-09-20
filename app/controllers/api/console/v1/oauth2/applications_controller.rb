@@ -99,8 +99,6 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   end
 
   def find_client
-    # @app = Doorkeeper::Application.find_by_uid(params[:client_id])
-    # binding.pry
     @app = Doorkeeper::Application.find_by(id: params[:id])
 
     if @app.nil?
