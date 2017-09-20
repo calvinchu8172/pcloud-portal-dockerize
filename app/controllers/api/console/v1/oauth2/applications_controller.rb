@@ -87,7 +87,7 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   private
 
   def create_filter
-    ['name', 'redirect_uri', 'create_table']
+    ['name', 'redirect_uri']
   end
 
   def application_params
