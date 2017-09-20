@@ -178,19 +178,19 @@ Feature: [Console_02_03] Create APP API
      And the JSON response should include error code: "400.40"
      And the JSON response should include error message: "Missing Required Parameter: redirect_uri"
 
-  Scenario: [Console_02_03_11]
-    Fail to create app list without create_db
+  # Scenario: [Console_02_03_11]
+  #   Fail to create app list without create_table
 
-   Given Dynamo_DB will successfully create table
-    When client send a POST request to /v1/oauth2/applications with:
-      | certificate_serial   | VALID CERTIFICATE SERIAL           |
-      | signature            | VALID SIGNATURE                    |
-      | timestamp            | VALID TIMESTAMP                    |
-      | name                 | VALID NAME                         |
-      | scopes               | VALID SCOPES                       |
-      | redirect_uri         | VALID REDIRECT_URI                 |
-      | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
-      # | create_table         | 1                                  |
-    Then the response status should be "400"
-     And the JSON response should include error code: "400.41"
-     And the JSON response should include error message: "Missing Required Parameter: create_table"
+  #  Given Dynamo_DB will successfully create table
+  #   When client send a POST request to /v1/oauth2/applications with:
+  #     | certificate_serial   | VALID CERTIFICATE SERIAL           |
+  #     | signature            | VALID SIGNATURE                    |
+  #     | timestamp            | VALID TIMESTAMP                    |
+  #     | name                 | VALID NAME                         |
+  #     | scopes               | VALID SCOPES                       |
+  #     | redirect_uri         | VALID REDIRECT_URI                 |
+  #     | logout_redirect_uri  | VALID LOGOUT_REDIRECT_URI          |
+  #     # | create_table         | 1                                  |
+  #   Then the response status should be "400"
+  #    And the JSON response should include error code: "400.41"
+  #    And the JSON response should include error message: "Missing Required Parameter: create_table"
