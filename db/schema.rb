@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170816084649) do
+ActiveRecord::Schema.define(version: 20170907055122) do
 
   create_table "accepted_users", force: :cascade do |t|
     t.integer  "invitation_id", limit: 4, null: false
@@ -34,9 +34,12 @@ ActiveRecord::Schema.define(version: 20170816084649) do
   add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
 
   create_table "certificates", force: :cascade do |t|
-    t.string  "serial",    limit: 255,   null: false
-    t.text    "content",   limit: 65535, null: false
-    t.integer "vendor_id", limit: 4
+    t.string   "serial",      limit: 255,   null: false
+    t.text     "content",     limit: 65535, null: false
+    t.integer  "vendor_id",   limit: 4
+    t.string   "description", limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "ddns", force: :cascade do |t|

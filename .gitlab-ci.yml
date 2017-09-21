@@ -29,8 +29,10 @@ cucumber:
     - bundle exec yard config load_plugins true
     - bundle exec yardoc 'app/**/*.rb' 'features/**/*.rb' 'features/**/*.feature'
   artifacts:
+    when: always
     paths:
       - test-plans/
       - doc
   only:
     - develop
+    - /^release.*$/

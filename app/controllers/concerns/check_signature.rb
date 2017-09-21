@@ -1,21 +1,48 @@
 module CheckSignature
   include ApiErrors
 
+  def timestamp
+    request.headers["X-Timestamp"]
+  end
+
+  def check_header_timestamp(timestamp)
+     if timestamp.nil?
+      return response_error("400.37")
+    end
+  end
+
+  def check_timestamp_valid(timestamp)
+     if timestamp.to_i - Time.now.to_i < 300
+      return response_error("400.38")
+    end
+  end
+
+  def signature
+    request.headers["X-Signature"]
+  end
+
+  def check_header_signature(signature)
+    if signature.nil?
+      return response_error("400.0")
+    end
+  end
+
   def check_signature(params, signature)
     params = sort_params(params)
     key = params.values.join("")
     certificate_serial = params["certificate_serial"]
     unless validate_signature(signature, key, certificate_serial)
-      return render :json => { code: "400.1", message: error("400.1") }, status: 400
+      return response_error("400.1")
     end
   end
 
   def check_signature_urlsafe(params, signature)
+    params.merge!( {'X-Timestamp': timestamp} )
     params = sort_params(params)
     key = params.values.join("")
     certificate_serial = params["certificate_serial"]
     unless validate_signature_urlsafe(signature, key, certificate_serial)
-      return render :json => { code: "400.1", message: error("400.1") }, status: 400
+      return response_error("400.1")
     end
   end
 

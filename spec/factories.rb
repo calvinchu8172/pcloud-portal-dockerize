@@ -63,6 +63,7 @@ FactoryGirl.define do
   factory :oauth_client_app, class: Doorkeeper::Application do
     sequence(:name)  { |n| "oauth_client_app_#{n}"}
     redirect_uri 'https://app.com/callback'
+    logout_redirect_uri 'https://app.com/'
   end
   factory :oauth_access_token, class: Doorkeeper::AccessToken do
     sequence(:resource_owner_id) { |n| n }
