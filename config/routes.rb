@@ -146,6 +146,8 @@ Rails.application.routes.draw do
     scope path: 'v1', module: 'api/console/v1', format: 'json' do
       put 'user/revoke', to: 'users#revoke', format: 'json'
       resources :device_certs, except: [:destroy, :edit], param: :serial
+      resources :templates, param: :identity
+      resources :template_contents
       namespace :oauth2 do
         resources :applications do
           member do
