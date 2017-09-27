@@ -34,8 +34,8 @@ class Api::Console::V1::TemplatesController < Api::Base
       {
         id: tamplate.id,
         identity: tamplate.identity,
-        en_title: tamplate.en_template_content.title,
-        en_content: tamplate.en_template_content.content
+        title_en: tamplate.en_template_content.title,
+        content_en: tamplate.en_template_content.content
       }
     end
     render json: { data: @data }, status: 200
