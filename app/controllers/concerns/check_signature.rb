@@ -37,7 +37,7 @@ module CheckSignature
   end
 
   def check_signature_urlsafe(params, signature)
-    params.merge!( {'X-Timestamp': timestamp} )
+    params.merge!( {'X-Timestamp' => timestamp} )
     params = sort_params(params)
     key = params.values.join("")
     certificate_serial = params["certificate_serial"]
