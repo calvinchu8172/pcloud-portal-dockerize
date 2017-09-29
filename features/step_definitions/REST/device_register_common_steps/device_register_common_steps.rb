@@ -6,7 +6,7 @@ Given(/^the device with information$/) do |table|
 
   # 設定 device default 的 ip address
   if ENV['RAILS_TEST_IP_ADDRESS'].blank?
-    unless @device_given_attrs['ip_address'].blank?
+    if @device_given_attrs['ip_address'].present?
       set_device_ip_address(@device_given_attrs['ip_address'])
     end
   end
@@ -29,7 +29,17 @@ Given(/^the device is registered$/) do
     serial_number: @device_given_attrs['serial_number'],
     firmware_version: @device_given_attrs['firmware_version'],
     ip_address: current_ip,
-    product_id: product.id
+    product_id: product.id,
+    country: "US"
+    )
+end
+
+Given(/^the device was registered "(.*?)" days ago$/) do |days|
+  steps %{ Given the device is registered }
+  time = days.to_i.days.ago
+  @registered_device.update(
+    created_at: time,
+    updated_at: time
     )
 end
 
@@ -41,6 +51,15 @@ Given(/^the device is not registered$/) do
   username = TestingDevice.new(@device_given_attrs).xmpp_username
   xmpp_user = XmppUser.find_by(username: username)
   expect(XmppUser.find_by(username: username)).to be_nil
+end
+
+Then(/^the device country should be changed to "(.*?)"$/) do |country_code|
+  @device = Device.find(@registered_device.id)
+  expect(@device.country).to eq("TW")
+end
+
+Then(/^the device created_at should be the same value of updated_at$/) do
+  expect(@device.created_at).to eq(@device.updated_at)
 end
 
 Then(/^the record in databases as expected$/) do
