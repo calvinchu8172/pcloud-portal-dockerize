@@ -47,17 +47,23 @@ class Api::Console::V1::TemplatesController < Api::Base
   end
 
   def create
-    @template = Template.new
-    @template.identity = params[:identity]
+    # @template = Template.new
+    # @template.identity = params[:identity]
+    # if @template.save
+
+    #   locale_array.map do |locale|
+    #     unless params[:"title_#{locale}"].blank?
+    #       create_template_content(locale)
+    #     end
+    #   end
+
+    #   @template_contents = show_template_content(@template)
+    #   render json: { data: @template_contents }, status: 200
+    # else
+    #   render json: { message: @template.errors.full_messages.first }, status: 400
+    # end
+    @template = Template.new(template_params)
     if @template.save
-
-      locale_array.map do |locale|
-        unless params[:"title_#{locale}"].blank?
-          create_template_content(locale)
-        end
-      end
-
-      @template_contents = show_template_content(@template)
       render json: { data: @template_contents }, status: 200
     else
       render json: { message: @template.errors.full_messages.first }, status: 400
@@ -65,14 +71,19 @@ class Api::Console::V1::TemplatesController < Api::Base
   end
 
   def update
-    locale_array.map do |locale|
-      unless params[:"title_#{locale}"].blank?
-        create_or_update_template_content(locale)
-      end
+    if @template.update(template_params)
+      render json: { data: @template_contents }, status: 200
+    else
+      render json: { message: @template.errors.full_messages.first }, status: 400
     end
+    # locale_array.map do |locale|
+    #   unless params[:"title_#{locale}"].blank?
+    #     create_or_update_template_content(locale)
+    #   end
+    # end
 
-    @template_contents = show_template_content(@template)
-    render json: { data: @template_contents }, status: 200
+    # @template_contents = show_template_content(@template)
+    # render json: { data: @template_contents }, status: 200
   end
 
   def destroy
