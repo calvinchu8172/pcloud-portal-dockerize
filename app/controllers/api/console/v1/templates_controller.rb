@@ -108,6 +108,12 @@ class Api::Console::V1::TemplatesController < Api::Base
     )
   end
 
+  def template_content_params
+    params.permit(
+      { templates_attributes: [:id, :locale, :title, :content] }
+    )
+  end
+
   def find_template
     @template = Template.find_by(identity: params[:identity])
 
