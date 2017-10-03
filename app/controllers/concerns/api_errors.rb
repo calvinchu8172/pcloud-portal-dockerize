@@ -51,8 +51,9 @@ module ApiErrors
       '400.42' => 'description',
       '400.43' => 'content',
       '400.45' => 'identity',
-      '400.46' => 'title_en',
-      '400.47' => 'content_en'
+      # '400.46' => 'title_en',
+      # '400.47' => 'content_en',
+      '400.46' => 'template_contents_attributes'
     }
   end
 

@@ -18,12 +18,20 @@ class Api::Console::V1::TemplatesController < Api::Base
     check_certificate_serial params
   end
 
+  # before_action do
+  #   check_signature_urlsafe template_params, signature
+  # end
+
   before_action do
-    check_signature_urlsafe template_params, signature
+    check_signature_urlsafe template_content_params, signature
   end
 
+  # before_action only: [:create] do
+  #   check_params template_params, create_filter
+  # end
+
   before_action only: [:create] do
-    check_params template_params, create_filter
+    check_params template_content_params, create_filter
   end
 
   before_action :find_template, only: [:show, :update, :destroy]
@@ -62,16 +70,21 @@ class Api::Console::V1::TemplatesController < Api::Base
     # else
     #   render json: { message: @template.errors.full_messages.first }, status: 400
     # end
-    @template = Template.new(template_params)
+    create_params = template_content_params.delete_if {|key, value| key == "certificate_serial" }
+    @template = Template.new(create_params)
     if @template.save
+      @template_contents = show_template_content(@template)
       render json: { data: @template_contents }, status: 200
     else
       render json: { message: @template.errors.full_messages.first }, status: 400
     end
+
   end
 
   def update
-    if @template.update(template_params)
+    update_params = template_content_params.delete_if {|key, value| key == "certificate_serial" }
+    if @template.update(update_params)
+      @template_contents = show_template_content(@template)
       render json: { data: @template_contents }, status: 200
     else
       render json: { message: @template.errors.full_messages.first }, status: 400
@@ -94,23 +107,26 @@ class Api::Console::V1::TemplatesController < Api::Base
   private
 
   def create_filter
-    ['identity', 'title_en', 'content_en']
+    # ['identity', 'title_en', 'content_en']
+    ['identity', 'template_contents_attributes']
   end
 
-  def template_params
-    params.permit(:certificate_serial, :identity, :title_en, :content_en,
-      :'title_zh-TW', :'content_zh-TW', :title_de, :content_de,
-      :title_cs, :content_cs, :title_es, :content_es,
-      :title_fr, :content_fr, :title_hu, :content_hu,
-      :title_it, :content_it, :title_nl, :content_nl,
-      :title_pl, :content_pl, :title_ru, :content_ru,
-      :title_th, :content_th, :title_tr, :content_tr
-    )
-  end
+  # def template_params
+  #   params.permit(:certificate_serial, :identity, :title_en, :content_en,
+  #     :'title_zh-TW', :'content_zh-TW', :title_de, :content_de,
+  #     :title_cs, :content_cs, :title_es, :content_es,
+  #     :title_fr, :content_fr, :title_hu, :content_hu,
+  #     :title_it, :content_it, :title_nl, :content_nl,
+  #     :title_pl, :content_pl, :title_ru, :content_ru,
+  #     :title_th, :content_th, :title_tr, :content_tr
+  #   )
+  # end
 
   def template_content_params
     params.permit(
-      { templates_attributes: [:id, :locale, :title, :content] }
+      :certificate_serial,
+      :identity,
+      { template_contents_attributes: [:id, :template_id, :locale, :title, :content] }
     )
   end
 
@@ -122,27 +138,27 @@ class Api::Console::V1::TemplatesController < Api::Base
     end
   end
 
-  def locale_array
-    ["cs", "de", "en", "es", "fr", "hu", "it", "nl", "pl", "ru", "th", "tr", "zh-TW"]
-  end
+  # def locale_array
+  #   ["cs", "de", "en", "es", "fr", "hu", "it", "nl", "pl", "ru", "th", "tr", "zh-TW"]
+  # end
 
-  def create_template_content(locale)
-    @template_content = TemplateContent.new
-    @template_content.template_id = @template.id
-    @template_content.locale = locale
-    @template_content.title = params[:"title_#{locale}"]
-    @template_content.content = params[:"content_#{locale}"]
-    @template_content.save
-  end
+  # def create_template_content(locale)
+  #   @template_content = TemplateContent.new
+  #   @template_content.template_id = @template.id
+  #   @template_content.locale = locale
+  #   @template_content.title = params[:"title_#{locale}"]
+  #   @template_content.content = params[:"content_#{locale}"]
+  #   @template_content.save
+  # end
 
-  def create_or_update_template_content(locale)
-    @template_content = TemplateContent.find_or_create_by!(template_id: @template.id, locale: locale)
+  # def create_or_update_template_content(locale)
+  #   @template_content = TemplateContent.find_or_create_by!(template_id: @template.id, locale: locale)
 
-    @template_content.update_attributes(
-      title: params[:"title_#{locale}"],
-      content: params[:"content_#{locale}"]
-    )
-  end
+  #   @template_content.update_attributes(
+  #     title: params[:"title_#{locale}"],
+  #     content: params[:"content_#{locale}"]
+  #   )
+  # end
 
   def show_template_content(template)
     template_contents = template.template_contents.map{ |template_content|
