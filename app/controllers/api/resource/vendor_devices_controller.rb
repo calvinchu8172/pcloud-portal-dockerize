@@ -6,9 +6,6 @@ class Api::Resource::VendorDevicesController < Api::Base
 
   def index
     begin
-      # cloud_id = "zyxoperator"
-      # @user = User.first
-
       saved_vendor_devices = []
 
       # 由 NAS 端傳入 cloud_id
@@ -36,12 +33,11 @@ class Api::Resource::VendorDevicesController < Api::Base
         end
       end
 
-      render :json => { "cloud_id" => cloud_id,
-                        "device_list" => saved_vendor_devices }, status: 200
+      return reder_response({ cloud_id: cloud_id, device_list: saved_vendor_devices }, 200)
 
     rescue Exception => error
       logger.error(error.message)
-      render :json => { error_code: "300", description: "Unexpected error." }, status: 400 if error
+      return reder_response({ error_code: "300", description: "Unexpected error." }, 400) if error
     end
   end
 
@@ -64,12 +60,11 @@ class Api::Resource::VendorDevicesController < Api::Base
         saved_vendor_devices = save_data_to_db(device_list, vendor_device.user_id)
       end
 
-      render :json => { "result" => "success",
-                        "device_list" => saved_vendor_devices }, status: 200
+      return reder_response({ result: "success", device_list: saved_vendor_devices }, 200)
 
     rescue Exception => error
       logger.error(error.message)
-      render :json => { error_code: "300", description: "Unexpected error." }, status: 400 if error
+      return reder_response({ error_code: "300", description: "Unexpected error." }, 400) if error
     end
   end
 
@@ -82,31 +77,40 @@ class Api::Resource::VendorDevicesController < Api::Base
 
     def check_params
       if valid_params.keys != ["certificate_serial", "signature", "cloud_id", "mac_address", "serial_number"]
-        return render :json => { error_code: "000", description: "Missing required params." }, status: 400
+        return reder_response({ error_code: "000", description: "Missing required params." }, 400)
       end
       valid_params.values.each do |value|
-        return render :json => { error_code: "000", description: "Missing required params." }, status: 400 if value.blank?
+        if value.blank?
+          return reder_response({ error_code: "000", description: "Missing required params." }, 400)
+        end
       end
     end
 
     def check_cloud_id
       @user = User.find_by_encoded_id(valid_params[:cloud_id])
-      return render :json => { error_code: "201", description: "invalid cloud id or token." }, status: 400 if @user.blank?
+      if @user.blank?
+        return reder_response({ error_code: "201", description: "invalid cloud id or token." }, 400)
+      end
     end
 
     def check_device
       device = Device.find_by(serial_number: valid_params[:serial_number], mac_address: valid_params[:mac_address])
-      return render :json => { error_code: "004", description: "invalid device." }, status: 400 if device.blank?
+      if device.blank?
+        return reder_response({ error_code: "004", description: "invalid device." }, 400)
+      end
       pairing = Pairing.where(user_id: @user.id).where(device_id: device.id)
-      return render :json => { error_code: "004", description: "invalid device." }, status: 400 if pairing.blank?
+      if pairing.blank?
+        return reder_response({ error_code: "004", description: "invalid device." }, 400)
+      end
     end
 
     def check_signature
       key = valid_params[:certificate_serial] + valid_params[:cloud_id] + valid_params[:mac_address] + valid_params[:serial_number]
       signature = valid_params[:signature]
       certificate_serial = valid_params[:certificate_serial]
-
-      return render :json => { error_code: "101", description: "invalid signature." }, status: 400 unless validate_signature(signature, key, certificate_serial)
+      unless validate_signature(signature, key, certificate_serial)
+        return reder_response({ error_code: "101", description: "invalid signature." }, 400)
+      end
     end
 
     def validate_signature(signature, key, serial)
@@ -120,20 +124,17 @@ class Api::Resource::VendorDevicesController < Api::Base
     end
 
     def get_devise_list_from_vendor(cloud_id)
-      data = RestClient.get( Settings.vendors.asi.host + '/spu/ws/vpc/auth.do', :params => {
-        :act => 'login',
-        :vpcName => Settings.vendors.asi.vpcName,
-        :username => Settings.vendors.asi.account,
-        :password => Settings.vendors.asi.password,
-        :forcedLogin => '1'
+      data = RestClient.get( Settings.vendors.asi.host + Settings.vendors.asi.api_paths.login, params: {
+        username: Settings.vendors.asi.account,
+        password: Settings.vendors.asi.password,
+        forcedLogin: '1'
         })
       data = JSON.parse(data)
       logger.debug data
 
-      data = RestClient.get( Settings.vendors.asi.host + '/spu/ws/vpc/device.do', :params => {
-        :act => 'getList',
-        :accessToken => data['accessToken'],
-        :username => cloud_id
+      data = RestClient.get( Settings.vendors.asi.host + Settings.vendors.asi.api_paths.get_list, params: {
+        accessToken: data['accessToken'],
+        username: cloud_id
         })
       logger.debug data
 
@@ -163,7 +164,6 @@ class Api::Resource::VendorDevicesController < Api::Base
           # 確認指定的產品是否存在，若不存在則寫入
           vendor_product = VendorProduct.find_or_initialize_by(product_class_name: device.delete("productClass") , model_class_name: device.delete("modelName"))
           vendor_product.update(vendor_id: 1)
-
 
           vendor_device = VendorDevice.create(
             user_id: user_id,
@@ -195,6 +195,11 @@ class Api::Resource::VendorDevicesController < Api::Base
 
     def convert_ip_decimal_to_hex(ip)
       IPAddr.new(ip).to_i.to_s(16).rjust(8, "0") if ip
+    end
+
+    def reder_response response, status
+      logger.info("render: #{response.to_json}, status: #{status}")
+      return render json: response, status: status 
     end
 
 end
