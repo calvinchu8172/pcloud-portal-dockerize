@@ -23,80 +23,58 @@ class Api::Console::V1::TemplatesController < Api::Base
   # end
 
   before_action do
-    check_signature_urlsafe template_content_params, signature
+    check_signature_urlsafe template_params, signature
   end
 
   # before_action only: [:create] do
   #   check_params template_params, create_filter
   # end
 
-  before_action only: [:create] do
-    check_params template_content_params, create_filter
+  before_action only: [:create, :update] do
+    check_params template_params, filter
   end
 
   before_action :find_template, only: [:show, :update, :destroy]
 
   def index
-    @tamplates = Template.all
-    @data = @tamplates.map do |tamplate|
-      {
-        id: tamplate.id,
-        identity: tamplate.identity,
-        title_en: tamplate.en_template_content.title,
-        content_en: tamplate.en_template_content.content
-      }
+    data = Template.all.map do |tamplate|
+      tamplate.attributes.merge({
+        template_contents: tamplate.template_contents.map(&:attributes)
+      })
     end
-    render json: { data: @data }, status: 200
+    render json: { data: data }.to_json, status: 200
   end
 
   def show
-    @template_contents = show_template_content(@template)
-    render json: { data: @template_contents }, status: 200
+    data = @template.attributes.merge({
+      template_contents: @template.template_contents.map(&:attributes)
+    })
+    render json: { data: data }.to_json, status: 200
   end
 
   def create
-    # @template = Template.new
-    # @template.identity = params[:identity]
-    # if @template.save
-
-    #   locale_array.map do |locale|
-    #     unless params[:"title_#{locale}"].blank?
-    #       create_template_content(locale)
-    #     end
-    #   end
-
-    #   @template_contents = show_template_content(@template)
-    #   render json: { data: @template_contents }, status: 200
-    # else
-    #   render json: { message: @template.errors.full_messages.first }, status: 400
-    # end
-    create_params = template_content_params.delete_if {|key, value| key == "certificate_serial" }
+    create_params = template_params.delete_if {|key, value| key == "certificate_serial" }
     @template = Template.new(create_params)
     if @template.save
-      @template_contents = show_template_content(@template)
-      render json: { data: @template_contents }, status: 200
+      data = @template.attributes.merge({
+        template_contents: @template.template_contents.map(&:attributes)
+      })
+      render json: { data: data }.to_json, status: 200
     else
       render json: { message: @template.errors.full_messages.first }, status: 400
     end
-
   end
 
   def update
-    update_params = template_content_params.delete_if {|key, value| key == "certificate_serial" }
+    update_params = template_params.delete_if {|key, value| key == "certificate_serial" }
     if @template.update(update_params)
-      @template_contents = show_template_content(@template)
-      render json: { data: @template_contents }, status: 200
+      data = @template.attributes.merge({
+        template_contents: @template.template_contents.map(&:attributes)
+      })
+      render json: { data: data }.to_json, status: 200
     else
       render json: { message: @template.errors.full_messages.first }, status: 400
     end
-    # locale_array.map do |locale|
-    #   unless params[:"title_#{locale}"].blank?
-    #     create_or_update_template_content(locale)
-    #   end
-    # end
-
-    # @template_contents = show_template_content(@template)
-    # render json: { data: @template_contents }, status: 200
   end
 
   def destroy
@@ -106,9 +84,13 @@ class Api::Console::V1::TemplatesController < Api::Base
 
   private
 
-  def create_filter
+  def filter
     # ['identity', 'title_en', 'content_en']
-    ['identity', 'template_contents_attributes']
+    # ['identity', 'template_contents_attributes']
+    required_params = []
+    required_params = ['identity', 'template_contents_attributes'] if action_name.eql? "create"
+    required_params = ['identity'] if action_name.eql? "update"
+    required_params
   end
 
   # def template_params
@@ -122,7 +104,7 @@ class Api::Console::V1::TemplatesController < Api::Base
   #   )
   # end
 
-  def template_content_params
+  def template_params
     params.permit(
       :certificate_serial,
       :identity,
@@ -132,10 +114,7 @@ class Api::Console::V1::TemplatesController < Api::Base
 
   def find_template
     @template = Template.find_by(identity: params[:identity])
-
-    if @template.nil?
-      return response_error('404.4')
-    end
+    return response_error('404.4') unless @template
   end
 
   # def locale_array
