@@ -24,9 +24,7 @@ Feature: [ASI_01] get vendor device list
       """
       ["cloud_id", "device_list"]
       """
-      # """
-      # ["cloud_id", "device_list", "device_name", "serial_number", "meta"]
-      # """
+
   Scenario: [ASI_01_01_02]
     If there is an existing vendor device in database, and has not updated in 10 minutes. the vendor device will not be updated.
 
@@ -110,11 +108,9 @@ Feature: [ASI_01] get vendor device list
     Given there is no vendor device in database
       And the ASI server return valid result
      When NAS send a GET request to /resource/1/vendor_devices with:
-      # | certificate_serial    | CERTIFICATE SERIAL             |
       | cloud_id              | INVALID CLOUD ID               |
       | mac_address           | VALID MAC ADDRESS              |
       | serial_number         | VALID SERIAL NUMBER            |
-      # | signature             | VALID SIGNATURE                |
 
     Then the response status should be "400"
     And the JSON response should include the error:

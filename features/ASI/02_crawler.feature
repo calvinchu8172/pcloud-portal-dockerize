@@ -6,7 +6,6 @@ Feature: [ASI_02] crawler
   Scenario: [ASI_02_01_01]
     If there is an existing vendor device in database, and has not updated in 10 minutes. the vendor device will not be updated.
 
-    # Given there is no vendor device in database
     Given there is an existed vendor device in database
       And the ASI server return valid result
      When NAS send a GET request to /resource/1/vendor_devices/crawl with:
@@ -20,7 +19,6 @@ Feature: [ASI_02] crawler
    Scenario: [ASI_02_01_02]
     If there is an existing vendor device in database, and has not updated in 10 minutes. the vendor device will be updated.
 
-    # Given there is no vendor device in database
     Given there is an existed vendor device in database
       And the vendor device has updated more then 10 minutes
       And the ASI server return valid result
