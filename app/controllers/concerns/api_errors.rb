@@ -22,7 +22,8 @@ module ApiErrors
       "403.0"  => "User Is Not Device Owner",
       "403.1"  => "Device Already Paired",
       "404.2"  => "User Not Found",
-      "404.3"  => "APP Not Found"
+      "404.3"  => "APP Not Found",
+      "404.4"  => "Template Not Found",
     }
 
     error.merge! missing_param_code_modify
@@ -48,7 +49,11 @@ module ApiErrors
       '400.40' => 'redirect_uri' ,
       '400.41' => 'create_table',
       '400.42' => 'description',
-      '400.43' => 'content'
+      '400.43' => 'content',
+      '400.45' => 'identity',
+      # '400.46' => 'title_en',
+      # '400.47' => 'content_en',
+      '400.46' => 'template_contents_attributes'
     }
   end
 
