@@ -14,6 +14,11 @@ module ApiErrors
       "400.5"  => "Invalid app_id",
       "400.24" => "Device Not Found",
       "400.26" => "Invalid cloud_id",
+      "400.28" => "Device Not Paired",
+      "400.29" => "Invalid app_group_id",
+      "400.32" => "Invalid template_id",
+      "400.34" => "Template Params does not match",
+      "400.35" => "Invalid template_params",
       "400.37" => "Missing Required Header: X-Timestamp",
       "400.38" => "Invalid timestamp",
       "400.44" => "Invalid content",
@@ -24,6 +29,7 @@ module ApiErrors
       "404.2"  => "User Not Found",
       "404.3"  => "APP Not Found",
       "404.4"  => "Template Not Found",
+      "500.0"  => "Failed To Queue The Job",
     }
 
     error.merge! missing_param_code_modify
@@ -44,6 +50,9 @@ module ApiErrors
       '400.22' => 'mac_address',
       '400.23' => 'serial_number',
       '400.25' => 'cloud_id' ,
+      '400.29' => 'app_group_id',
+      '400.31' => 'template_id',
+      '400.33' => 'template_params',
       '400.36' => 'email' ,
       '400.39' => 'name',
       '400.40' => 'redirect_uri' ,

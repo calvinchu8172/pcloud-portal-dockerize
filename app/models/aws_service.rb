@@ -17,7 +17,7 @@ module AwsService
   def self.get_queue
     begin
       sqs = AWS::SQS.new
-      sqs.queues.named(Settings.environments.sqs.name)
+      sqs.queues.named(Settings.environments.sqs.bot_jobs.name)
     rescue
       nil
     end

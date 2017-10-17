@@ -102,4 +102,13 @@ FactoryGirl.define do
   end
   factory :domain do
   end
+  factory :template, class: Template do
+    identity                   "template_1"
+  end
+  factory :template_content, class: TemplateContent do
+    locale                     "en"
+    title                      "notification title"
+    content                    'notification content params #{a} and #{b}'
+    association :template_id,  factory: :template_id
+  end
 end
