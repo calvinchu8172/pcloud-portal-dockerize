@@ -27,7 +27,7 @@ class Api::Devices::V3::NotificationsController < Api::Base
   end
 
   def create 
-    device = Device.find_by(mac_address: valid_params[:mac_address], serial_number: valid_params[:serial_number])
+    device = Device.includes(:product).find_by(mac_address: valid_params[:mac_address], serial_number: valid_params[:serial_number])
     return response_error("400.24") if device.blank?
 
     pairing = Pairing.find_by(device_id: device.id)
@@ -37,17 +37,16 @@ class Api::Devices::V3::NotificationsController < Api::Base
     return response_error("400.32") if template.blank?
 
     begin 
-      template_params = JSON.parse(valid_params[:template_params])
+      req_template_params = JSON.parse(valid_params[:template_params])
     rescue Exception => e
       logger.error("Parse template params failed: #{e.message}")
       return response_error("400.35")
     end
 
-    en_template_content = template.template_contents.select{ |tc| tc.locale == 'en' }.first
-    matches = en_template_content.content.scan(/\#\{([a-zA-Z]\w*)\}/)
-    t_content_params = matches.flatten
+    en_template_content = template.en_template_content
+    t_content_params = en_template_content.param_list
 
-    if (t_content_params - template_params.keys).length > 0
+    if (t_content_params - req_template_params.keys).length > 0
       return response_error("400.34")
     end
 
@@ -56,11 +55,7 @@ class Api::Devices::V3::NotificationsController < Api::Base
       localizations[tc.locale.to_sym] = {
         title: tc.title
       }
-      t_content = tc.content
-      t_content_params.each do |p_name|
-        t_content.gsub!('#{'+p_name+'}', template_params[p_name])
-      end
-      localizations[tc.locale.to_sym][:body] = t_content
+      localizations[tc.locale.to_sym][:body] = tc.fit_params(req_template_params)
     end
 
     request_id = request.headers.env["action_dispatch.request_id"]
@@ -81,7 +76,30 @@ class Api::Devices::V3::NotificationsController < Api::Base
         }
       })
     rescue Exception => e
-      logger.error("Send Push Job Failed: #{e.message}")
+      logger.error("AWS SQS Send Message Failed: #{e.message}")
+      return response_error("500.0")
+    end
+
+    product = device.product
+    begin
+      firehose = Aws::Firehose::Client.new
+      data = {
+        firmware_version: device.firmware_version,
+        app_group_id: valid_params[:app_group_id],
+        requestd_at: Time.now.utc.strftime("%Y-%m-%d %H:%M:%S"),
+        request_id: request_id,
+        model_name: product.model_class_name,
+        category: product.category.name,
+        country: device.country
+      }.to_json
+      firehose.put_record({
+        delivery_stream_name: "pcloud-push-alpha-push-requests",
+        record: {
+          data: "#{data}\n"
+        }
+      })
+    rescue Exception => e
+      logger.error("AWS Firehose Put Record Failed: #{e.message}")
       return response_error("500.0")
     end
     
