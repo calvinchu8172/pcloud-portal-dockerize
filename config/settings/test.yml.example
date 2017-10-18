@@ -35,11 +35,15 @@ environments:
         s3_host_name: 's3-us-west-2.amazonaws.com'
         path: '/:class/:attachment/:id_partition/:style/:filename'
   sqs:
-    name: 'PCloud-Alpha-Bot-Jobs-Test'
+    bot_jobs:
+      name: 'PCloud-Alpha-Bot-Jobs-Test'
+    push_jobs:
+      name: 'pcloud-push-test-device-notifications'
     attributes:
-      access_key_id:
-      secret_access_key:
       region: 'us-east-1'
+  firehose:
+    delivery_stream:
+      name: 'pcloud-push-test-push-requests'
   ddns: pcloud.ecoworkinc.com
   upnp:
     random_port_max: '10000'
@@ -81,8 +85,10 @@ oauth_applications:
 vendors:
   data_safe_period: 10 # minutes
   asi:
-    vpcName: 'ZYX'
-    host: 'http://asicloud-beta.aethersi.com:10980'
+    host: 'https://gsu-dev.aethersi.com'
+    api_paths:
+      login: '/gsu/vpc/auth/login'
+      get_list: '/gsu/vpc/device/zyx/get_list'
     account: 'zyxoperator'
     password: 'zyxoperator'
 geoip:
