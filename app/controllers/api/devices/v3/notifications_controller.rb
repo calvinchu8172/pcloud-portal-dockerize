@@ -93,7 +93,7 @@ class Api::Devices::V3::NotificationsController < Api::Base
         country: device.country
       }.to_json
       firehose.put_record({
-        delivery_stream_name: "pcloud-push-alpha-push-requests",
+        delivery_stream_name: Settings.environments.firehose.delivery_stream.name,
         record: {
           data: "#{data}\n"
         }
