@@ -102,4 +102,10 @@ FactoryGirl.define do
   end
   factory :domain do
   end
+  factory :template do
+    sequence(:identity)  { |n| "template-#{n}"}
+  end
+  factory :template_content do
+    association :template_id,     factory: :template_id
+  end
 end

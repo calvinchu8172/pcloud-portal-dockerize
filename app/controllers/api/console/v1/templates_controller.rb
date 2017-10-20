@@ -37,7 +37,7 @@ class Api::Console::V1::TemplatesController < Api::Base
   before_action :find_template, only: [:show, :update, :destroy]
 
   def index
-    data = Template.all.map do |tamplate|
+    data = Template.includes(:template_contents).all.map do |tamplate|
       tamplate.attributes.merge({
         template_contents: tamplate.template_contents.map(&:attributes)
       })
