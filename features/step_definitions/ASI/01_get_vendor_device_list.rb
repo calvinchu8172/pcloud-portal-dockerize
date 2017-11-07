@@ -30,6 +30,10 @@ Given(/^the NAS is not paired with user$/) do
   @pairing.destroy
 end
 
+Given(/^the device is not paired with user$/) do
+  @pairing.destroy
+end
+
 Given(/^there is no this NAS corresponding to the mac_address and serial_number$/) do
   @pairing.destroy
   @device.destroy

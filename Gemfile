@@ -153,6 +153,7 @@ gem 'time_difference'
 gem 'doorkeeper'
 # gem 'doorkeeper-i18n'
 gem 'geoip'
+gem 'aws-sdk-firehose', '~> 1'
 
 group :development do
   gem 'brakeman', require: false
