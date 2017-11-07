@@ -81,7 +81,7 @@ Then(/^the user and the device have been paired$/) do
 end
 
 When(/^the device has been paired$/) do
-  FactoryGirl.create(:pairing, user_id: @user.id, device_id: @device.id)
+  @pairing = FactoryGirl.create(:pairing, user_id: @user.id, device_id: @device.id)
 end
 
 Then(/^the access_token is revoked$/) do

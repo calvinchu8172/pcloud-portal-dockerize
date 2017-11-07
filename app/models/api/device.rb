@@ -20,12 +20,20 @@ class Api::Device < Device
       self.save
       return true
     else
+      attrs = { ip_address: ip_encode_hex, online_status: true, country: country }
+
+      # 2017/9/28: 裝置在生產後，於工廠內可能先執行開機測試，因此開機時就會對 API Server 註冊，
+      # 此情形並非使用者購買後的裝置註冊，因此會影響 BI 報表中每日註冊裝置數的精確度，
+      # 經討論後，最終決議: 如果裝置註冊的 ip 國家與前一次不同，皆視同裝置轉賣至其他國家，
+      # 因此更新裝置資訊時需更新 created_at 為當下時間。
+      attrs[:created_at] = Time.now if instance.country != country
+      attrs[:mac_address_of_router_lan_port] = self.mac_address_of_router_lan_port if self.mac_address_of_router_lan_port.present?
+
       # instance 是由 DB 所查詢出來的 device 資料，即使用 "Api::Device" 接也不會有 model_class_name 的值，
       # 因此當 instance 在 update 時，執行到 validate_model_name，就會出現錯誤，因為 model_class_name 是 nil，
       # 所以 instance 的物件型態不可設為 "Api::Device"，因 Api::Device 會執行 validate_model_name，
       # 且當 instance 已經存在 DB 當中時，因重複註冊並不會修改 model_class_name，因此 validate_model_name 可不被執行。
-      instance.update( ip_address: ip_encode_hex, online_status: true, country: country )
-      instance.update_attribute(:mac_address_of_router_lan_port, self.mac_address_of_router_lan_port) if self.mac_address_of_router_lan_port.present?
+      instance.update(attrs)
     end
     
     # 如果 instance.firmware_version (from DB) 和 firmware_version (from parameters) 的值不同，則修改 firmware_version
@@ -205,17 +213,20 @@ class Api::Device < Device
     end
 
     def get_country
+      remote_ip = current_ip_address 
+      remote_ip = "173.194.112.35" if Rails.env.development?
+      ip_to_country(remote_ip)
+    end
+
+    def ip_to_country(ip)
       geoip = GeoIP.new(Settings.geoip.db_path)
       country = ""
       begin  
-        remote_ip = current_ip_address 
-        remote_ip = "173.194.112.35" if Rails.env.development?
-
         # set local_ip_alias:
         # geoip.city("127.0.0.1") 
         # <struct GeoIP::City request="127.0.0.1", ip="173.194.112.35", country_code2="US", country_code3="USA", country_name="United States", continent_code="NA", region_name="CA", city_name="Mountain View", postal_code="94043", latitude=37.41919999999999, longitude=-122.0574, dma_code=807, area_code=650, timezone="America/Los_Angeles", real_region_name="California">
         # geoip.local_ip_alias = "173.194.112.35" if Rails.env.test?
-        location = geoip.country(remote_ip)
+        location = geoip.country(ip)
         country = location.country_code2 if location.country_code2 != '--'
       rescue Exception => e
         Rails.logger.error(e.message)

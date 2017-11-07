@@ -106,6 +106,9 @@ FactoryGirl.define do
     sequence(:identity)  { |n| "template-#{n}"}
   end
   factory :template_content do
+    locale                     "en"
+    title                      "notification title"
+    content                    'notification content params #{a} and #{b}'
     association :template_id,     factory: :template_id
   end
 end

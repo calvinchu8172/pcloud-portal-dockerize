@@ -63,3 +63,17 @@ Feature: [REST_00_02] Device Register V3
      Then the API should return success respond
       And the database should not have any pairing records
       And the database should not have any associate invitations and accepted users records
+
+
+  Scenario Outline: [REST_00_02_05]
+    Check created_at updated when register device with valid format and different country IP
+     Given the device was registered "10" days ago
+      And the device "<information>" was be changed to "<value>"
+      And the device send "register" request to REST API /d/3/register
+     Then the API should return success respond
+      And the record in databases as expected
+      And the device country should be changed to "TW" 
+      And the device created_at should be the same value of updated_at
+    Examples: Valid format
+      | information      | value           |
+      | ip_address       | 60.251.144.84   |
