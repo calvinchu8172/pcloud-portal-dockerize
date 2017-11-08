@@ -75,6 +75,7 @@ class Api::Devices::V3::NotificationsController < Api::Base
       #     } 
       #   }
       # })
+      binding.pry
       AwsService.send_message_to_queue(localizations.to_json, 'push_jobs', {
         :message_attributes => { 
           "cloud_id" => { 
@@ -92,7 +93,7 @@ class Api::Devices::V3::NotificationsController < Api::Base
       logger.error("AWS SQS Send Message Failed: #{e.message}")
       return response_error("500.0")
     end
-
+    
     product = device.product
     begin
       firehose = Aws::Firehose::Client.new

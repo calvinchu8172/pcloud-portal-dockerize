@@ -143,7 +143,7 @@ gem 'omniauth-twitter'
 gem 'recaptcha', '~> 0.3.6', require: 'recaptcha/rails'
 gem 'paperclip', github: 'thoughtbot/paperclip'
 # gem 'rmagick'
-gem 'aws-sdk', '~> 1'
+gem 'aws-sdk', '~> 3'
 gem 'rails_admin', group: [:test, :development, :staging]
 gem 'rest-client'
 gem 'json', '1.8.2'
@@ -153,7 +153,7 @@ gem 'time_difference'
 gem 'doorkeeper'
 # gem 'doorkeeper-i18n'
 gem 'geoip'
-gem 'aws-sdk-firehose', '~> 1'
+# gem 'aws-sdk-firehose', '~> 1'
 
 group :development do
   gem 'brakeman', require: false
