@@ -59,10 +59,23 @@ class Api::Devices::V3::NotificationsController < Api::Base
     end
 
     request_id = request.headers.env["action_dispatch.request_id"]
-    sqs = AWS::SQS.new
-    queue = sqs.queues.named(Settings.environments.sqs.push_jobs.name)
     begin
-      queue.send_message(localizations.to_json, {
+      # sqs = AWS::SQS.new
+      # queue = sqs.queues.named(Settings.environments.sqs.push_jobs.name)
+      # queue.send_message(localizations.to_json, {
+      #   :message_attributes => { 
+      #     "cloud_id" => { 
+      #     :string_value => pairing.user.encoded_id, :data_type => 'String'
+      #     },
+      #     "title" => { 
+      #       :string_value => en_template_content.title, :data_type => 'String'
+      #     },
+      #     "request_id" => { 
+      #       :string_value => request_id, :data_type => 'String'
+      #     } 
+      #   }
+      # })
+      AwsService.send_message_to_queue(localizations.to_json, 'push_jobs', {
         :message_attributes => { 
           "cloud_id" => { 
           :string_value => pairing.user.encoded_id, :data_type => 'String'

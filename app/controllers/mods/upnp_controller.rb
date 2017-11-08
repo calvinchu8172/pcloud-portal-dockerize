@@ -101,7 +101,7 @@ class Mods::UpnpController < ApplicationController
 
     def push_to_queue(job, module_version)
       data = {:job => job, :session_id => @upnp.id, :module_version => module_version}
-      AwsService.send_message_to_queue(data)
+      AwsService.send_message_to_queue(data, 'bot_jobs', nil)
     end
 
     def deleted_extra_key

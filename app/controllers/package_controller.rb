@@ -148,7 +148,7 @@ class PackageController < ApplicationController
 
   def push_to_queue(job)
     data = {:job => job, :session_id => @package.id}
-    AwsService.send_message_to_queue(data)
+    AwsService.send_message_to_queue(data, 'bot_jobs', nil)
   end
 
   # check the updated result and added the result to each

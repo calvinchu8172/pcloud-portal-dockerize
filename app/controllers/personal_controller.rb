@@ -72,7 +72,7 @@ class PersonalController < ApplicationController
     @session[:session_id] = device_info_session.escaped_encrypted_id
     @session[:expire_in] = DeviceInfoSession::WAITING_PERIOD.to_i
     job = {:job => 'device_info', :session_id => device_info_session.id}
-    AwsService.send_message_to_queue(job)
+    AwsService.send_message_to_queue(job, 'bot_jobs', nil)
   end
 
   def check_device_info_session

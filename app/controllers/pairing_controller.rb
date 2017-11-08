@@ -101,7 +101,7 @@ class PairingController < ApplicationController
     @pairing_session = job_params
 
     job = {:job => 'pairing', :device_id => @device.id.to_s}
-    AwsService.send_message_to_queue(job)
+    AwsService.send_message_to_queue(job, 'bot_jobs', nil)
     @device.pairing_session.bulk_set job_params
 
     @pairing_session[:expire_in] = Pairing::WAITING_PERIOD.to_i

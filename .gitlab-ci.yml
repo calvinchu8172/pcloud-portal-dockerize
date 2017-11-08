@@ -36,3 +36,4 @@ cucumber:
   only:
     - develop
     - /^release.*$/
+    - test
