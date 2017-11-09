@@ -75,7 +75,7 @@ class Api::Devices::V3::NotificationsController < Api::Base
       #     } 
       #   }
       # })
-      binding.pry
+      # binding.pry
       AwsService.send_message_to_queue(localizations.to_json, 'push_jobs', {
         :message_attributes => { 
           "cloud_id" => { 
