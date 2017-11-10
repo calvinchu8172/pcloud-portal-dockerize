@@ -129,6 +129,7 @@ Rails.application.routes.draw do
     scope :path => '/d/3/', :module => "api/devices/v3" do
       post 'register', to: 'register#create', format: 'json'
       post 'register/lite', to: 'lite#create', format: 'json'
+      post 'notifications', to: 'notifications#create', format: 'json'
     end
 
     scope :path => '/user/1/', :module => "api/user", :as => "last_user_api" do
@@ -146,6 +147,8 @@ Rails.application.routes.draw do
     scope path: 'v1', module: 'api/console/v1', format: 'json' do
       put 'user/revoke', to: 'users#revoke', format: 'json'
       resources :device_certs, except: [:destroy, :edit], param: :serial
+      resources :templates, param: :identity
+      resources :template_contents
       namespace :oauth2 do
         resources :applications do
           member do

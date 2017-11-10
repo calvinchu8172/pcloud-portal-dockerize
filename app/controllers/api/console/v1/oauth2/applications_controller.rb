@@ -107,7 +107,8 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
   end
 
   def create_dynamo_db(client_id)
-    ddb = AWS::DynamoDB::Client.new(api_version: '2012-08-10')
+    # ddb = AWS::DynamoDB::Client.new(api_version: '2012-08-10')
+    ddb = Aws::DynamoDB::Client.new
     resp = ddb.create_table(dynamo_db_params(client_id))
   end
 
@@ -121,8 +122,8 @@ class Api::Console::V1::Oauth2::ApplicationsController < Api::Base
     params = {
       table_name: table_name(client_id)
     }
-
-    ddb = AWS::DynamoDB::Client.new(api_version: '2012-08-10')
+    ddb = Aws::DynamoDB::Client.new
+    # ddb = AWS::DynamoDB::Client.new(api_version: '2012-08-10')
     resp = ddb.delete_table(params)
   end
 

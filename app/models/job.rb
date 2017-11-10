@@ -7,7 +7,7 @@ class Job
   # Push message to queue
   def push_to_queue(body)
     data = body.merge({:job => get_job_name})
-    AwsService.send_message_to_queue(data)
+    AwsService.send_message_to_queue(data, 'bot_jobs', nil)
   end
 
   def method_missing name, *args

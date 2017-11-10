@@ -33,7 +33,7 @@ class InvitationsController < ApplicationController
 		@accepted_session[:expire_in] = AcceptedUser::WAITING_PERIOD.to_i
 
 		job = {:job => 'create_permission', :session_id => @accepted_user.id.to_s}
-		AwsService.send_message_to_queue(job)
+		AwsService.send_message_to_queue(job, 'bot_jobs', nil)
 	end
 
 	def check_connection

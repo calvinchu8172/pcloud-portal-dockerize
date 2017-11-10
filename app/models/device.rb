@@ -155,7 +155,7 @@ class Device < ActiveRecord::Base
   end
 
   def self.search(mac_address, serial_number)
-    devices = Device.where(mac_address: mac_address)
+    devices = Device.where(mac_address: mac_address).includes(:product)
     return if devices.empty?
     devices.each do |device|
       return device if device.dont_verify_serial_number?

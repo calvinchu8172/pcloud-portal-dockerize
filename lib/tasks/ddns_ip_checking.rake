@@ -94,7 +94,7 @@ namespace :ddns_ip_checking do
 
       begin
         job = { :job => 'ddns', :session_id => ddns_session.id }
-        AwsService.send_message_to_queue(job)
+        AwsService.send_message_to_queue(job, 'bot_jobs', nil)
       rescue Exception => e
         update_result[:failed_sendinging_queue_message] << data.merge({ error_message: e.to_s })
         next

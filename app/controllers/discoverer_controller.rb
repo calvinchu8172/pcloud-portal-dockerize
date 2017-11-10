@@ -93,7 +93,7 @@ class DiscovererController < ApplicationController
     indicator_session.session.bulk_set(session)
 
     job = {:job => 'led_indicator', :session_id => indicator_session.id}
-    AwsService.send_message_to_queue(job)
+    AwsService.send_message_to_queue(job, 'bot_jobs', nil)
 
     render :json => { "result" => "success" }, status: 200
   end

@@ -1,4 +1,4 @@
-Feature: /v1_01_02] Get Certificate List
+Feature: [Console_01_02] Get Certificate List
 
   Background:
     Given Server has an Certifcate data as below:

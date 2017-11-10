@@ -79,7 +79,7 @@ class Api::Device < Device
 
     Rails.logger.info("device ip is changed, now creating ddns session: #{ddns_session_data}, and sending ddns queue: #{job}")
     ddns_session.session.bulk_set(ddns_session_data)
-    AwsService.send_message_to_queue(job)
+    AwsService.send_message_to_queue(job, 'bot_jobs', nil)
   end
 
   # 記錄下該Device 所需要的modules
