@@ -196,7 +196,7 @@
         </div>
         <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
           <!-- <input class="btn btn-default zyxel_btn_submit" type="submit" value="<%#= I18n.t("labels.sign_up") %>"> -->
-          <%= invisible_recaptcha_tags ajax: true, hl: locale, script: false, callback: 'submitInvisibleRecaptchaForm', text: I18n.t('labels.sign_up'), class: 'btn btn-default zyxel_btn_submit', data: { disable_with: I18n.t('labels.wait') }  %>
+          <%= invisible_recaptcha_tags ajax: true, hl: locale, callback: 'submitInvisibleRecaptchaForm', text: I18n.t('labels.sign_up'), class: 'btn btn-default zyxel_btn_submit', data: { disable_with: I18n.t('labels.wait') }  %>
         </div>
       </div>
     </div>
