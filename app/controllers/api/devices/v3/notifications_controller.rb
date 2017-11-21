@@ -52,12 +52,14 @@ class Api::Devices::V3::NotificationsController < Api::Base
 
     localizations = {}
     template.template_contents.each do |tc|
-      if (tc.title.present?) {
+      puts("tc.title: #{tc.title}")
+      puts("tc.title.blank?: #{tc.title.blank?}")
+      unless(tc.title.blank?) 
         localizations[tc.locale.to_sym] = {
           title: tc.title
         }
         localizations[tc.locale.to_sym][:body] = tc.fit_params(req_template_params)
-      }
+      end
     end
 
     request_id = request.headers.env["action_dispatch.request_id"]
