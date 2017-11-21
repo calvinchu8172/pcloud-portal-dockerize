@@ -88,7 +88,7 @@ class Api::Devices::V3::NotificationsController < Api::Base
       data = {
         firmware_version: device.firmware_version,
         app_group_id: valid_params[:app_group_id],
-        requestd_at: Time.now.utc.to_i,
+        requested_at: Time.now.utc.strftime("%Y-%m-%d %H:%M:%S"),
         request_id: request_id,
         model_name: product.model_class_name,
         category: product.category.name,
