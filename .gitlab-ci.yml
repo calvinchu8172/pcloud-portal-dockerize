@@ -35,4 +35,3 @@ cucumber:
       - doc
   only:
     - develop
-    - /^release.*$/
