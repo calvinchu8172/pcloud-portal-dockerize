@@ -1,8 +1,15 @@
 <% provide(:flow, I18n.t("titles.sign_up")) %>
 <div class="zyxel_content sign_up" style="max-width: 530px;">
 
-  <%= form_for(resource, html: {role: "form"},as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= form_for(resource, html: {role: "form", id: 'invisible-recaptcha-form'}, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
+    <% if flash[:error] %>
+      <div class="error">
+        <div class="zyxel_arlert_area">
+          <label class="error_message"><%= flash[:error] %></label>
+        </div>
+      </div>
+    <% end %>
     <%# Hidden current user language %>
     <%=  f.hidden_field :language, :value => I18n.locale.to_s %>
     <%# Hidden current user language - end %>
@@ -149,27 +156,6 @@
       </div>
       <%# Country - end %>
 
-      <%# Recaptcha %>
-      <div class="row">
-        <div class="rwd_tbl_th col-xs-11 col-md-3">
-          <div class="text-left-xs text-left-sm text-right">
-            <span>* </span>
-            <%= I18n.t("user.labels.captcha") %>
-          </div>
-        </div>
-        <div class="rwd_tbl_td col-xs-11 col-md-9">
-          <%= recaptcha_tags ajax: true %>
-          <% if flash[:error] %>
-            <div class="error">
-              <div class="zyxel_arlert_area">
-                <label class="error_message"><%= flash[:error] %></label>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <%# Recaptcha - end %>
-
     </div>
 
     <div class="checkbox_i18n_wrap">
@@ -182,7 +168,7 @@
         <!-- Checkbox real label text -->
         <label class="checkbox_label" for="user_agreement">
           <span></span>
-          <%= I18n.t("user.labels.terms.instruction") %> 
+          <%= I18n.t("user.labels.terms.instruction") %>
           <%= link_to I18n.t("user.labels.terms.instruction_2"), '#', data: { toggle: 'modal', target: '#user_agreement_dialog' } %>
           <strong> *</strong>
         </label>
@@ -209,7 +195,8 @@
           <a class="btn btn-default zyxel_btn_back" href="<%= new_session_path(resource_name) %>" role="button"><%= I18n.t("labels.cancel") %></a>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-          <input class="btn btn-default zyxel_btn_submit" type="submit" value="<%= I18n.t("labels.sign_up") %>">
+          <!-- <input class="btn btn-default zyxel_btn_submit" type="submit" value="<%#= I18n.t("labels.sign_up") %>"> -->
+          <%= invisible_recaptcha_tags ajax: true, hl: locale, callback: 'submitInvisibleRecaptchaForm', text: I18n.t('labels.sign_up'), class: 'btn btn-default zyxel_btn_submit', data: { disable_with: I18n.t('labels.wait') }  %>
         </div>
       </div>
     </div>
