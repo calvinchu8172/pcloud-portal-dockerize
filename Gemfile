@@ -10,7 +10,8 @@ gem 'rake', '10.4.2'
 # -   for Database   - #
 # -------------------- #
 
-gem 'mysql2', '0.3.16'
+# gem 'mysql2', '0.3.16'
+gem 'mysql2', '0.4.5'
 
 group :development, :test do
   # for optimize database
@@ -141,7 +142,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'recaptcha', '~> 0.3.6', require: 'recaptcha/rails'
-gem 'paperclip', github: 'thoughtbot/paperclip'
+# gem 'paperclip', github: 'thoughtbot/paperclip'
+gem 'paperclip'
 # gem 'rmagick'
 gem 'aws-sdk', '~> 3'
 gem 'rails_admin', group: [:test, :development, :staging]
