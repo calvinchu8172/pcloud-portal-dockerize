@@ -82,28 +82,29 @@ class Api::Devices::V3::NotificationsController < Api::Base
       return response_error("500.0")
     end
     
-    product = device.product
-    begin
-      firehose = Aws::Firehose::Client.new
-      data = {
-        firmware_version: device.firmware_version,
-        app_group_id: valid_params[:app_group_id],
-        requested_at: Time.now.utc.strftime("%Y-%m-%d %H:%M:%S"),
-        request_id: request_id,
-        model_name: product.model_class_name,
-        category: product.category.name,
-        country: device.country
-      }.to_json
-      firehose.put_record({
-        delivery_stream_name: Settings.environments.firehose.delivery_stream.name,
-        record: {
-          data: "#{data}\n"
-        }
-      })
-    rescue Exception => e
-      logger.error("AWS Firehose Put Record Failed: #{e.message}")
-      return response_error("500.0")
-    end
+    # 20190903 comment the AWS Firehose function.
+    # product = device.product
+    # begin
+    #   firehose = Aws::Firehose::Client.new
+    #   data = {
+    #     firmware_version: device.firmware_version,
+    #     app_group_id: valid_params[:app_group_id],
+    #     requested_at: Time.now.utc.strftime("%Y-%m-%d %H:%M:%S"),
+    #     request_id: request_id,
+    #     model_name: product.model_class_name,
+    #     category: product.category.name,
+    #     country: device.country
+    #   }.to_json
+    #   firehose.put_record({
+    #     delivery_stream_name: Settings.environments.firehose.delivery_stream.name,
+    #     record: {
+    #       data: "#{data}\n"
+    #     }
+    #   })
+    # rescue Exception => e
+    #   logger.error("AWS Firehose Put Record Failed: #{e.message}")
+    #   return response_error("500.0")
+    # end
     
     render json: { request_id: request_id }, status: 200
   end

@@ -19,39 +19,41 @@ xmpp:
     - ec2-54-85-72-129.compute-1.amazonaws.com
     - ec2-107-21-4-229.compute-1.amazonaws.com
 environments:
-  name: 'alpha'
-  api_domain: 'localhost'
-  portal_domain: 'localhost'
+  name: 'production'
+  api_domain: '127.0.0.1'
+  portal_domain: '127.0.0.1'
   ga_tracker: 'UA-57135359-1'
   paperclip:
     default:
       storage: :s3
       s3_credentials:
         bucket: 's3-pcloud-test'
-        access_key_id:
-        secret_access_key:
+        access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"] %>
+        secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
     attachment:
       default:
         s3_host_name: 's3-us-west-2.amazonaws.com'
         path: '/:class/:attachment/:id_partition/:style/:filename'
   sqs:
     bot_jobs:
-      name: 'PCloud-Alpha-Bot-Jobs-Test'
+      name: 'pcloud-bot-jobs-test'
     push_jobs:
-      name: 'pcloud-push-test-device-notifications'
+      name: 'pcloud-push-jobs-device-notifications-test'
     attributes:
+      access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"] %>
+      secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
       region: 'us-east-1'
   firehose:
     delivery_stream:
       name: 'pcloud-push-test-push-requests'
-  ddns: pcloud.ecoworkinc.com
+  ddns: lovefunthing.com
   upnp:
     random_port_max: '10000'
     random_port_min: '6000'
   cdn: 'https://d3k0gq7ryrjfe4.cloudfront.net'
   zones_info:
-    id: 'Z23KWXIJBQNA7O'
-    name: 'pcloud.ecoworkinc.com'
+    id: 'Z1LTE4IQLEVG76'
+    name: 'lovefunthing.com'
   filter_list:
     - api
     - www
@@ -65,34 +67,32 @@ environments:
     - support
     - service
     - services
-  public_key:
+  public_key: 2048
 oauth:
-  facebook_app_id: 897809603581013
-  facebook_secret: fe942ea4847d9a3e6c5ada6d37ecbef9
-  google_app_id: 473860103111-i1gqjjk57evl10r2i1iqvkpohkqssktp.apps.googleusercontent.com
-  google_secret: s-rA4uAtd5OPg6BLKxT0yU7b
+  facebook_app_id: <%= ENV['FACEBOOK_APP_ID'] %>
+  facebook_secret: <%= ENV['FACEBOOK_APP_SECRET'] %>
+  google_app_id: <%= ENV['GOOGLE_APP_ID'] %>
+  google_secret: <%= ENV['GOOGLE_APP_SECRET'] %>
 recaptcha:
   config:
-    public_key: '6LelPvUSAAAAAHQP8AccRDnMO0ETmgmtY-okFr95'
-    private_key: '6LelPvUSAAAAAGdYfFVdxTPayPH1cQG5jIpoDqcj'
+    public_key: <%= ENV['RECAPCHA_PUBLIC_KEY'] %>
+    private_key: <%= ENV['RECAPCHA_PRIVATE_KEY'] %>
 redis:
-  web_host: 'redis'
-  xmpp_host: 'redis'
+  web_host: '127.0.0.1'
+  xmpp_host: '127.0.0.1'
   port: 6379
 oauth_applications:
   account: 'admin'
   password: 'ecowork'
 vendors:
-  data_safe_period: 10 # minutes
+  data_safe_period: '10'
   asi:
-    host: 'https://gsu-dev.aethersi.com'
-    api_paths:
-      login: '/gsu/vpc/auth/login'
-      get_list: '/gsu/vpc/device/zyx/get_list'
+    vpcName: 'ZYX'
+    host: 'http://asicloud-beta.aethersi.com:10980'
     account: 'zyxoperator'
     password: 'zyxoperator'
 geoip:
-  db_path: "db/geoip/GeoIP.dat"
+  db_path: db/geoip/GeoIP.dat
 oss:
   env: test
   service_name: object-storage-service

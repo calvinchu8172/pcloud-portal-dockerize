@@ -5,7 +5,7 @@ default: &default
   database: personal_cloud
   host: 127.0.0.1
   username: root
-  password: 12345678
+  password: 
   collation: utf8_general_ci
 
 xmpp_default: &xmpp_default
@@ -22,10 +22,8 @@ xmpp_test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: mongooseim
-  host: mysql
+  database: mongooseim_test
   username: root
-  password:
   collation: utf8_general_ci
 
 # Warning: The database defined as "test" will be erased and
@@ -36,9 +34,7 @@ test:
   encoding: utf8
   reconnect: false
   database: mycloud_test
-  host: mysql
   username: root
-  password:
   collation: utf8_general_ci
 
 
