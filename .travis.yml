@@ -28,7 +28,7 @@ script:
   - rename 's/.example//' config/*.example
   - cat config/database.yml
   - RAILS_ENV=test bundle exec rake db:migrate db:seed
-  - RAILS_ENV=test bundle exec rake xmpp:db:migrate xmpp:db:seed
+  - RAILS_ENV=test bundle exec rake xmpp:db:migrate
   - mkdir test-plans
   - xvfb-run -a bundle exec cucumber --format html --out test-plans/report.html
 
@@ -49,4 +49,3 @@ notifications:
 branches:
   only:
     - develop
-    - feature/20190903-1-travis-ci-test
