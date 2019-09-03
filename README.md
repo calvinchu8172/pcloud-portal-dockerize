@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/calvinchu8172/pcloud-portal-dockerize.svg?branch=develop)](https://travis-ci.org/calvinchu8172/pcloud-portal-dockerize)
+
 # Personal Cloud Portal
 
 ## Frontend
