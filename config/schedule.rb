@@ -27,11 +27,6 @@ set :output, 'log/cron.log'
 #   # rake "dev:delete"
 # end
 
-# every 30.minute do
-#   rake "ddns_expire:cronjob"
-# end
-
-
 every 30.minute do
-  rake "device:register"
+  rake "ddns_expire:cronjob"
 end
