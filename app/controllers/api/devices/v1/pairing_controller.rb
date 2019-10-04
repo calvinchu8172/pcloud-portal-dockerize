@@ -6,27 +6,56 @@ class Api::Devices::V1::PairingController < Api::Base
     check_header_signature signature
   end
 
-  before_action do
+  before_action only: [:create] do
     check_certificate_serial valid_params
   end
 
-  before_action do
+  before_action only: [:create] do
     check_signature valid_params, signature
   end
 
-  before_action do
+  before_action only: [:create] do
     check_params valid_params, filter
   end
 
-  before_action :doorkeeper_authorize!
-  before_action :compare_cloud_id
-  before_action :query_device
-  before_action :query_pairing
+  before_action :doorkeeper_authorize!, only: [:create]
+  before_action :compare_cloud_id, only: [:create]
+
+  before_action only: [:create] do
+    query_device valid_params["mac_address"], valid_params["serial_number"]
+  end
+
+  before_action :query_pairing, only: [:create]
+
+
+  before_action only: [:destroy] do
+    check_certificate_serial destroy_params
+  end
+
+  before_action only: [:destroy] do
+    check_signature destroy_params, signature
+  end
+
+  before_action only: [:destroy] do
+    check_params destroy_params, destroy_filter
+  end
+
+  before_action only: [:destroy] do
+    query_device destroy_params["mac_address"], destroy_params["serial_number"]
+  end
+
+  before_action :query_pairings, only: [:destroy]
 
 
   def create
     create_pairing
     render nothing: true, status: 200
+  end
+
+  def destroy
+    destroy_pairings
+    @device.pairing
+    render json: @device.pairing, status: 200
   end
 
   private
@@ -36,8 +65,16 @@ class Api::Devices::V1::PairingController < Api::Base
       params.permit(:access_token, :certificate_serial, :cloud_id, :mac_address, :serial_number)
     end
 
+    def destroy_params
+      params.permit(:certificate_serial, :mac_address, :serial_number)
+    end
+
     def filter
       ["access_token", "cloud_id", "mac_address", "serial_number"]
+    end
+
+    def destroy_filter
+      ["mac_address", "serial_number"]
     end
 
     def compare_cloud_id
@@ -63,8 +100,8 @@ class Api::Devices::V1::PairingController < Api::Base
       end
     end
 
-    def query_device
-      @device = Device.find_by(mac_address: valid_params["mac_address"], serial_number: valid_params["serial_number"])
+    def query_device mac_address, serial_number
+      @device = Device.find_by(mac_address: mac_address, serial_number: serial_number)
       if @device.nil?
         return response_error("400.24")
       end
@@ -77,8 +114,32 @@ class Api::Devices::V1::PairingController < Api::Base
       end
     end
 
+    def query_pairings
+      @pairings = @device.pairing
+      if @pairings.blank?
+        return response_error("400.28")
+      end
+    end
+
     def create_pairing
       Pairing.create(user_id: @resource_owner_id, device_id: @device.id, ownership: 0)
+    end
+
+    def destroy_pairings
+      @pairings.each do |pairing|
+        if check_pairing_over_time? pairing, 10
+          pairing.destroy
+          Job.new.push_device_id(@device.id.to_s)
+        end
+      end
+    end
+
+    def check_pairing_over_time? pairing, how_many_minutes
+      if Time.now.to_i - pairing.created_at.to_i > how_many_minutes.minutes.to_i
+        true
+      else
+        false
+      end
     end
 
 end
