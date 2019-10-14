@@ -117,6 +117,7 @@ zh-TW:
     terms: "使用者條款"
     manually: "手動加入裝置"
     download_edm_users_list: "下載 EDM users list"
+    manually_input_if_test: "如要測試請手動加入裝置，預設值已填入"
   warnings:
     not_config: "尚未設定DDNS"
     no_pairing_device: "您沒有已配對的設備!"

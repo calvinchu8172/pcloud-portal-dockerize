@@ -134,6 +134,7 @@ en:
     terms: Terms of Use
     manually: Manually Add Device
     download_edm_users_list: Download EDM users list
+    manually_input_if_test: Please manually input if test pairing with device. Default values are already set.
   warnings:
     not_config: DDNS is not Configured
     no_pairing_device: No device have been paired.
