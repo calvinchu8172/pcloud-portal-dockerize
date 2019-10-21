@@ -25,7 +25,7 @@ nl:
       remember_me: Onthoud mijn gegevens
       language: Taal
       captcha: Captcha
-      terms:
-        instruction: Ik ga akkoord met de voorwaarde
-        instruction_2: Zyxel Cloud gebruiksvoorwaarde
-      edm: Ja, stuur mij meer informatie over Zyxel Cloud producten of diensten.
+      # terms:
+      #   instruction: Ik ga akkoord met de voorwaarde
+      #   instruction_2: Zyxel Cloud gebruiksvoorwaarde
+      # edm: Ja, stuur mij meer informatie over Zyxel Cloud producten of diensten.

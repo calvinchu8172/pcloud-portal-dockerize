@@ -25,7 +25,7 @@ cs:
       remember_me: Zapamatovat si mě
       language: Jazyk
       captcha: Kód Captcha
-      terms:
-        instruction: Rozumím a souhlasím s
-        instruction_2: Podmínky použití služby Zyxel Cloud
-      edm: Ano, zasílejte mi e-mailové zprávy o produktech a službách Zyxel Cloud
+      # terms:
+      #   instruction: Rozumím a souhlasím s
+      #   instruction_2: Podmínky použití služby Zyxel Cloud
+      # edm: Ano, zasílejte mi e-mailové zprávy o produktech a službách Zyxel Cloud

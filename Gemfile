@@ -38,6 +38,7 @@ gem 'c3-rails'
 gem 'd3-rails'
 gem 'i18n_country_select', '1.1.5'
 gem 'i18n-country-translations', '1.2.2'
+gem 'haml'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-angular-timer', '1.2.1'

@@ -2,8 +2,8 @@
 //   Page: footer
 // -------------------------------------
 
-div.footer{
-  margin: 80px auto;
+.footer{
+  margin: 20px auto;
   text-align: center;
   .support {
     a {
@@ -28,6 +28,6 @@ div.footer{
   }
   span{
     color:$zyxel_color2;
-    font-size:12px ;
+    font-size: 14px;
   }
 }

@@ -27,5 +27,6 @@ en:
       captcha: Captcha
       terms:
         instruction: I understand and agree the
-        instruction_2: Zyxel Cloud Terms of Use
-      edm: Yes, send me emails on Zyxel Cloud Products and Services
+        instruction_2: terms of use
+      edm: Yes, send me emails about products and services
+      copy_right: "© %{current_year} Only for personal demo, not for business purpose."

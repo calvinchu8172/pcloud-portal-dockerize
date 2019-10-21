@@ -25,7 +25,7 @@ de:
       remember_me: Erinnere mich
       language: Sprache
       captcha: Captcha
-      terms:
-        instruction: Ich verstehe und stimme den
-        instruction_2: Zyxel Cloud Bedingungen zur Nutzung zu
-      edm: Ja, senden Sie mir E-Mails zu Zyxel Cloud Produkte und Diensten
+      # terms:
+      #   instruction: Ich verstehe und stimme den
+      #   instruction_2: Zyxel Cloud Bedingungen zur Nutzung zu
+      # edm: Ja, senden Sie mir E-Mails zu Zyxel Cloud Produkte und Diensten

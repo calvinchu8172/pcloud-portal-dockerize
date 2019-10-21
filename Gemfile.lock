@@ -927,6 +927,7 @@ DEPENDENCIES
   fluent-logger
   geoip
   github-markup
+  haml
   hirb
   hirb-unicode
   i18n-country-translations (= 1.2.2)

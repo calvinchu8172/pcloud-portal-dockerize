@@ -26,7 +26,7 @@ it:
       remember_me: Ricordami
       language: Lingua
       captcha: Captcha
-      terms:
-        instruction: Capisco e accetto le
-        instruction_2: condizioni d'uso di Zyxel Cloud
-      edm: Sì, inviatemi e-mail con informazioni sui prodotti e servizi Zyxel Cloud
+      # terms:
+      #   instruction: Capisco e accetto le
+      #   instruction_2: condizioni d'uso di Zyxel Cloud
+      # edm: Sì, inviatemi e-mail con informazioni sui prodotti e servizi Zyxel Cloud

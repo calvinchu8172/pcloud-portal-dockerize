@@ -25,7 +25,7 @@ tr:
       remember_me: Beni Hatırla
       language: Dil
       captcha: Güvenlik Kodu
-      terms:
-        instruction: Zyxel Cloud Kullanım Hükümlerini
-        instruction_2: Zyxel Cloud kabul ediyorum
-      edm: Evet, bana Zyxel Cloud Ürünleri ve Hizmetleri konusunda e-postalar gönder
+      # terms:
+      #   instruction: Zyxel Cloud Kullanım Hükümlerini
+      #   instruction_2: Zyxel Cloud kabul ediyorum
+      # edm: Evet, bana Zyxel Cloud Ürünleri ve Hizmetleri konusunda e-postalar gönder

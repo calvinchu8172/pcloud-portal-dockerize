@@ -25,8 +25,8 @@ pl:
       remember_me: Pamiętaj mnie
       language: Język
       captcha: Kod obrazkowy
-      terms:
-        instruction: Rozumiem i zgadzam się z
-        instruction_2: warunkami użytkowania Zyxel Cloud
-      edm: Tak, proszę o przesyłanie mi wiadomości na temat produktów i usług Zyxel
-        Cloud
+      # terms:
+      #   instruction: Rozumiem i zgadzam się z
+      #   instruction_2: warunkami użytkowania Zyxel Cloud
+      # edm: Tak, proszę o przesyłanie mi wiadomości na temat produktów i usług Zyxel
+      #   Cloud

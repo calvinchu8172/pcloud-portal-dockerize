@@ -1,8 +1,7 @@
 .header_h1_rwd_left {
-  width: 118px;
-  height: 26px;
-  float: left;
-  margin-top: 30px;
+  img {
+    width: 250px;
+  }
 }
 .header_h1_rwd_right {
   float: right;
@@ -25,10 +24,10 @@
 
 @media (max-width: 767px) {
   .header_h1_rwd_left {
-    float: none;
-    margin-top: 35px;
-    margin-left: auto;
-    margin-right: auto;
+    img {
+      display: block;
+      margin: auto;
+    }
   }
   .header_h1_rwd_right {
     float: none;
