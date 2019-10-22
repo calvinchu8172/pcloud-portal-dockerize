@@ -2,6 +2,7 @@
 <html >
 <head>
   <meta charset='utf-8' />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= 'Portal' %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800' %>
@@ -60,7 +61,11 @@
     <% end %>
 
     <%# breadcrumb - end %>
-    <%= yield %>
+    <div class="row">
+      <div class="col-xs-12">
+        <%= yield %>
+      </div>
+    </div>
 
     <%= render 'layouts/footer' %>
   </div>

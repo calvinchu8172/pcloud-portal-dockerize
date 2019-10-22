@@ -1,0 +1,33 @@
+.device_content {
+  display: block;
+  border-bottom: 1px solid $zyxel_color4;
+
+  .device_info {
+    span{
+      font-size: 14px;
+      display: block;
+      margin: 3px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: $zyxel_color2;
+      &.model_name{
+        font-size: 17px;
+        color: $zyxel_color4;
+      }
+    }
+    > span {
+      &:hover .device_info_hover{
+        visibility: visible;
+      }
+    }
+    .device_info_hover{
+      @extend .hover_pop;
+      margin: -55px auto;
+      text-align: left;
+      // Reset to default
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+  }
+}

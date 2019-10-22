@@ -1,6 +1,6 @@
 <% provide(:tab, 'search') %>
 
-<div class="discoverer" ng-app="discoverer_app" ng-controller="DeviceListCtrl" ng-init="devices=<%= @result.to_json %>;">
+<div class="discoverer" ng-app="discoverer_app" ng-controller="DeviceListCtrl" ng-init="devices=<%= @result.to_json %>">
   <div class="zyxel_bread">
     <span><%= I18n.t("titles.search_devices") %></span>
     <%# Top content - result text and re-find button %>
@@ -42,7 +42,8 @@
   </div>
 </div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript"> -->
+<script>
   // get devices data on search device page
   var discoverer_app = angular.module('discoverer_app', []);
   discoverer_app.controller('DeviceListCtrl', function ($scope, $timeout, $http) {

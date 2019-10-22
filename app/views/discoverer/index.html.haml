@@ -1,0 +1,59 @@
+- provide(:tab, 'search')
+
+.discoverer{ "ng-app": "discoverer_app", "ng-controller": "DeviceListCtrl", "ng-init": "devices=#{@result.to_json};" }
+  .zyxel_bread
+    %span>
+      = I18n.t("titles.search_devices")
+    %button#discoverer_index_research_button.zyxel_btn_main.icon_research{ "ng-click": "doClick()" }
+      = I18n.t("labels.research")
+
+  .zyxel_content{ style: "max-width:660px" }
+    .device{ "ng-repeat": "device in devices" }
+      .row.device_content
+        .col-md-3
+          %img{ "ng-src": "{{device.img_url}}" }
+        .col-md-6.device_info
+          %span.model_name
+            {{device.model_class_name}}
+          %span
+            = I18n.t("labels.mac_address")
+            {{device.mac_address}}
+          %span
+            = I18n.t("labels.settings.ddns.firmware_version")
+            {{device.firmware_version}}
+            %span.device_info_hover{ "ng-if": "device.firmware_version.length > 35" }
+              {{device.firmware_version}}
+        .col-md-3
+          %a{ "ng-if": "!device.paired", "class": "", href: "/discoverer/check/{{device.device_id}}" }
+            = image_tag "pairing_icon.gif", :size=> "130x42", :alt=>I18n.t("labels.pairing"), :title=>I18n.t("labels.pairing")
+          %span.zyxel_btn_style1.zyxel_btn_disabled.zyxel_btn_disabled.pull-right.disabled{ "ng-if": "device.paired" }
+            = I18n.t("labels.paired")
+          %a.zyxel_btn_style1{ "ng-if": "device.has_indicator_module && !device.paired", "ng-show": "!device.indicated", href: "#", "ng-click": "doIndicate($index)" }
+            = I18n.t("labels.find_nas")
+          %span.zyxel_btn_style1.zyxel_btn_disabled.pull-right.disabled{ "ng-if": "device.has_indicator_module && !device.paired", "ng-show": "device.indicated" }
+            = I18n.t("labels.find_nas")
+
+    .zyxel_btn_area
+      %p
+        = I18n.t("titles.manually_input_if_test")
+      = link_to(I18n.t("labels.manually"), "/discoverer/add/", class: "zyxel_btn_ok")
+
+:javascript
+  // get devices data on search device page
+  var discoverer_app = angular.module('discoverer_app', []);
+  discoverer_app.controller('DeviceListCtrl', function ($scope, $timeout, $http) {
+
+    $scope.doClick = function() {
+      $http.get("/discoverer/index.json").success(function(response) {
+        $scope.devices = response;
+      });
+    }
+
+    $scope.doIndicate = function($index){
+      var indicated_device = $scope.devices[$index]
+      indicated_device.indicated = true
+      $http.get("/discoverer/indicate/" + indicated_device.device_id + ".json").success(function(response) {});
+      var timer = $timeout(function(){ indicated_device.indicated = false; }, 30000);
+      $scope.$on("$destroy", function(event){ $timeout.cancel(timer); });
+    }
+  });
