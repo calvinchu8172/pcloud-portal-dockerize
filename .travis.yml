@@ -4,9 +4,9 @@ language: ruby
 addons:
   apt:
     packages:
-      - imagemagick 
-      - libmagickwand-dev 
-      - qt5-default 
+      - imagemagick
+      - libmagickwand-dev
+      - qt5-default
       - libqt5webkit5-dev
       - xvfb
   artifacts:
@@ -38,7 +38,7 @@ before_script:
 
 after_script:
   - ls test-plans
-    
+
 services:
   - mysql
   - redis-server
@@ -49,3 +49,4 @@ notifications:
 branches:
   only:
     - develop
+    - feature/20200213-1-add-private-policy-page
