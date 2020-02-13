@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   # Routes for Pcloud portal
   constraints :host => Settings.environments.portal_domain do
+
     devise_scope :user do
       # setting root path to personal index page, if user signed in
       authenticated :user do
@@ -104,6 +105,8 @@ Rails.application.routes.draw do
 
     resources :products, :path => "fs2g0a2vtz", except: [:destroy]
     get 'diagram', to: 'diagram#index'
+
+    resources :private_policy
   end
 
   # Routes for Pcloud REST API server

@@ -9,6 +9,12 @@
   margin-top: 20px;
 }
 
+@media (max-width: 420px) {
+  .nav_zyxel {
+    margin-top: 10px;
+  }
+}
+
 .dropdown {
   border: 1px solid $zyxel_color4;
   margin-right: 10px;

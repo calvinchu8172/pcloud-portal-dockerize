@@ -1,0 +1,5 @@
+.privacy-policy
+  - if I18n.locale.to_s  == "zh-TW"
+    = render "hint/terms/zh_TW"
+  - else
+    = render "hint/terms/en"

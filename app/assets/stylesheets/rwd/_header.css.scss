@@ -1,3 +1,9 @@
+.pre_header {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 100px;
+}
+
+
 .header_h1_rwd_left {
   img {
     width: 250px;
@@ -11,22 +17,12 @@
   margin-right: -50px;
 }
 
-.rwd_header {
-  height:120px;
-}
-
-.header_devider {
-  border-color: #eee;
-  margin-top: 0;
-  margin-bottom: 0;
-  width: 100%;
-}
-
 @media (max-width: 767px) {
   .header_h1_rwd_left {
     img {
+      width: 200px;
       display: block;
-      margin: auto;
+      margin: 0 0 0 -20px;
     }
   }
   .header_h1_rwd_right {
@@ -37,7 +33,3 @@
     height:50px;
   }
 }
-
-// .grecaptcha-badge {
-//     display: none;
-// }

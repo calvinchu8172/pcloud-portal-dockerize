@@ -1,0 +1,8 @@
+.pre_header
+  .row
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      .header_h1_rwd_left
+        = link_to_unless( in_oauth_flow?, image_tag("portal.png"), root_path )
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      = render 'layouts/header_right'
+

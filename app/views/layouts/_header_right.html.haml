@@ -1,0 +1,22 @@
+%ul.nav.nav-pills.nav_zyxel
+  / - if current_user.nil? && (current_page?(root_path) || current_page?(new_user_session_path))
+  %li.dropdown
+    %a.dropdown-toggle{ "data-toggle": "dropdown", href: "#" }
+      = t('labels.language')
+    %ul.dropdown-menu{ role: "menu" }
+      - @options_path.each do |l, value|
+        %li
+          = link_to l, value
+
+  / Display member link when user signed in
+  - if user_signed_in? && !current_page?('/help') && confirmed_or_valid_unconfirmed_access? && !in_oauth_flow?
+    %li
+      = show_unverified_button
+    %li
+      = link_to "", "/personal/profile", class: "member" if confirmed_or_skiped? && !in_oauth_flow?
+
+  / Display sign out link when user signed in
+  / <%# if user_signed_in? && !current_page?('/help') && confirmed_or_valid_unconfirmed_access? %>
+  - if user_signed_in? && !current_page?('/help')
+    %li
+      = link_to t("labels.sign_out") , destroy_user_session_path, class: "sign_out"
