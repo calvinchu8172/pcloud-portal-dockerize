@@ -31,3 +31,4 @@ en:
       edm: Yes, send me emails about products and services
       copy_right: "© %{current_year} Only for personal demo, not for business purpose."
       private_policy: Private Policy
+      continue: Continue

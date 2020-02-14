@@ -108,7 +108,8 @@ Feature: [PCP_001_01] Sign Up
      When the new user confirmed account within email
      Then the page will redirect to confirmed page
      When user click the confirm button
-     Then user will redirect to login page
+     # Then user will redirect to login page
+     Then user will redirect to welcome page
       And user should not see "Unverified" button
 
   Scenario: [PCP_001_01_10]

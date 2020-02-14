@@ -65,7 +65,8 @@ Given(/^the visitor success sign up and login$/) do
 
     When user click the confirm button
 
-    Then user will redirect to login page
+    Then user will redirect to welcome page
+
   }
 end
 
@@ -198,6 +199,11 @@ end
 
 Then(/^user will redirect to login page$/) do
   expect(page).to have_content("Sign in")
+end
+
+Then(/^user will redirect to welcome page$/) do
+  # pending # express the regexp above with the code you wish you had
+  expect(page).to have_content("Continue")
 end
 
 # Analog method of captcha

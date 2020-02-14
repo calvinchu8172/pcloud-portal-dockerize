@@ -1,7 +1,8 @@
 Feature: [PCP_001_05] OAuth-Google
 
 	Background:
-		Given a user visits home page
+		# Given a user visits home page
+    Given a user visits sign in page
 
 	Scenario: [PCP_001_05_01]
 	  Show error message when permissions error

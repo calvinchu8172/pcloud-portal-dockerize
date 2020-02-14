@@ -3,6 +3,10 @@ Given(/^a user visits home page$/) do
   visit unauthenticated_root_path
 end
 
+Given(/^a user visits sign in page$/) do
+  visit new_user_session_path
+end
+
 Then(/^the user should see text\/message "(.*?)" on the page$/) do |message|
   expect(page.body).to have_content(message)
 end

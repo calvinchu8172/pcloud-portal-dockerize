@@ -66,7 +66,8 @@ Feature: [PCP_001_03] Login
      And  the user should see "Skip" button
      When the user's session is expired
       And the user click on "Skip"
-     Then user will redirect to login page
+     # Then user will redirect to login page
+     Then user will redirect to welcome page
 
   Scenario: [PCP_001_03_08]
     If user doesn't confirm email over 3 days, user will only can visit resend email of confirmation page
@@ -85,7 +86,8 @@ Feature: [PCP_001_03] Login
      Then confirmation email should be delivered
       And the page should redirect to hint confirmation sent page
      When the user click "OK" link
-     Then the page should redirect to sign in page
+     # Then the page should redirect to sign in page
+     Then user will redirect to welcome page
       And the new user confirmed account within email
 
   Scenario: [PCP_001_03_10]

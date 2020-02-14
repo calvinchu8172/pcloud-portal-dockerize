@@ -6,7 +6,8 @@ end
 
 # Go to Login page
 Given(/^the user visits login page$/) do
-  visit unauthenticated_root_path
+  # visit unauthenticated_root_path
+  visit new_user_session_path
 end
 
 Given(/^the user change language (.*?)$/) do |locale|

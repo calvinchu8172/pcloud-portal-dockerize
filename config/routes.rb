@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   # Routes for Pcloud portal
   constraints :host => Settings.environments.portal_domain do
 
+    # root "welcome#index"
+
     devise_scope :user do
       # setting root path to personal index page, if user signed in
       authenticated :user do
@@ -11,7 +13,8 @@ Rails.application.routes.draw do
 
       # setting root path to sign in page, if user not sign in
       unauthenticated do
-        root 'sessions#new', as: :unauthenticated_root
+        # root 'sessions#new', as: :unauthenticated_root
+        root 'welcome#index', as: :unauthenticated_root
       end
     end
 
