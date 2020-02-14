@@ -19,4 +19,7 @@
   / <%# if user_signed_in? && !current_page?('/help') && confirmed_or_valid_unconfirmed_access? %>
   - if user_signed_in? && !current_page?('/help')
     %li
-      = link_to t("labels.sign_out") , destroy_user_session_path, class: "sign_out"
+      = link_to t("labels.sign_out"), destroy_user_session_path, class: "sign_out"
+  - if !user_signed_in? && !current_page?('/private_policy')
+    %li
+      = link_to t("labels.sign_in"), new_user_session_path, class: "sign_out"

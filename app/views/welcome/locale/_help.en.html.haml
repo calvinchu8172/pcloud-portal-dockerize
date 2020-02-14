@@ -1,0 +1,40 @@
+%h1
+  = 'Welcome!'
+%p
+  = 'This is a demostration web APP allowing users to pair and config their devices.'
+%p
+  = 'This web APP is only for personal demostration, not for business purpose. Please feel free to try.'
+%p
+  = 'If you use Facebook or Google Sign in, this web APP only collects your email as user ID just like email sign in. Please check the '
+  = link_to I18n.t('user.labels.private_policy'), private_policy_index_path, target:'_blank'
+  = '.'
+
+.panel.panel-zyxel-blue
+  .panel-heading
+    = 'Step 1: Sign in or register first.'
+  .panel-body
+    = image_tag 'help/20200214/step1.png'
+
+.panel.panel-zyxel-blue
+  .panel-heading
+    = 'Step 2: Press manually add.'
+  .panel-body
+    = image_tag 'help/20200214/step2.png'
+
+.panel.panel-zyxel-blue
+  .panel-heading
+    = 'Step 3: Default device has filled in. Press submit.'
+  .panel-body
+    = image_tag 'help/20200214/step3.png'
+
+.panel.panel-zyxel-blue
+  .panel-heading
+    = 'Step 4: Confirm pairing with device.'
+  .panel-body
+    = image_tag 'help/20200214/step4.png'
+
+.panel.panel-zyxel-blue
+  .panel-heading
+    = 'Step 5: If pairing successfully, you can keep testing this web APP.'
+  .panel-body
+    = image_tag 'help/20200214/step5.png'

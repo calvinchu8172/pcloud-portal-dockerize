@@ -1,6 +1,7 @@
 .row
   .col-lg-12
-    %h1
-      = 'welcome'
+    .zyxel_content
+      = render 'welcome/locale/help'
+
     .zyxel_btn_area
       = link_to I18n.t('user.labels.continue'), new_user_session_path, class: "zyxel_btn_ok"

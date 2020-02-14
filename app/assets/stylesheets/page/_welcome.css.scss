@@ -1,0 +1,17 @@
+.panel-zyxel-blue {
+
+  border-color: $zyxel_color4;
+
+  .panel-heading {
+    background: $zyxel_color4;
+    color: #ffffff;
+    border-color: $zyxel_color4;
+  }
+
+  .panel-body {
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+}
