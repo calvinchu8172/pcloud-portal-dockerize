@@ -50,5 +50,4 @@ notifications:
 branches:
   only:
     - develop
-    - feature/20200213-1-add-private-policy-page
     - feature/20200214-1-test-welcome-page-as-homepage
