@@ -50,4 +50,4 @@ notifications:
 branches:
   only:
     - develop
-    - feature/20200214-1-test-welcome-page-as-homepage
+    - feature/20200217-1-implement-new-google-icon
