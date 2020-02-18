@@ -19,12 +19,11 @@
           %span.error_message
             = message
 
-      .row.sns_sign
-        .col-xs-6
-          = link_to "Facebook", user_omniauth_authorize_path(:facebook), class: "zyxel_btn_sns sns_fb"
-        .col-xs-6.google_signin
-          / = link_to "Google", user_omniauth_authorize_path(:google_oauth2), class: "zyxel_btn_sns sns_google", style: "margin-right:0"
-          = link_to image_tag("btn_google_signin_dark_normal_web.png"), user_omniauth_authorize_path(:google_oauth2), class: 'google_signin_btn'
+      .row.sns_signin
+        .col-xs-12.facebook_signin
+          = link_to image_tag("facebook_signin_btn.png"), user_omniauth_authorize_path(:facebook), class: 'facebook_signin_btn'
+        .col-xs-12.google_signin
+          = link_to image_tag("google_signin_btn.png"), user_omniauth_authorize_path(:google_oauth2), class: 'google_signin_btn'
 
 
       .divider

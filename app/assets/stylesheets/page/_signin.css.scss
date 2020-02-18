@@ -29,7 +29,7 @@
   }
 }
 .signup_cont {
-  padding: 8% 7% 7% 7%;
+  padding: 7% 7% 7% 7%;
 }
 .divider {
   display: -webkit-box;
@@ -106,4 +106,23 @@
   display: block;
   margin: auto;
   padding: 0 0 20px 0;
+}
+
+.sns_signin {
+  .facebook_signin {
+    img {
+      display: block;
+      height: 50px;
+      margin: 5px auto;
+    }
+  }
+
+  .google_signin {
+    img {
+      display: block;
+      height: 56px;
+      margin: 10px auto;
+    }
+  }
+
 }
