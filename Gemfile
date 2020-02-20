@@ -130,7 +130,7 @@ group :development, :test do
 end
 
 gem 'mail', '2.5.4'
-gem 'devise', '3.5.1'
+gem 'devise', '4.7.1'
 gem 'devise-i18n'
 gem 'log4r'
 gem 'xmpp4r'
