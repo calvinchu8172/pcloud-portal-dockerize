@@ -50,4 +50,3 @@ notifications:
 branches:
   only:
     - develop
-    - feature/20200217-1-implement-new-google-icon
